@@ -27,8 +27,8 @@ class Login extends Component {
   }
   render() {
     return (
-      <View>
-        <Text style={styles.center}>Login Page</Text>
+      <View style={styles.center}>
+        <Text>Login Page</Text>
       </View>
     );
   }

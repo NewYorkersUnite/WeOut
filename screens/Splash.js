@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, ImageBackground} from 'react-native';
+import {View, Text, ImageBackground, Image} from 'react-native';
 import {Button} from 'native-base';
 import styles from '../public/styles';
 
@@ -11,16 +11,26 @@ class Splash extends Component {
       <ImageBackground
         style={styles.title}
         source={require('../public/City.jpg')}>
-        <View>
+        <Image
+          source={require('../public/WeOut.png')}
+          style={styles.MainLogo}
+        />
+        <View style={styles.LogSignBtnContainer}>
           <View>
-            <Button full onPress={() => navigate('SignUp')}>
-              <Text> Sign Up</Text>
+            <Button
+              style={styles.LogSignBtn}
+              full
+              onPress={() => navigate('SignUp')}>
+              <Text style={styles.BtnText}>Sign Up</Text>
             </Button>
           </View>
 
           <View>
-            <Button full onPress={() => navigate('Login')}>
-              <Text> Login</Text>
+            <Button
+              style={styles.LogSignBtn}
+              full
+              onPress={() => navigate('Login')}>
+              <Text style={styles.BtnText}> Login</Text>
             </Button>
           </View>
         </View>

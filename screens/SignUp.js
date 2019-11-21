@@ -27,8 +27,8 @@ class SignUp extends Component {
   }
   render() {
     return (
-      <View>
-        <Text style={styles.center}>SignUp Page</Text>
+      <View style={styles.center}>
+        <Text>SignUp Page</Text>
       </View>
     );
   }
