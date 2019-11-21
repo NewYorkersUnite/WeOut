@@ -26,9 +26,11 @@ class SignUp extends Component {
     super();
   }
   render() {
-    <View>
-      <Text style={styles.center}>SignUp Page</Text>
-    </View>;
+    return (
+      <View>
+        <Text style={styles.center}>SignUp Page</Text>
+      </View>
+    );
   }
 }
 

@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    backgroundColor: '#93d1b8',
+    backgroundColor: 'white',
     flex: 1,
   },
 });

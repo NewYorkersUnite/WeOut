@@ -26,9 +26,11 @@ class Login extends Component {
     super();
   }
   render() {
-    <View>
-      <Text style={styles.center}>Login Page</Text>
-    </View>;
+    return (
+      <View>
+        <Text style={styles.center}>Login Page</Text>
+      </View>
+    );
   }
 }
 export default Login;
