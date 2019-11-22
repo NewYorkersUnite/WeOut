@@ -20,24 +20,18 @@ import Splash from './screens/Splash';
 import SignUp from './screens/SignUp';
 import Login from './screens/Login';
 import styles from './public/styles';
+import {Provider} from 'react-redux';
+import store from './store';
 
 export default class App extends React.Component {
   // componentDidMount() {
-  // Nayyif will enter this data later
-  // const firebaseConfig = {
-  //   apiKey: "apiKey",
-  //   authDomain: "authDomain",
-  //   databaseURL: "databaseURL",
-  //   projectId: "projectId",
-  //   storageBucket: "storageBucket",
-  //   messagingSenderId: "messagingSenderId",
-  //   appId: "appId",
-  //   measurementId: "measurementId"
-  // };
-  // firebase.initializeApp(firebaseConfig);
   // }
   render() {
-    return <AppNavigator />;
+    return (
+      <Provider store={store}>
+        <AppNavigator />;
+      </Provider>
+    );
   }
 }
 

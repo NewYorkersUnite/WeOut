@@ -2,6 +2,11 @@ import React, {Component} from 'react';
 import {View, Text, ImageBackground} from 'react-native';
 import {Button} from 'native-base';
 import styles from '../public/styles';
+import {createUser} from '../store/actions/users';
+import {connect} from 'react-redux';
+
+import {getFirestore} from 'redux-firestore';
+import {getFirebase} from 'react-redux-firebase';
 
 class Splash extends Component {
   render() {
@@ -29,4 +34,14 @@ class Splash extends Component {
   }
 }
 
-export default Splash;
+const mapDispatchToProps = dispatch => {
+  return {
+    createUser: user => {
+      dispatch(createUser(user));
+    },
+  };
+};
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Splash);
