@@ -21,6 +21,8 @@ import SignUp from './screens/SignUp';
 import Login from './screens/Login';
 import Dashboard from './screens/Dashboard';
 import styles from './public/styles';
+import {Provider} from 'react-redux';
+import store from './store';
 
 export default class App extends React.Component {
   // componentDidMount() {
@@ -38,7 +40,11 @@ export default class App extends React.Component {
   // firebase.initializeApp(firebaseConfig);
   // }
   render() {
-    return <AppNavigator />;
+    return (
+      <Provider store={store}>
+        <AppNavigator />
+      </Provider>
+    );
   }
 }
 

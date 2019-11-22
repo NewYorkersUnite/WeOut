@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {View, Text, ImageBackground, Image} from 'react-native';
 import {Button} from 'native-base';
 import styles from '../public/styles';
+import {createUser} from '../store/actions/users';
+import {connect} from 'react-redux';
 
 class Splash extends Component {
   render() {
@@ -20,7 +22,7 @@ class Splash extends Component {
             <Button
               style={styles.LogSignBtn}
               full
-              onPress={() => navigate('SignUp')}>
+              onPress={() => this.props.createUser({user: 'John'})}>
               <Text style={styles.BtnText}>Sign Up</Text>
             </Button>
           </View>
@@ -39,4 +41,14 @@ class Splash extends Component {
   }
 }
 
-export default Splash;
+const mapDispatchToProps = dispatch => {
+  return {
+    createUser: user => {
+      dispatch(createUser(user));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Splash);
+
+//onPress={() => navigate('SignUp')}
