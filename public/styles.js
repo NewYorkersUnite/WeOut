@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'column',
     marginBottom: 250,
-    // color: '#DA2727',
   },
   title: {
     backgroundColor: 'white',
@@ -25,7 +24,7 @@ const styles = StyleSheet.create({
   },
   LogSignBtn: {
     width: 200,
-    backgroundColor: '#DA2727',
+    backgroundColor: '#DA2727', // SUPREME RED COLOR
     paddingHorizontal: 26,
     fontSize: 22,
     marginVertical: 20,
@@ -34,6 +33,22 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: '#ffffff',
     fontWeight: 'bold',
+  },
+
+  // LOGIN & SIGN UP SCREENS
+  centerish: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 200,
+  },
+  LogSignBtnCentered: {
+    width: 200,
+    backgroundColor: '#DA2727',
+    paddingHorizontal: 26,
+    fontSize: 22,
+    marginVertical: 20,
+    marginLeft: 110,
   },
 });
 

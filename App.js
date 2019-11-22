@@ -19,6 +19,7 @@ import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import Splash from './screens/Splash';
 import SignUp from './screens/SignUp';
 import Login from './screens/Login';
+import Dashboard from './screens/Dashboard';
 import styles from './public/styles';
 
 export default class App extends React.Component {
@@ -45,6 +46,7 @@ const MainNavigator = createSwitchNavigator({
   Splash: {screen: Splash},
   SignUp: {screen: SignUp},
   Login: {screen: Login},
+  Dashboard: {screen: Dashboard},
 });
 
 const AppNavigator = createAppContainer(MainNavigator);
