@@ -144,4 +144,7 @@ exports.uploadImage = (req, res) => {
         return res.status(500).json({error: err.code});
       });
   });
+  //This part is to change the default image, but isn't working..
+  // busboy.end(req.rawBody);
+  // req.pipe(busboy);
 };
