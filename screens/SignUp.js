@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styles from '../public/styles';
+import * as firebase from 'firebase';
 
 import {
   Container,
@@ -38,10 +39,10 @@ class SignUp extends Component {
       email = this.state.email;
       password = this.state.password;
       // username = this.state.username;
-      // firebase.auth().createUserWithEmailAndPassword(email, password); **
+      firebase.auth().createUserWithEmailAndPassword(email, password);
 
       // firebase.auth().currentUser.providerData[0].displayName = username;
-      // console.log("CURRENT USER", firebase.auth());
+      console.log('CURRENT USER', firebase.auth());
 
       this.props.navigation.navigate('Dashboard');
     } catch (error) {
