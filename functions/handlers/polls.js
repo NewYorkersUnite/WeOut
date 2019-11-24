@@ -23,7 +23,7 @@ exports.getAllPolls = (req, res) => {
 
 exports.createOnePoll = (req, res) => {
   if (req.body.body.trim() === '') {
-    return res.status(400).json({body: 'Bosy must not be empty'});
+    return res.status(400).json({body: 'Event title must not be empty'});
   }
   const newPoll = {
     body: req.body.body,
