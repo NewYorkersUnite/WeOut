@@ -6,7 +6,7 @@ export default class Dashboard extends Component {
   render() {
     return (
       <ScrollView>
-        <Text>DASHBOARD!!</Text>
+        <Text style={styles.center}>DASHBOARD!!</Text>
       </ScrollView>
     );
   }

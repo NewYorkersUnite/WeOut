@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styles from '../public/styles';
+import * as firebase from 'firebase';
 
 import {
   Container,
@@ -28,6 +29,18 @@ class Login extends Component {
       email: '',
       password: '',
     };
+  }
+  loginUser(email, password) {
+    try {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(function(user) {
+          console.log('USER THAT WAS LOGGED IN >>>', user);
+        });
+    } catch (error) {
+      console.log(error.toString());
+    }
   }
   render() {
     return (
