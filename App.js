@@ -18,7 +18,7 @@ import styles from './public/styles';
 import * as firebase from 'firebase';
 
 export default class App extends React.Component {
-  componentDidMount() {
+  // componentDidMount() {
 
   //   // SELECT DATA
   //   firebase
