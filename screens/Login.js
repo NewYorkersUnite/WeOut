@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, ImageBackground, Image} from 'react-native';
 import styles from '../public/styles';
-import * as firebase from 'firebase';
-import config from '../functions/util/config';
-
-firebase.initializeApp(config);
+const {firebaseApp, db, config} = require('../functions/util/config');
 
 import {Input, Item, Button, Label} from 'native-base';
 
@@ -19,7 +16,7 @@ class Login extends Component {
 
   loginUser(email, password) {
     if (this.validateLoginData(this.state)) {
-      firebase
+      firebaseApp
         .auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then(function(user) {
@@ -51,7 +48,6 @@ class Login extends Component {
     }
     return {
       errors,
-      valid: Object.keys(errors).length === 0 ? true : false,
     };
   };
 
