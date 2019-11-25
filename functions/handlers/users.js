@@ -148,6 +148,4 @@ exports.uploadImage = (req, res) => {
       });
   });
   busboy.end(req.rawBody);
-  //This part is to change the default image, but isn't working..
-  // req.pipe(busboy);
 };
