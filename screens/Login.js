@@ -1,29 +1,12 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  ImageBackground,
-  ActivityIndicator,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, ImageBackground, Image} from 'react-native';
 import styles from '../public/styles';
 import * as firebase from 'firebase';
 import config from '../functions/util/config';
 
 firebase.initializeApp(config);
 
-import {
-  Container,
-  Content,
-  Header,
-  Form,
-  Input,
-  Item,
-  Button,
-  Label,
-} from 'native-base';
+import {Input, Item, Button, Label} from 'native-base';
 
 class Login extends Component {
   constructor() {
@@ -31,23 +14,16 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      token: '',
     };
-    this.navigate = this.navigate.bind(this);
   }
-  // user@email.com
-  navigate(string) {
-    this.props.navigation.navigate(string);
-  }
+
   loginUser(email, password) {
     if (this.validateLoginData(this.state)) {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then(function(user) {
-          console.log('USER THAT WAS LOGGED IN >>>', user.user.uid);
-
-          // this.navigate('Dashboard');
+          console.log('USER THAT WAS LOGGED IN >>>', user);
         })
         .catch(error => {
           console.error(error);
@@ -55,9 +31,8 @@ class Login extends Component {
         });
     }
     this.props.navigation.navigate('Dashboard');
-
-    // console.log('this.state', firebase.auth());
   }
+
   isEmpty = string => {
     if (string.trim() === '') {
       return true;
@@ -65,6 +40,7 @@ class Login extends Component {
       return false;
     }
   };
+
   validateLoginData = data => {
     let errors = {};
     if (this.isEmpty(data.email)) {
@@ -120,9 +96,6 @@ class Login extends Component {
             <Text style={styles.BtnText}>Login</Text>
           </Button>
         </View>
-        {/* <View style={styles.center}>
-          <Text>Login Page</Text>
-        </View> */}
       </ImageBackground>
     );
   }
