@@ -1,14 +1,9 @@
 import React, {Component} from 'react';
 import {View, Text, ImageBackground, Image, Alert} from 'react-native';
 import styles from '../public/styles';
-// import * as firebase from 'firebase';
-// const Firebase = require('../functions/util/config');
-// firebase.initializeApp(config);
-// import Firebase from '../functions/util/config';
 const {firebaseApp, db, config} = require('../functions/util/config');
 
 import {Input, Item, Button, Label} from 'native-base';
-import {appendToMemberExpression} from '@babel/types';
 
 class SignUp extends Component {
   constructor() {
@@ -71,8 +66,11 @@ class SignUp extends Component {
 
   isEmail = email => {
     const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (email.match(regEx)) return true;
-    else return false;
+    if (email.match(regEx)) {
+      return true;
+    } else {
+      return false;
+    }
   };
   isEmpty = string => {
     if (string.trim() === '') {
@@ -102,7 +100,6 @@ class SignUp extends Component {
     }
     return {
       errors,
-      valid: Object.keys(errors).length === 0 ? true : false,
     };
   };
 
