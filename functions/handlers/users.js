@@ -111,12 +111,15 @@ exports.uploadImage = (req, res) => {
   let imageToBeUploaded = {};
 
   busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-    console.log(fieldname);
-    console.log(filename);
-    console.log(mimetype);
+    console.log(fieldname, file, filename, encoding, mimetype);
+    if (mimetype !== 'image/jpeg' && mimetype !== 'image/png') {
+      return res.status(400).json({error: 'Wrong file type submitted'});
+    }
     const imageExtension = filename.split('.')[filename.split('.').length - 1];
-    imageFileName = `${Math.round(Math.random() * 1000000)}.${imageExtension}`;
-    const filepath = path.join(os.tmpdir(), imageFilename);
+    imageFileName = `${Math.round(
+      Math.random() * 1000000000000,
+    ).toString()}.${imageExtension}`;
+    const filepath = path.join(os.tmpdir(), imageFileName);
     imageToBeUploaded = {filepath, mimetype};
     file.pipe(fs.createWriteStream(filepath));
   });
@@ -133,18 +136,18 @@ exports.uploadImage = (req, res) => {
         },
       })
       .then(() => {
-        const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFilename}?alt=media`;
-        return db.doc(`/users/${req.user.handle}`).update({imageUrl});
+        const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFileName}?alt=media`;
+        return db.doc(`/users/${req.user.username}`).update({imageUrl});
       })
       .then(() => {
         return res.json({message: 'Image uploaded successfully'});
       })
       .catch(err => {
         console.error(err);
-        return res.status(500).json({error: err.code});
+        return res.status(500).json({error: 'something went wrong'});
       });
   });
+  busboy.end(req.rawBody);
   //This part is to change the default image, but isn't working..
-  // busboy.end(req.rawBody);
   // req.pipe(busboy);
 };
