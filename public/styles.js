@@ -89,29 +89,35 @@ const styles = StyleSheet.create({
   },
 
   // FRIENDS SCROLLVIEW
-  friendsSVContainer: {
-    height: 130,
-    marginTop: 100,
-    backgroundColor: '#F0F0F0',
+  scrollContainer: {
+    marginTop: 120,
+    marginBottom: -460,
   },
-  friendsSV: {
-    height: 130,
-    width: 130,
+  scrollHeight: {
+    height: 100,
   },
-  friendImgThumbnailContainer: {
-    flex: 2,
-    height: 70,
-    width: 70,
-    borderRadius: 70 / 2,
-    borderColor: 'black',
-    borderWidth: 3,
-  },
-  friendImgThumbnail: {
+  proportionsOfScroll: {
     flex: 1,
-    height: 70,
-    width: 70,
-    borderRadius: 70 / 2,
-    // resizeMode: 'cover',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 7,
+  },
+  scrollTxt: {
+    fontWeight: 'bold',
+  },
+  proportionsOfScrollPRT2: {
+    flex: 3,
+  },
+  scrollPadding: {
+    alignItems: 'center',
+    paddingStart: 5,
+    paddingEnd: 5,
+  },
+  TNDetails: {
+    marginHorizontal: 5,
+    borderColor: '#60F718',
+    borderWidth: 2,
   },
 });
 

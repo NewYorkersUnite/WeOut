@@ -28,36 +28,21 @@ export default class Dashboard extends Component {
       <ImageBackground
         style={styles.title}
         source={require('../public/Background.png')}>
-        <Container style={{marginTop: 120}}>
-          <View style={{height: 100}}>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                paddingHorizontal: 7,
-              }}>
-              <Text style={{fontWeight: 'bold'}}>All Friends</Text>
+        <Container style={styles.scrollContainer}>
+          <View style={styles.scrollHeight}>
+            <View style={styles.proportionsOfScroll}>
+              <Text style={styles.scrollTxt}>All Friends</Text>
             </View>
-            <View style={{flex: 3}}>
+            <View style={styles.proportionsOfScrollPRT2}>
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{
-                  alignItems: 'center',
-                  paddingStart: 5,
-                  paddingEnd: 5,
-                }}>
+                contentContainerStyle={styles.scrollPadding}>
                 {dummyFriends.map((friend, indx) => {
                   return (
                     <Thumbnail
                       key={indx}
-                      style={{
-                        marginHorizontal: 5,
-                        borderColor: '#60F718',
-                        borderWidth: 2,
-                      }}
+                      style={styles.TNDetails}
                       source={{uri: friend}}
                     />
                   );
@@ -101,139 +86,3 @@ export default class Dashboard extends Component {
     );
   }
 }
-
-// export default class Dashboard extends Component {
-//   constructor() {
-//     super();
-//   }
-//   render() {
-//     const {navigate} = this.props.navigation;
-//     return (
-//       <ImageBackground
-//         style={styles.title}
-//         source={require('../public/Background.png')}>
-//         <Container style={{marginTop: 120}}>
-//           <View style={{height: 100}}>
-//             <View
-//               style={{
-//                 flex: 1,
-//                 flexDirection: 'row',
-//                 justifyContent: 'space-between',
-//                 alignItems: 'center',
-//                 paddingHorizontal: 7,
-//               }}>
-//               <Text style={{fontWeight: 'bold'}}>All Friends</Text>
-//             </View>
-//             <View style={{flex: 3}}>
-//               <ScrollView
-//                 horizontal={true}
-//                 showsHorizontalScrollIndicator={false}
-//                 contentContainerStyle={{
-//                   alignItems: 'center',
-//                   paddingStart: 5,
-//                   paddingEnd: 5,
-//                 }}>
-//                 <Thumbnail
-//                   style={{
-//                     marginHorizontal: 5,
-//                     borderColor: '#60F718',
-//                     borderWidth: 2,
-//                   }}
-//                   source={{uri: dummyFriends[0]}}
-//                 />
-//                 <Thumbnail
-//                   style={{
-//                     marginHorizontal: 5,
-//                     borderColor: '#60F718',
-//                     borderWidth: 2,
-//                   }}
-//                   source={{uri: dummyFriends[1]}}
-//                 />
-//                 <Thumbnail
-//                   style={{
-//                     marginHorizontal: 5,
-//                     borderColor: '#60F718',
-//                     borderWidth: 2,
-//                   }}
-//                   source={{uri: dummyFriends[2]}}
-//                 />
-//                 <Thumbnail
-//                   style={{
-//                     marginHorizontal: 5,
-//                     borderColor: '#60F718',
-//                     borderWidth: 2,
-//                   }}
-//                   source={{uri: dummyFriends[3]}}
-//                 />
-
-//                 <Thumbnail
-//                   style={{
-//                     marginHorizontal: 5,
-//                     borderColor: '#60F718',
-//                     borderWidth: 2,
-//                   }}
-//                   source={{uri: dummyFriends[4]}}
-//                 />
-//                 <Thumbnail
-//                   style={{
-//                     marginHorizontal: 5,
-//                     borderColor: '#60F718',
-//                     borderWidth: 2,
-//                   }}
-//                   source={{uri: dummyFriends[5]}}
-//                 />
-//                 <Thumbnail
-//                   style={{
-//                     marginHorizontal: 5,
-//                     borderColor: '#60F718',
-//                     borderWidth: 2,
-//                   }}
-//                   source={{uri: dummyFriends[4]}}
-//                 />
-//                 <Thumbnail
-//                   style={{
-//                     marginHorizontal: 5,
-//                     borderColor: '#60F718',
-//                     borderWidth: 2,
-//                   }}
-//                   source={{uri: dummyFriends[5]}}
-//                 />
-//               </ScrollView>
-//             </View>
-//           </View>
-//         </Container>
-
-//         <Text style={styles.center}>DASHBOARD!!</Text>
-//         <View style={styles.navContainer}>
-//           <View style={styles.navButtonContainer}>
-//             <Button
-//               style={styles.NavButton}
-//               onPress={() => navigate('Dashboard')}>
-//               <Text style={styles.NavBtnText}> Dash</Text>
-//             </Button>
-//           </View>
-
-//           <View style={styles.navButtonContainer}>
-//             <Button style={styles.NavButton} onPress={() => navigate('Search')}>
-//               <Text style={styles.NavBtnText}> Search</Text>
-//             </Button>
-//           </View>
-
-//           <View style={styles.navButtonContainer}>
-//             <Button style={styles.NavButton} onPress={() => navigate('Poll')}>
-//               <Text style={styles.NavBtnText}> Poll</Text>
-//             </Button>
-//           </View>
-
-//           <View style={styles.navButtonContainer}>
-//             <Button
-//               style={styles.NavButton}
-//               onPress={() => navigate('Profile')}>
-//               <Text style={styles.NavBtnText}> Profile</Text>
-//             </Button>
-//           </View>
-//         </View>
-//       </ImageBackground>
-//     );
-//   }
-// }
