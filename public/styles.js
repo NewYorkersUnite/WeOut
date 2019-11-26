@@ -76,6 +76,49 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
   },
+  // HORIZONTAL SCROLL - DASHBOARD
+  v1InsideSV: {
+    flex: 1,
+    // backgroundColor: 'blue',
+    paddingTop: 150,
+  },
+  v1InsideSVTEXT: {
+    fontSize: 24,
+    fontWeight: '700',
+    paddingHorizontal: 20,
+  },
+
+  // FRIENDS SCROLLVIEW
+  scrollContainer: {
+    marginTop: 120,
+    marginBottom: -460,
+  },
+  scrollHeight: {
+    height: 100,
+  },
+  proportionsOfScroll: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 7,
+  },
+  scrollTxt: {
+    fontWeight: 'bold',
+  },
+  proportionsOfScrollPRT2: {
+    flex: 3,
+  },
+  scrollPadding: {
+    alignItems: 'center',
+    paddingStart: 5,
+    paddingEnd: 5,
+  },
+  TNDetails: {
+    marginHorizontal: 5,
+    borderColor: '#60F718',
+    borderWidth: 2,
+  },
 });
 
 export default styles;
