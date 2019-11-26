@@ -91,18 +91,27 @@ const styles = StyleSheet.create({
   // FRIENDS SCROLLVIEW
   friendsSVContainer: {
     height: 130,
-    marginTop: 20,
+    marginTop: 100,
+    backgroundColor: '#F0F0F0',
   },
   friendsSV: {
     height: 130,
     width: 130,
   },
+  friendImgThumbnailContainer: {
+    flex: 2,
+    height: 70,
+    width: 70,
+    borderRadius: 70 / 2,
+    borderColor: 'black',
+    borderWidth: 3,
+  },
   friendImgThumbnail: {
     flex: 1,
-    height: null,
-    width: null,
-    borderRadius: 50,
-    resizeMode: 'cover',
+    height: 70,
+    width: 70,
+    borderRadius: 70 / 2,
+    // resizeMode: 'cover',
   },
 });
 

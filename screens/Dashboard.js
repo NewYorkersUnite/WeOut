@@ -1,7 +1,13 @@
 import React, {Component} from 'react';
-import {ScrollView, Image, Text, View, ImageBackground} from 'react-native';
+import {
+  ScrollView,
+  Text,
+  View,
+  ImageBackground,
+  SafeAreaView,
+} from 'react-native';
 import styles from '../public/styles';
-import {Button} from 'native-base';
+import {Button, Thumbnail, Container} from 'native-base';
 
 const dummyFriends = [
   'https://i.pinimg.com/originals/34/cf/e4/34cfe4ff152f7cde337006dbaf9a5cbf.jpg',
@@ -22,62 +28,125 @@ export default class Dashboard extends Component {
       <ImageBackground
         style={styles.title}
         source={require('../public/Background.png')}>
-        <View style={styles.mainContainer}>
-          <ScrollView horizontal={true} scrollEventThrottle={16}>
-            <View style={styles.v1InsideSV}>
-              <Text style={styles.v1InsideSVTEXT}>
-                TEST IN THE dashboard BABBBAYYYYYYYYYY
-              </Text>
+        <Container style={{marginTop: 120}}>
+          <View style={{height: 100}}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                paddingHorizontal: 7,
+              }}>
+              <Text style={{fontWeight: 'bold'}}>All Friends</Text>
             </View>
+            <View style={{flex: 3}}>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{
+                  alignItems: 'center',
+                  paddingStart: 5,
+                  paddingEnd: 5,
+                }}>
+                <Thumbnail
+                  style={{
+                    marginHorizontal: 5,
+                    borderColor: '#60F718',
+                    borderWidth: 2,
+                  }}
+                  source={{uri: dummyFriends[0]}}
+                />
+                <Thumbnail
+                  style={{
+                    marginHorizontal: 5,
+                    borderColor: '#60F718',
+                    borderWidth: 2,
+                  }}
+                  source={{uri: dummyFriends[1]}}
+                />
+                <Thumbnail
+                  style={{
+                    marginHorizontal: 5,
+                    borderColor: '#60F718',
+                    borderWidth: 2,
+                  }}
+                  source={{uri: dummyFriends[2]}}
+                />
+                <Thumbnail
+                  style={{
+                    marginHorizontal: 5,
+                    borderColor: '#60F718',
+                    borderWidth: 2,
+                  }}
+                  source={{uri: dummyFriends[3]}}
+                />
 
-            <View style={styles.friendsSVContainer}>
-              <ScrollView>
-                <View style={styles.friendsSV}>
-                  <View style={{flex: 2}}>
-                    <Image
-                      source={{uri: dummyFriends[0]}}
-                      style={styles.friendImgThumbnail}
-                    />
-                  </View>
-                  <View style={{flex: 1}}>
-                    <Text>FIRST ONE</Text>
-                  </View>
-                </View>
+                <Thumbnail
+                  style={{
+                    marginHorizontal: 5,
+                    borderColor: '#60F718',
+                    borderWidth: 2,
+                  }}
+                  source={{uri: dummyFriends[4]}}
+                />
+                <Thumbnail
+                  style={{
+                    marginHorizontal: 5,
+                    borderColor: '#60F718',
+                    borderWidth: 2,
+                  }}
+                  source={{uri: dummyFriends[5]}}
+                />
+                <Thumbnail
+                  style={{
+                    marginHorizontal: 5,
+                    borderColor: '#60F718',
+                    borderWidth: 2,
+                  }}
+                  source={{uri: dummyFriends[4]}}
+                />
+                <Thumbnail
+                  style={{
+                    marginHorizontal: 5,
+                    borderColor: '#60F718',
+                    borderWidth: 2,
+                  }}
+                  source={{uri: dummyFriends[5]}}
+                />
               </ScrollView>
             </View>
-          </ScrollView>
+          </View>
+        </Container>
 
-          <Text style={styles.center}>DASHBOARD!!</Text>
-          <View style={styles.navContainer}>
-            <View style={styles.navButtonContainer}>
-              <Button
-                style={styles.NavButton}
-                onPress={() => navigate('Dashboard')}>
-                <Text style={styles.NavBtnText}> Dash</Text>
-              </Button>
-            </View>
+        <Text style={styles.center}>DASHBOARD!!</Text>
+        <View style={styles.navContainer}>
+          <View style={styles.navButtonContainer}>
+            <Button
+              style={styles.NavButton}
+              onPress={() => navigate('Dashboard')}>
+              <Text style={styles.NavBtnText}> Dash</Text>
+            </Button>
+          </View>
 
-            <View style={styles.navButtonContainer}>
-              <Button
-                style={styles.NavButton}
-                onPress={() => navigate('Search')}>
-                <Text style={styles.NavBtnText}> Search</Text>
-              </Button>
-            </View>
+          <View style={styles.navButtonContainer}>
+            <Button style={styles.NavButton} onPress={() => navigate('Search')}>
+              <Text style={styles.NavBtnText}> Search</Text>
+            </Button>
+          </View>
 
-            <View style={styles.navButtonContainer}>
-              <Button style={styles.NavButton} onPress={() => navigate('Poll')}>
-                <Text style={styles.NavBtnText}> Poll</Text>
-              </Button>
-            </View>
+          <View style={styles.navButtonContainer}>
+            <Button style={styles.NavButton} onPress={() => navigate('Poll')}>
+              <Text style={styles.NavBtnText}> Poll</Text>
+            </Button>
+          </View>
 
-            <View style={styles.navButtonContainer}>
-              <Button
-                style={styles.NavButton}
-                onPress={() => navigate('Profile')}>
-                <Text style={styles.NavBtnText}> Profile</Text>
-              </Button>
-            </View>
+          <View style={styles.navButtonContainer}>
+            <Button
+              style={styles.NavButton}
+              onPress={() => navigate('Profile')}>
+              <Text style={styles.NavBtnText}> Profile</Text>
+            </Button>
           </View>
         </View>
       </ImageBackground>
