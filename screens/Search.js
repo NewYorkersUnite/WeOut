@@ -2,34 +2,30 @@ import React, {Component} from 'react';
 import {ScrollView, Image, Text, View, FlatList} from 'react-native';
 import styles from '../public/styles';
 import {Header, Item, Input, Button} from 'native-base';
-
-const listItems = [
-  'Writing',
-  'Larning',
-  'Descipling',
-  'Productivity',
-  'Personal',
-  'Meditate',
-  'Mindfulness',
-  'Buddha',
-  'Dhamma',
-  'Health',
-  'Fitness',
-  'Music',
-];
-let searchResult = [];
+const {db} = require('../functions/util/config');
 
 export default class Dashboard extends Component {
   constructor() {
     super();
     this.state = {
       value: '',
+      users: [],
+      searchResult: [],
     };
   }
 
   searchFriends = text => {
     this.setState({text});
   };
+
+  async componentDidMount() {
+    const users = [];
+    const userData = await db.collection('users').get();
+    userData.forEach(element => {
+      users.push(element.data().username);
+    });
+    this.setState({users});
+  }
 
   render() {
     const {navigate} = this.props.navigation;
@@ -42,14 +38,17 @@ export default class Dashboard extends Component {
               placeholder="Search For Friends"
               onChangeText={value => {
                 this.setState({value});
-                searchResult = listItems.filter(el => el.includes(value));
+                const searchResult = this.state.users.filter(el =>
+                  el.includes(value.toLowerCase()),
+                );
+                this.setState({searchResult});
               }}
             />
           </Item>
         </Header>
 
         <FlatList
-          data={searchResult}
+          data={this.state.searchResult}
           renderItem={({item}) => (
             <Text style={{padding: 20, fontSize: 20}}>{item}</Text>
           )}
