@@ -78,9 +78,24 @@ const styles = StyleSheet.create({
   },
 
   //SEARCH BAR
+  resultElement: {
+    flexDirection: 'row',
+    alignSelf: 'stretch',
+  },
   searchBar: {
     flex: 1,
+  },
+  listFriends: {
+    padding: 20,
+    fontSize: 20,
+    backgroundColor: 'red',
+  },
+  addFriendBtn: {
+    width: 50,
+    justifyContent: 'flex-end',
   },
 });
 
 export default styles;
+
+//bottomnav@email.com
