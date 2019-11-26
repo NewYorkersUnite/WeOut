@@ -76,6 +76,34 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
   },
+  // HORIZONTAL SCROLL - DASHBOARD
+  v1InsideSV: {
+    flex: 1,
+    // backgroundColor: 'blue',
+    paddingTop: 150,
+  },
+  v1InsideSVTEXT: {
+    fontSize: 24,
+    fontWeight: '700',
+    paddingHorizontal: 20,
+  },
+
+  // FRIENDS SCROLLVIEW
+  friendsSVContainer: {
+    height: 130,
+    marginTop: 20,
+  },
+  friendsSV: {
+    height: 130,
+    width: 130,
+  },
+  friendImgThumbnail: {
+    flex: 1,
+    height: null,
+    width: null,
+    borderRadius: 50,
+    resizeMode: 'cover',
+  },
 });
 
 export default styles;
