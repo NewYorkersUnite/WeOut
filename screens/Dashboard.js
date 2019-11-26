@@ -22,6 +22,27 @@ export default class Dashboard extends Component {
   constructor() {
     super();
   }
+  today() {
+    return (
+      <View>
+        <Text style={{fontWeight: 'bold'}}>TODAY YOOOOO!</Text>
+      </View>
+    );
+  }
+  upcoming() {
+    return (
+      <View>
+        <Text style={{fontWeight: 'bold'}}>COMING UP!</Text>
+      </View>
+    );
+  }
+  past() {
+    return (
+      <View>
+        <Text style={{fontWeight: 'bold'}}>Past!</Text>
+      </View>
+    );
+  }
   render() {
     const {navigate} = this.props.navigation;
     return (
@@ -52,7 +73,40 @@ export default class Dashboard extends Component {
           </View>
         </Container>
 
-        <Text style={styles.center}>DASHBOARD!!</Text>
+        {/* CALANDER BUTTONS */}
+        <View style={styles.mainContainerCALANDAR}>
+          <View style={styles.navButtonContainer}>
+            <Button
+              style={styles.NavButton}
+              onPress={() => {
+                this.today;
+              }}>
+              <Text style={styles.NavBtnText}> Today</Text>
+            </Button>
+          </View>
+
+          <View style={styles.navButtonContainer}>
+            <Button
+              style={styles.NavButton}
+              onPress={() => {
+                this.upcoming;
+              }}>
+              <Text style={styles.NavBtnText}> Upcoming</Text>
+            </Button>
+          </View>
+
+          <View style={styles.navButtonContainer}>
+            <Button
+              style={styles.NavButton}
+              onPress={() => {
+                this.past;
+              }}>
+              <Text style={styles.NavBtnText}> Past Events</Text>
+            </Button>
+          </View>
+        </View>
+
+        {/* BOTTOM 'NAVBAR' */}
         <View style={styles.navContainer}>
           <View style={styles.navButtonContainer}>
             <Button
