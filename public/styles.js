@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
   },
   navContainer: {
     flexDirection: 'row',
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   // FRIENDS SCROLLVIEW
   scrollContainer: {
     marginTop: 120,
-    marginBottom: -460,
+    // marginBottom: -460,
   },
   scrollHeight: {
     height: 100,
@@ -118,6 +118,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     borderColor: '#60F718',
     borderWidth: 2,
+  },
+  // DASHBOARD CALANDAR NAV
+  mainContainerCALANDAR: {
+    backgroundColor: 'green',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
 });
 
