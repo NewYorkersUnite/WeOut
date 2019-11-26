@@ -14,6 +14,9 @@ import Splash from './screens/Splash';
 import SignUp from './screens/SignUp';
 import Login from './screens/Login';
 import Dashboard from './screens/Dashboard';
+import Profile from './screens/Profile';
+import Search from './screens/Search';
+import Poll from './screens/Poll';
 import styles from './public/styles';
 import * as firebase from 'firebase';
 
@@ -69,6 +72,9 @@ const MainNavigator = createSwitchNavigator({
   SignUp: {screen: SignUp},
   Login: {screen: Login},
   Dashboard: {screen: Dashboard},
+  Profile: {screen: Profile},
+  Search: {screen: Search},
+  Poll: {screen: Poll},
 });
 
 const AppNavigator = createAppContainer(MainNavigator);
