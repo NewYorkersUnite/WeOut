@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
   },
+
   // HORIZONTAL SCROLL - DASHBOARD
   v1InsideSV: {
     flex: 1,
@@ -124,7 +125,26 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     flexDirection: 'row',
     justifyContent: 'flex-start',
+
+  //SEARCH BAR
+  resultElement: {
+    flexDirection: 'row',
+    alignSelf: 'stretch',
+  },
+  searchBar: {
+    flex: 1,
+  },
+  listFriends: {
+    padding: 20,
+    fontSize: 20,
+    backgroundColor: 'red',
+  },
+  addFriendBtn: {
+    width: 50,
+    justifyContent: 'flex-end',
   },
 });
 
 export default styles;
+
+//bottomnav@email.com
