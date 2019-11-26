@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {ScrollView, Image, Text, View, FlatList} from 'react-native';
+import {ScrollView, Image, Text, View, FlatList, Alert} from 'react-native';
 import styles from '../public/styles';
-import {Header, Item, Input, Button} from 'native-base';
+import {Header, Thumbnail, Item, Input, Button} from 'native-base';
 const {db} = require('../functions/util/config');
 
 export default class Dashboard extends Component {
@@ -14,15 +14,15 @@ export default class Dashboard extends Component {
     };
   }
 
-  searchFriends = text => {
-    this.setState({text});
-  };
+  addFriendClick() {
+    console.log('ADDED');
+  }
 
   async componentDidMount() {
     const users = [];
     const userData = await db.collection('users').get();
     userData.forEach(element => {
-      users.push(element.data().username);
+      users.push(element.data());
     });
     this.setState({users});
   }
@@ -39,7 +39,7 @@ export default class Dashboard extends Component {
               onChangeText={value => {
                 this.setState({value});
                 const searchResult = this.state.users.filter(el =>
-                  el.includes(value.toLowerCase()),
+                  el.username.includes(value.toLowerCase()),
                 );
                 this.setState({searchResult});
               }}
@@ -50,7 +50,18 @@ export default class Dashboard extends Component {
         <FlatList
           data={this.state.searchResult}
           renderItem={({item}) => (
-            <Text style={{padding: 20, fontSize: 20}}>{item}</Text>
+            <View style={styles.resultElement}>
+              <Thumbnail
+                style={styles.TNDetails}
+                source={{uri: item.imageUrl}}
+              />
+              <Text style={styles.listFriends}>{item.username}</Text>
+              <Button
+                style={styles.addFriendBtn}
+                onPress={this.addFriendClick}
+                title="Add"
+              />
+            </View>
           )}
           keyExtractor={(item, index) => index.toString()}
         />
