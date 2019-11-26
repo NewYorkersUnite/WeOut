@@ -8,6 +8,8 @@
 
 import React from 'react';
 import {SafeAreaView, ScrollView, View, Text, StatusBar} from 'react-native';
+import {Provider} from 'react-redux';
+import store from './store';
 
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import Splash from './screens/Splash';
@@ -62,7 +64,11 @@ export default class App extends React.Component {
   //     firebase.database().ref("users/001/email").remove()
   // }
   render() {
-    return <AppNavigator />;
+    return (
+      <Provider>
+        <AppNavigator />
+      </Provider>
+    );
   }
 }
 

@@ -4,6 +4,9 @@ import styles from '../public/styles';
 const {firebaseApp, db, config} = require('../functions/util/config');
 
 import {Input, Item, Button, Label} from 'native-base';
+import store from '../store';
+import {connect} from 'react-redux';
+import {login} from '../store/users';
 
 class Login extends Component {
   constructor() {
@@ -85,7 +88,7 @@ class Login extends Component {
             full
             success
             onPress={() =>
-              this.loginUser(this.state.email, this.state.password)
+              this.props.login(this.state.email, this.state.password)
             }>
             <Text style={styles.BtnText}>Login</Text>
           </Button>
@@ -94,4 +97,16 @@ class Login extends Component {
     );
   }
 }
-export default Login;
+
+const mapProps = state => {
+  return {
+    currentUser: state.currentUser,
+  };
+};
+
+const mapDispatch = dispatch => {
+  return {
+    login: (email, password) => dispatch(login(email, password)),
+  };
+};
+export default connect(mapProps, mapDispatch)(Login);
