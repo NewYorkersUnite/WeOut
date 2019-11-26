@@ -50,6 +50,32 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     marginLeft: 110,
   },
+
+  //NAV BAR
+  mainContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+  },
+  navContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
+    justifyContent: 'space-around',
+    backgroundColor: '#F0F0F0',
+  },
+  navButtonContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  NavButton: {
+    backgroundColor: '#F0F0F0',
+  },
+  NavBtnText: {
+    fontSize: 15,
+    color: 'black',
+    fontWeight: 'bold',
+  },
 });
 
 export default styles;

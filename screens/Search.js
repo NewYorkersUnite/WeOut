@@ -3,12 +3,12 @@ import {ScrollView, Image, Text} from 'react-native';
 import styles from '../public/styles';
 import {Button} from 'native-base';
 
-export default class Profile extends Component {
+export default class Search extends Component {
   render() {
     const {navigate} = this.props.navigation;
     return (
       <ScrollView>
-        <Text style={styles.center}>PROFILE!!</Text>
+        <Text style={styles.center}>SEARCH!!</Text>
         <Button
           style={styles.LogSignBtn}
           full
