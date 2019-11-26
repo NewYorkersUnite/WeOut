@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     flexDirection: 'row',
     justifyContent: 'flex-start',
+  },
 
   //SEARCH BAR
   resultElement: {
