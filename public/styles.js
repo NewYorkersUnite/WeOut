@@ -76,11 +76,6 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
   },
-
-  //SEARCH BAR
-  searchBar: {
-    flex: 1,
-  },
 });
 
 export default styles;
