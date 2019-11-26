@@ -97,7 +97,7 @@ export default class Profile extends Component {
                       marginLeft: 5,
                       justifyContent: 'center',
                     }}>
-                    <Text>?</Text>
+                    <Text>Log Out</Text>
                   </Button>
                 </View>
               </View>
