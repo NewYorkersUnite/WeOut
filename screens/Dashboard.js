@@ -19,30 +19,59 @@ const dummyFriends = [
 ];
 
 export default class Dashboard extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      activeIndex: 0,
+    };
   }
-  today() {
+
+  segmentClicked(index) {
+    this.setState({
+      activeIndex: index,
+    });
+  }
+  checkActive = index => {
+    if (this.state.activeIndex !== index) {
+      return {color: 'grey'};
+    } else {
+      return {};
+    }
+  };
+
+  renderTodaySection() {
     return (
       <View>
         <Text style={{fontWeight: 'bold'}}>TODAY YOOOOO!</Text>
       </View>
     );
   }
-  upcoming() {
+  renderUpcomingSection() {
     return (
       <View>
         <Text style={{fontWeight: 'bold'}}>COMING UP!</Text>
       </View>
     );
   }
-  past() {
+  renderPastSection() {
     return (
       <View>
         <Text style={{fontWeight: 'bold'}}>Past!</Text>
       </View>
     );
   }
+  // style={{flexDirection: 'row', flexWrap: 'wrap'}}
+  renderSection() {
+    if (this.state.activeIndex === 0) {
+      return <View>{this.renderTodaySection()}</View>;
+    } else if (this.state.activeIndex === 1) {
+      return <View>{this.renderUpcomingSection()}</View>;
+    } else if (this.state.activeIndex === 2) {
+      return <View>{this.renderPastSection()}</View>;
+    }
+  }
+
   render() {
     const {navigate} = this.props.navigation;
     return (
@@ -55,7 +84,7 @@ export default class Dashboard extends Component {
 
         <View style={styles.mainContainer}>
           <View style={styles.top}>
-            <Container style={styles.scrollContainer}>
+            <View style={styles.scrollContainer}>
               <View style={styles.scrollHeight}>
                 <View style={styles.proportionsOfScroll}>
                   <Text style={styles.scrollTxt}>All Friends</Text>
@@ -77,42 +106,36 @@ export default class Dashboard extends Component {
                   </ScrollView>
                 </View>
               </View>
-            </Container>
+            </View>
 
             {/* CALANDER BUTTONS */}
             <View style={styles.mainContainerCALANDAR}>
-              <View style={styles.navButtonContainer}>
+              <View style={styles.tabBackgroundColor}>
                 <Button
-                  style={styles.NavButton}
-                  onPress={() => {
-                    this.today;
-                  }}>
+                  onPress={() => this.segmentClicked(0)}
+                  transparent
+                  active={this.state.activeIndex === 0}>
                   <Text style={styles.NavBtnText}> Today</Text>
                 </Button>
-              </View>
 
-              <View style={styles.navButtonContainer}>
                 <Button
-                  style={styles.NavButton}
-                  onPress={() => {
-                    this.upcoming;
-                  }}>
+                  onPress={() => this.segmentClicked(1)}
+                  transparent
+                  active={this.state.activeIndex === 1}>
                   <Text style={styles.NavBtnText}> Upcoming</Text>
                 </Button>
-              </View>
 
-              <View style={styles.navButtonContainer}>
                 <Button
-                  style={styles.NavButton}
-                  onPress={() => {
-                    this.past;
-                  }}>
+                  onPress={() => this.segmentClicked(2)}
+                  transparent
+                  active={this.state.activeIndex === 2}>
                   <Text style={styles.NavBtnText}> Past Events</Text>
                 </Button>
               </View>
+
+              {this.renderSection()}
             </View>
           </View>
-          <View style={styles.feeds} />
         </View>
       </ImageBackground>
     );
