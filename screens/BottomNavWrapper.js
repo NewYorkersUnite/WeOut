@@ -13,42 +13,44 @@ const bottomTabNavigator = createMaterialBottomTabNavigator(
     Dashboard: {
       screen: Dashboard,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
-          <Icon name="home" size={23} color={tintColor} />
-        ),
+        tabBarLabel: 'Dash',
+
+        // tabBarIcon: ({tintColor}) => (
+        //   <Icon name="home" size={23} color={tintColor} />
+        // ),
       },
     },
 
     Search: {
       screen: Search,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
-          <Icon name="search" size={23} color={tintColor} />
-        ),
+        // tabBarIcon: ({tintColor}) => (
+        //   <Icon name="search" size={23} color={tintColor} />
+        // ),
       },
     },
     Poll: {
       screen: Poll,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
-          <Icon name="list" size={23} color={tintColor} />
-        ),
+        // tabBarIcon: ({tintColor}) => (
+        //   <Icon name="list" size={23} color={tintColor} />
+        // ),
       },
     },
     Profile: {
       screen: Profile,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
-          <Icon name="user" size={23} color={tintColor} />
-        ),
+        // tabBarIcon: ({tintColor}) => (
+        //   <Icon name="user" size={23} color={tintColor} />
+        // ),
       },
     },
   },
   {
-    activeColor: '#CFDEE7',
-    inactiveColor: '#4472CA',
+    activeColor: '#000000',
+    inactiveColor: '#404040',
     barStyle: {
-      backgroundColor: '#0A369D',
+      backgroundColor: '#F0F0F0',
     },
     initialRouteName: 'Dashboard',
     backBehavior: 'none',

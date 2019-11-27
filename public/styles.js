@@ -16,9 +16,6 @@ const styles = StyleSheet.create({
     flex: 2,
   },
 
-
-
-
   center: {
     flex: 1,
     justifyContent: 'center',
@@ -131,6 +128,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingStart: 5,
     paddingEnd: 5,
+    paddingBottom: 5,
   },
   TNDetails: {
     marginHorizontal: 5,
@@ -161,7 +159,7 @@ const styles = StyleSheet.create({
   addFriendBtn: {
     flex: 1,
     justifyContent: 'flex-end',
-    alignSelf: "stretch",
+    alignSelf: 'stretch',
   },
 });
 
