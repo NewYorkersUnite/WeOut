@@ -13,10 +13,8 @@ import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import Splash from './screens/Splash';
 import SignUp from './screens/SignUp';
 import Login from './screens/Login';
-import Dashboard from './screens/Dashboard';
-import Profile from './screens/Profile';
-import Search from './screens/Search';
-import Poll from './screens/Poll';
+
+import BottomNavWrapper from './screens/BottomNavWrapper';
 import styles from './public/styles';
 import * as firebase from 'firebase';
 
@@ -67,14 +65,16 @@ export default class App extends React.Component {
   }
 }
 
-const MainNavigator = createSwitchNavigator({
-  Splash: {screen: Splash},
-  SignUp: {screen: SignUp},
-  Login: {screen: Login},
-  Dashboard: {screen: Dashboard},
-  Profile: {screen: Profile},
-  Search: {screen: Search},
-  Poll: {screen: Poll},
-});
+const MainNavigator = createSwitchNavigator(
+  {
+    Splash: {screen: Splash},
+    SignUp: {screen: SignUp},
+    Login: {screen: Login},
+    BottomNavWrapper: {screen: BottomNavWrapper},
+  },
+  {
+    backBehavior: 'none',
+  },
+);
 
 const AppNavigator = createAppContainer(MainNavigator);
