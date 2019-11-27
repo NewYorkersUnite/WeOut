@@ -49,91 +49,103 @@ export default class Dashboard extends Component {
       <ImageBackground
         style={styles.title}
         source={require('../public/Background.png')}>
-        <Container style={styles.scrollContainer}>
-          <View style={styles.scrollHeight}>
-            <View style={styles.proportionsOfScroll}>
-              <Text style={styles.scrollTxt}>All Friends</Text>
-            </View>
-            <View style={styles.proportionsOfScrollPRT2}>
-              <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.scrollPadding}>
-                {dummyFriends.map((friend, indx) => {
-                  return (
-                    <Thumbnail
-                      key={indx}
-                      style={styles.TNDetails}
-                      source={{uri: friend}}
-                    />
-                  );
-                })}
-              </ScrollView>
-            </View>
-          </View>
-        </Container>
-
-        {/* CALANDER BUTTONS */}
-        <View style={styles.mainContainerCALANDAR}>
-          <View style={styles.navButtonContainer}>
-            <Button
-              style={styles.NavButton}
-              onPress={() => {
-                this.today;
-              }}>
-              <Text style={styles.NavBtnText}> Today</Text>
-            </Button>
-          </View>
-
-          <View style={styles.navButtonContainer}>
-            <Button
-              style={styles.NavButton}
-              onPress={() => {
-                this.upcoming;
-              }}>
-              <Text style={styles.NavBtnText}> Upcoming</Text>
-            </Button>
-          </View>
-
-          <View style={styles.navButtonContainer}>
-            <Button
-              style={styles.NavButton}
-              onPress={() => {
-                this.past;
-              }}>
-              <Text style={styles.NavBtnText}> Past Events</Text>
-            </Button>
-          </View>
+        <View style={styles.logo}>
+          {/* This is is just an empty space to allow the logo to show */}
         </View>
 
-        {/* BOTTOM 'NAVBAR' */}
-        <View style={styles.navContainer}>
-          <View style={styles.navButtonContainer}>
-            <Button
-              style={styles.NavButton}
-              onPress={() => navigate('Dashboard')}>
-              <Text style={styles.NavBtnText}> Dash</Text>
-            </Button>
+        <View style={styles.mainContainer}>
+          <View style={styles.top}>
+            <Container style={styles.scrollContainer}>
+              <View style={styles.scrollHeight}>
+                <View style={styles.proportionsOfScroll}>
+                  <Text style={styles.scrollTxt}>All Friends</Text>
+                </View>
+                <View style={styles.proportionsOfScrollPRT2}>
+                  <ScrollView
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.scrollPadding}>
+                    {dummyFriends.map((friend, indx) => {
+                      return (
+                        <Thumbnail
+                          key={indx}
+                          style={styles.TNDetails}
+                          source={{uri: friend}}
+                        />
+                      );
+                    })}
+                  </ScrollView>
+                </View>
+              </View>
+            </Container>
+
+            {/* CALANDER BUTTONS */}
+            <View style={styles.mainContainerCALANDAR}>
+              <View style={styles.navButtonContainer}>
+                <Button
+                  style={styles.NavButton}
+                  onPress={() => {
+                    this.today;
+                  }}>
+                  <Text style={styles.NavBtnText}> Today</Text>
+                </Button>
+              </View>
+
+              <View style={styles.navButtonContainer}>
+                <Button
+                  style={styles.NavButton}
+                  onPress={() => {
+                    this.upcoming;
+                  }}>
+                  <Text style={styles.NavBtnText}> Upcoming</Text>
+                </Button>
+              </View>
+
+              <View style={styles.navButtonContainer}>
+                <Button
+                  style={styles.NavButton}
+                  onPress={() => {
+                    this.past;
+                  }}>
+                  <Text style={styles.NavBtnText}> Past Events</Text>
+                </Button>
+              </View>
+            </View>
+          </View>
+          <View style={styles.feeds}>
+
           </View>
 
-          <View style={styles.navButtonContainer}>
-            <Button style={styles.NavButton} onPress={() => navigate('Search')}>
-              <Text style={styles.NavBtnText}> Search</Text>
-            </Button>
-          </View>
+          <View style={styles.bottom}>
+            <View style={styles.navContainer}>
+              <View style={styles.navButtonContainer}>
+                <Button
+                  style={styles.NavButton}
+                  onPress={() => navigate('Dashboard')}>
+                  <Text style={styles.NavBtnText}> Dash</Text>
+                </Button>
+              </View>
 
-          <View style={styles.navButtonContainer}>
-            <Button style={styles.NavButton} onPress={() => navigate('Poll')}>
-              <Text style={styles.NavBtnText}> Poll</Text>
-            </Button>
-          </View>
+              <View style={styles.navButtonContainer}>
+                <Button style={styles.NavButton} onPress={() => navigate('Search')}>
+                  <Text style={styles.NavBtnText}> Search</Text>
+                </Button>
+              </View>
 
-          <View style={styles.navButtonContainer}>
-            <Button
-              style={styles.NavButton}
-              onPress={() => navigate('Profile')}>
-              <Text style={styles.NavBtnText}> Profile</Text>
-            </Button>
+              <View style={styles.navButtonContainer}>
+                <Button style={styles.NavButton} onPress={() => navigate('Poll')}>
+                  <Text style={styles.NavBtnText}> Poll</Text>
+                </Button>
+              </View>
+
+              <View style={styles.navButtonContainer}>
+                <Button
+                  style={styles.NavButton}
+                  onPress={() => navigate('Profile')}>
+                  <Text style={styles.NavBtnText}> Profile</Text>
+                </Button>
+              </View>
+            </View>
           </View>
         </View>
       </ImageBackground>

@@ -56,11 +56,9 @@ export default class Dashboard extends Component {
                 source={{uri: item.imageUrl}}
               />
               <Text style={styles.listFriends}>{item.username}</Text>
-              <Button
-                style={styles.addFriendBtn}
-                onPress={this.addFriendClick}
-                title="Add"
-              />
+              <Button style={styles.addFriendBtn} onPress={this.addFriendClick}>
+                ><Text>Add</Text>
+              </Button>
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}

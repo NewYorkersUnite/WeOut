@@ -2,6 +2,23 @@ import {StyleSheet} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const styles = StyleSheet.create({
+  // Main Page
+  logo: {
+    height: 120,
+  },
+  top: {
+    flex: 5,
+  },
+  feeds: {
+    flex: 20,
+  },
+  bottom: {
+    flex: 2,
+  },
+
+
+
+
   center: {
     flex: 1,
     justifyContent: 'center',
@@ -59,7 +76,7 @@ const styles = StyleSheet.create({
   },
   navContainer: {
     flexDirection: 'row',
-    marginBottom: 20,
+    marginBottom: 10,
     justifyContent: 'space-around',
     backgroundColor: '#F0F0F0',
   },
@@ -91,7 +108,7 @@ const styles = StyleSheet.create({
 
   // FRIENDS SCROLLVIEW
   scrollContainer: {
-    marginTop: 120,
+    // marginTop: 120,
     // marginBottom: -460,
   },
   scrollHeight: {
@@ -122,7 +139,7 @@ const styles = StyleSheet.create({
   },
   // DASHBOARD CALANDAR NAV
   mainContainerCALANDAR: {
-    backgroundColor: 'green',
+    backgroundColor: '#F0F0F0',
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
@@ -136,13 +153,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   listFriends: {
-    padding: 20,
+    flex: 7,
+    // padding: 20,
     fontSize: 20,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
   },
   addFriendBtn: {
-    width: 50,
+    flex: 1,
     justifyContent: 'flex-end',
+    alignSelf: "stretch",
   },
 });
 
