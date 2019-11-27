@@ -46,7 +46,9 @@ class SignUp extends Component {
             username: newUser.username,
             email: newUser.email,
             createdAt: new Date().toISOString(),
-            imageUrl: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noImg}?alt=media`,
+            imageUrl: `https://firebasestorage.googleapis.com/v0/b/${
+              config.storageBucket
+            }/o/${noImg}?alt=media`,
             userId: userId,
           };
           return db
@@ -60,7 +62,7 @@ class SignUp extends Component {
           console.error(error);
           console.log('Email is already in use or invalid.');
         });
-      this.props.navigation.navigate('Dashboard');
+      this.props.navigation.navigate('BottomNavWrapper');
     }
   }
 

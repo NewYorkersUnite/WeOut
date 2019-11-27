@@ -27,7 +27,7 @@ class Login extends Component {
           console.log('Wrong credentials, please try again', error.toString());
         });
     }
-    this.props.navigation.navigate('Dashboard');
+    this.props.navigation.navigate('BottomNavWrapper');
   }
 
   isEmpty = string => {
