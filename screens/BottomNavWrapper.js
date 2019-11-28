@@ -60,18 +60,6 @@ const bottomTabNavigator = createMaterialBottomTabNavigator(
 const AppContainer = createAppContainer(bottomTabNavigator);
 
 export default class BottomNavWrapper extends Component {
-  //   constructor(props) {
-  //     super(props);
-  //     BackHandler.addEventListener(
-  //       'hardwareBackPress',
-  //       this.onBackButtonPressAndroid,
-  //     );
-  //   }
-
-  //   onBackButtonPressAndroid = () => {
-  //     return true;
-  //   };
-
   render() {
     return <AppContainer />;
   }
