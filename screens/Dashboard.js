@@ -43,7 +43,7 @@ export default class Dashboard extends Component {
   renderTodaySection() {
     return (
       <View>
-        <Text style={{fontWeight: 'bold'}}>TODAY YOOOOO!</Text>
+        <Text style={styles.paragraph}>TODAY YOOOOO!</Text>
       </View>
     );
   }
@@ -132,8 +132,12 @@ export default class Dashboard extends Component {
                   <Text style={styles.NavBtnText}> Past Events</Text>
                 </Button>
               </View>
-
-              {this.renderSection()}
+              <ImageBackground
+                style={styles.opacityImg}
+                imageStyle={{opacity: 0.3}}
+                source={require('../public/Taxis.jpg')}>
+                {this.renderSection()}
+              </ImageBackground>
             </View>
           </View>
         </View>

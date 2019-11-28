@@ -165,6 +165,24 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignSelf: 'stretch',
   },
+  opacityImg: {
+    width: '100%',
+    height: '100%',
+    paddingBottom: 90,
+  },
+  paragraph: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    paddingTop: 7,
+  },
+
+  // PROFILE
+  ProfileContainer: {
+    flex: 1,
+    // backgroundColor: '#F0F0F0',
+    // backgroundColor: 'pink', // for testing purposes
+    paddingTop: 120, // use this for poll's container!
+  },
 });
 
 export default styles;
