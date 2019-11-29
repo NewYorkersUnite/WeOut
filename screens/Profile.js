@@ -120,6 +120,7 @@ export default class Profile extends Component {
                       justifyContent: 'center',
                     }}>
                     <Text style={{fontWeight: 'bold'}}>Log Out</Text>
+
                   </Button>
                 </View>
               </View>

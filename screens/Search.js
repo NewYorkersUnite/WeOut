@@ -4,7 +4,7 @@ import styles from '../public/styles';
 import {Header, Thumbnail, Item, Input, Button} from 'native-base';
 const {db} = require('../functions/util/config');
 
-export default class Dashboard extends Component {
+export default class Search extends Component {
   constructor() {
     super();
     this.state = {
@@ -57,7 +57,7 @@ export default class Dashboard extends Component {
               />
               <Text style={styles.listFriends}>{item.username}</Text>
               <Button style={styles.addFriendBtn} onPress={this.addFriendClick}>
-                ><Text>Add</Text>
+                <Text>Add</Text>
               </Button>
             </View>
           )}
