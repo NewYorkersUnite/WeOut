@@ -19,8 +19,9 @@ const dummyFriends = [
 ];
 
 export default class Dashboard extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {currentUser: this.props.navigation.getParam('currentUser')};
   }
   today() {
     return (
@@ -127,7 +128,7 @@ export default class Dashboard extends Component {
               </View>
 
               <View style={styles.navButtonContainer}>
-                <Button style={styles.NavButton} onPress={() => navigate('Search')}>
+                <Button style={styles.NavButton} onPress={() => navigate('Search',{currentUser:this.state.currentUser})}>
                   <Text style={styles.NavBtnText}> Search</Text>
                 </Button>
               </View>

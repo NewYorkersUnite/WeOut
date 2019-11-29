@@ -14,20 +14,22 @@ class Login extends Component {
     };
   }
 
-  loginUser(email, password) {
+  async loginUser(email, password) {
     if (this.validateLoginData(this.state)) {
       firebaseApp
         .auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
-        .then(function(user) {
-          console.log('USER THAT WAS LOGGED IN >>>', user);
-        })
         .catch(error => {
           console.error(error);
           console.log('Wrong credentials, please try again', error.toString());
         });
     }
-    this.props.navigation.navigate('Dashboard');
+    const usernameData = await db
+      .collection('users')
+      .where('email', '==', email)
+      .get();
+    const username = usernameData.docs[0].data().username;
+    this.props.navigation.navigate('Dashboard', {currentUser: username});
   }
 
   isEmpty = string => {
