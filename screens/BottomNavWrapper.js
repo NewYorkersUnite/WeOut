@@ -47,6 +47,7 @@ const bottomTabNavigator = createMaterialBottomTabNavigator(
     },
   },
   {
+    shifting: false,
     activeColor: '#000000',
     inactiveColor: '#404040',
     barStyle: {

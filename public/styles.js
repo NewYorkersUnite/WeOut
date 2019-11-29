@@ -183,6 +183,15 @@ const styles = StyleSheet.create({
     // backgroundColor: 'pink', // for testing purposes
     paddingTop: 120, // use this for poll's container!
   },
+
+  // POLL
+  activeTitle: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 20,
+    paddingTop: 110,
+  },
+  pollDetails: {flexDirection: 'column', width: 300, height: 50},
 });
 
 export default styles;
