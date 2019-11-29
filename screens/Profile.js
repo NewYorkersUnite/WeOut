@@ -24,7 +24,7 @@ const catergories = [
   {name: 'AllFriends', img: AllFriends},
   {name: 'College', img: College},
   {name: 'Single', img: Single},
-  {name: 'HighSchool', img: Lockers},
+  {name: 'High School', img: Lockers},
   {name: 'Office', img: Office},
   {name: 'Party', img: Party},
   {name: 'Parents', img: Parents},
@@ -120,7 +120,6 @@ export default class Profile extends Component {
                       justifyContent: 'center',
                     }}>
                     <Text style={{fontWeight: 'bold'}}>Log Out</Text>
-
                   </Button>
                 </View>
               </View>
@@ -151,6 +150,7 @@ export default class Profile extends Component {
                               fontWeight: 'bold',
                               color: 'white',
                               backgroundColor: '#DA2727',
+                              textAlign: 'center',
                             }}>
                             {category.name}
                           </Text>
