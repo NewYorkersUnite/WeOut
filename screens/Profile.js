@@ -6,6 +6,7 @@ import {
   ImageBackground,
   Image,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import styles from '../public/styles';
 import {Button, Content, Container} from 'native-base';
@@ -20,14 +21,14 @@ const Party = require('../public/Party.jpg');
 const Single = require('../public/Single.jpg');
 
 const catergories = [
-  AllFriends,
-  College,
-  Single,
-  Lockers,
-  Office,
-  Party,
-  Parents,
-  Foodie,
+  {name: 'AllFriends', img: AllFriends},
+  {name: 'College', img: College},
+  {name: 'Single', img: Single},
+  {name: 'HighSchool', img: Lockers},
+  {name: 'Office', img: Office},
+  {name: 'Party', img: Party},
+  {name: 'Parents', img: Parents},
+  {name: 'Foodie', img: Foodie},
 ];
 
 const {width, height} = Dimensions.get('window');
@@ -62,18 +63,18 @@ export default class Profile extends Component {
                   </View>
                   <View style={{alignItems: 'center'}}>
                     <Text>205</Text>
-                    <Text style={{fontSize: 10, color: 'grey'}}>Followers</Text>
+                    <Text style={{fontSize: 10, color: 'grey'}}>Friends</Text>
                   </View>
                   <View style={{alignItems: 'center'}}>
                     <Text>167</Text>
-                    <Text style={{fontSize: 10, color: 'grey'}}>Friends</Text>
+                    <Text style={{fontSize: 10, color: 'grey'}}>Polls</Text>
                   </View>
                 </View>
 
                 <View
                   style={{
                     flexDirection: 'row',
-                    paddingTop: 10,
+                    paddingTop: 15,
                   }}>
                   <Button
                     bordered
@@ -82,9 +83,9 @@ export default class Profile extends Component {
                       flex: 3,
                       marginLeft: 10,
                       justifyContent: 'center',
-                      height: 30,
+                      height: 40,
                     }}>
-                    <Text>Edit Profile</Text>
+                    <Text style={{fontWeight: 'bold'}}>Edit Profile</Text>
                   </Button>
 
                   <Button
@@ -92,35 +93,47 @@ export default class Profile extends Component {
                     dark
                     style={{
                       flex: 1,
-                      height: 30,
+                      height: 40,
                       marginRight: 10,
                       marginLeft: 5,
                       justifyContent: 'center',
                     }}>
-                    <Text>?</Text>
+                    <Text style={{fontWeight: 'bold'}}>Log Out</Text>
                   </Button>
                 </View>
               </View>
             </View>
-            <View
-              style={{flexDirection: 'row', flexWrap: 'wrap', paddingTop: 25}}>
-              {catergories.map((category, ind) => {
-                return (
-                  <View
-                    key={ind}
-                    style={[
-                      {width: width / 3},
-                      {height: width / 3},
-                      ind % 3 !== 0 ? {paddingLeft: 2} : {paddingLeft: 0},
-                    ]}>
-                    <Image
-                      style={{flex: 1, width: undefined, height: undefined}}
-                      source={category}
-                    />
-                  </View>
-                );
-              })}
-            </View>
+            <ScrollView>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  paddingTop: 25,
+                }}>
+                {catergories.map((category, ind) => {
+                  return (
+                    <TouchableOpacity>
+                      <View
+                        key={ind}
+                        style={[
+                          {width: width / 2},
+                          {height: width / 2},
+                          {marginBottom: 2},
+                          ind % 2 !== 0 ? {paddingLeft: 2} : {paddingLeft: 0},
+                        ]}>
+                        <ImageBackground
+                          style={{flex: 1, width: undefined, height: undefined}}
+                          source={category.img}>
+                          <Text style={{fontWeight: 'bold'}}>
+                            {category.name}
+                          </Text>
+                        </ImageBackground>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </ScrollView>
           </View>
         </View>
       </ImageBackground>
