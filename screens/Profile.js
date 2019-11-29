@@ -34,6 +34,21 @@ const catergories = [
 const {width, height} = Dimensions.get('window');
 
 export default class Profile extends Component {
+  constructor() {
+    super();
+    this.state = {
+      availablity: true,
+    };
+  }
+
+  availablity() {
+    if (this.state.availablity === true) {
+      this.setState({availablity: false});
+    } else {
+      this.setState({availablity: true});
+    }
+  }
+
   render() {
     const {navigate} = this.props.navigation;
     return (
@@ -46,7 +61,12 @@ export default class Profile extends Component {
               <View style={{flex: 1, alignItems: 'center'}}>
                 <Image
                   source={require('../public/Taxis.jpg')}
-                  style={{width: 100, height: 100, borderRadius: 50}}
+                  style={[
+                    {width: 100, height: 100, borderRadius: 50},
+                    this.state.availablity
+                      ? {borderColor: '#60F718', borderWidth: 4}
+                      : null,
+                  ]}
                 />
               </View>
               <View style={{flex: 3}}>
@@ -84,8 +104,9 @@ export default class Profile extends Component {
                       marginLeft: 10,
                       justifyContent: 'center',
                       height: 40,
-                    }}>
-                    <Text style={{fontWeight: 'bold'}}>Edit Profile</Text>
+                    }}
+                    onPress={() => this.availablity()}>
+                    <Text style={{fontWeight: 'bold'}}>Status</Text>
                   </Button>
 
                   <Button
@@ -124,7 +145,12 @@ export default class Profile extends Component {
                         <ImageBackground
                           style={{flex: 1, width: undefined, height: undefined}}
                           source={category.img}>
-                          <Text style={{fontWeight: 'bold'}}>
+                          <Text
+                            style={{
+                              fontWeight: 'bold',
+                              color: 'white',
+                              backgroundColor: '#DA2727',
+                            }}>
                             {category.name}
                           </Text>
                         </ImageBackground>
