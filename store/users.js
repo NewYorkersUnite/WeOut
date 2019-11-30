@@ -10,6 +10,7 @@ const LOGGED_IN = 'LOGGED_IN';
  */
 const defaultUser = {
   currentUser: {},
+  logged_in: false,
 };
 
 /**
@@ -23,7 +24,6 @@ const logged_in = user => {
  * THUNK CREATORS
  */
 export const login = (email, password) => async dispatch => {
-  console.log('user in reducer', email);
   try {
     await firebaseApp.auth().signInWithEmailAndPassword(email, password);
     const userData = await db
@@ -46,8 +46,9 @@ export const login = (email, password) => async dispatch => {
  */
 export default function(state = defaultUser, action) {
   switch (action.type) {
-    case LOGGED_IN:
-      return {...state, currentUser: action.user};
+    case LOGGED_IN: {
+      return {...state, currentUser: action.user, logged_in: true};
+    }
     case 'ERRORFROMSIGNIN':
       return state;
     default:

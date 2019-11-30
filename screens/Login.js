@@ -13,16 +13,13 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
+      currentUser: {},
     };
   }
 
   async loginUser(email, password) {
     if (this.validateLoginData(this.state)) {
       await this.props.login(this.state.email, this.state.password);
-      if (this.props.currentUser.username) {
-        console.log("LOGGED IN USER",this.props.currentUser.username);
-        this.props.navigation.navigate('BottomNavWrapper');
-      }
     }
   }
 
@@ -48,6 +45,8 @@ class Login extends Component {
   };
 
   render() {
+    if (this.props.logged_in)
+    {this.props.navigation.navigate('BottomNavWrapper');}
     return (
       <ImageBackground
         style={styles.title}
@@ -96,6 +95,7 @@ class Login extends Component {
 const mapToProps = state => {
   return {
     currentUser: state.user.currentUser,
+    logged_in: state.user.logged_in,
   };
 };
 
