@@ -48,6 +48,7 @@ class SignUp extends Component {
             createdAt: new Date().toISOString(),
             imageUrl: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noImg}?alt=media`,
             userId: userId,
+            available: true,
           };
           return db
             .doc(`/users/${newUser.username}`)

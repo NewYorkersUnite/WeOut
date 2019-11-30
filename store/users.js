@@ -4,6 +4,8 @@ const {firebaseApp, db, config} = require('../functions/util/config');
  * ACTION TYPES
  */
 const LOGGED_IN = 'LOGGED_IN';
+const ADDED_FRIEND = 'ADDED_FRIEND';
+const ERROR = 'ERROR';
 
 /**
  * INITIAL STATE
@@ -11,6 +13,7 @@ const LOGGED_IN = 'LOGGED_IN';
 const defaultUser = {
   currentUser: {},
   logged_in: false,
+  friends: [],
 };
 
 /**
@@ -18,6 +21,10 @@ const defaultUser = {
  */
 const logged_in = user => {
   return {type: LOGGED_IN, user};
+};
+
+const added_friend = () => {
+  return {type: ADDED_FRIEND};
 };
 
 /**
@@ -36,7 +43,19 @@ export const login = (email, password) => async dispatch => {
     console.error(err);
     console.log('Wrong credentials, please try again', err.toString());
     return {
-      type: 'ERRORFROMSIGNIN',
+      type: ERROR,
+    };
+  }
+};
+
+export const addFriend = (username, item) => async dispatch => {
+  try {
+    await db.doc(`/users/${username}/fiends/${item.username}`).set(item);
+    dispatch(added_friend());
+  } catch (err) {
+    console.error(err);
+    return {
+      type: ERROR,
     };
   }
 };
@@ -49,7 +68,10 @@ export default function(state = defaultUser, action) {
     case LOGGED_IN: {
       return {...state, currentUser: action.user, logged_in: true};
     }
-    case 'ERRORFROMSIGNIN':
+    case ADDED_FRIEND: {
+      return state;
+    }
+    case ERROR:
       return state;
     default:
       return state;

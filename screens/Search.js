@@ -4,22 +4,22 @@ import styles from '../public/styles';
 import {Header, Thumbnail, Item, Input, Button} from 'native-base';
 const {db} = require('../functions/util/config');
 
-export default class Search extends Component {
+import {connect} from 'react-redux';
+import {addFriend} from '../store';
+
+class Search extends Component {
   constructor() {
     super();
     this.state = {
-      currentUser: this.props.navigation.getParam('currentUser'),
+      // currentUser: this.props.navigation.getParam('currentUser'),
       value: '',
       users: [],
       searchResult: [],
     };
   }
 
-  async addFriendClick({item}) {
-    console.log("ADDEED", item);
-    await db
-      .doc(`/users/${this.state.currentUser}/fiends/${item.username}`)
-      .set(item);
+  addFriendClick({item}) {
+    this.props.addFriend(this.props.currentUser.username, item);
   }
 
   async componentDidMount() {
@@ -33,8 +33,6 @@ export default class Search extends Component {
   }
 
   render() {
-    console.log("In search current user is", this.state.currentUser  );
-
     const {navigate} = this.props.navigation;
     return (
       <View style={styles.searchBar}>
@@ -63,7 +61,9 @@ export default class Search extends Component {
                 source={{uri: item.imageUrl}}
               />
               <Text style={styles.listFriends}>{item.username}</Text>
-              <Button style={styles.addFriendBtn} onPress={this.addFriendClick}>
+              <Button
+                style={styles.addFriendBtn}
+                onPress={() => this.addFriendClick({item})}>
                 <Text>Add</Text>
               </Button>
             </View>
@@ -74,3 +74,19 @@ export default class Search extends Component {
     );
   }
 }
+
+const mapToState = state => {
+  return {
+    currentUser: state.user.currentUser,
+  };
+};
+
+const dispatchToProps = dispatch => {
+  return {
+    addFriend: (username, item) => {
+      dispatch(addFriend(username, item));
+    },
+  };
+};
+
+export default connect(mapToState, dispatchToProps)(Search);

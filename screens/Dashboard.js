@@ -75,7 +75,6 @@ class Dashboard extends Component {
 
   render() {
     const {navigate} = this.props.navigation;
-    console.log("logged in user is in dashboard",this.props.currentUser);
     return (
       <ImageBackground
         style={styles.title}
@@ -154,12 +153,4 @@ const mapToState = state => {
   };
 };
 
-const dispatchToProps = dispatch => {
-  return {
-  };
-};
-
-export default connect(
-  mapToState,
-  dispatchToProps,
-)(Dashboard);
+export default connect(mapToState, null)(Dashboard);
