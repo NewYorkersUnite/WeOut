@@ -16,9 +16,6 @@ const styles = StyleSheet.create({
     flex: 2,
   },
 
-
-
-
   center: {
     flex: 1,
     justifyContent: 'center',
@@ -113,6 +110,7 @@ const styles = StyleSheet.create({
   },
   scrollHeight: {
     height: 100,
+    // paddingBottom: 100,
   },
   proportionsOfScroll: {
     flex: 1,
@@ -131,6 +129,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingStart: 5,
     paddingEnd: 5,
+    paddingBottom: 5,
   },
   TNDetails: {
     marginHorizontal: 5,
@@ -139,12 +138,17 @@ const styles = StyleSheet.create({
   },
   // DASHBOARD CALANDAR NAV
   mainContainerCALANDAR: {
-    backgroundColor: '#F0F0F0',
-    flexDirection: 'row',
     justifyContent: 'flex-start',
   },
 
   //SEARCH BAR
+  tabBackgroundColor: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    borderTopWidth: 1,
+    borderTopColor: '#eae5e5',
+    backgroundColor: '#F0F0F0',
+  },
   resultElement: {
     flexDirection: 'row',
     alignSelf: 'stretch',
@@ -154,15 +158,40 @@ const styles = StyleSheet.create({
   },
   listFriends: {
     flex: 7,
-    // padding: 20,
     fontSize: 20,
-    // backgroundColor: 'red',
   },
   addFriendBtn: {
     flex: 1,
     justifyContent: 'flex-end',
-    alignSelf: "stretch",
+    alignSelf: 'stretch',
   },
+  opacityImg: {
+    width: '100%',
+    height: '100%',
+    paddingBottom: 90,
+  },
+  paragraph: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    paddingTop: 7,
+  },
+
+  // PROFILE
+  ProfileContainer: {
+    flex: 1,
+    // backgroundColor: '#F0F0F0',
+    // backgroundColor: 'pink', // for testing purposes
+    paddingTop: 120, // use this for poll's container!
+  },
+
+  // POLL
+  activeTitle: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 20,
+    paddingTop: 110,
+  },
+  pollDetails: {flexDirection: 'column', width: 300, height: 50},
 });
 
 export default styles;

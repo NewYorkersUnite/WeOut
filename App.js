@@ -13,12 +13,13 @@ import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import Splash from './screens/Splash';
 import SignUp from './screens/SignUp';
 import Login from './screens/Login';
-import Dashboard from './screens/Dashboard';
-import Profile from './screens/Profile';
-import Search from './screens/Search';
-import Poll from './screens/Poll';
+import CreatePoll from './screens/CreatePoll';
+import SinglePoll from './screens/SinglePoll';
+import BottomNavWrapper from './screens/BottomNavWrapper';
 import styles from './public/styles';
 import * as firebase from 'firebase';
+import {Provider} from 'react-redux';
+import store from './store';
 
 export default class App extends React.Component {
   // componentDidMount() {
@@ -63,18 +64,26 @@ export default class App extends React.Component {
   //     firebase.database().ref("users/001/email").remove()
   // }
   render() {
-    return <AppNavigator />;
+    return (
+      <Provider store={store}>
+        <AppNavigator />
+      </Provider>
+    );
   }
 }
 
-const MainNavigator = createSwitchNavigator({
-  Splash: {screen: Splash},
-  SignUp: {screen: SignUp},
-  Login: {screen: Login},
-  Dashboard: {screen: Dashboard},
-  Profile: {screen: Profile},
-  Search: {screen: Search},
-  Poll: {screen: Poll},
-});
+const MainNavigator = createSwitchNavigator(
+  {
+    Splash: {screen: Splash},
+    SignUp: {screen: SignUp},
+    Login: {screen: Login},
+    CreatePoll: {screen: CreatePoll},
+    SinglePoll: {screen: SinglePoll},
+    BottomNavWrapper: {screen: BottomNavWrapper},
+  },
+  {
+    backBehavior: 'none',
+  },
+);
 
 const AppNavigator = createAppContainer(MainNavigator);

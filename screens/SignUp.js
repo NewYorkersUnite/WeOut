@@ -60,7 +60,7 @@ class SignUp extends Component {
           console.error(error);
           console.log('Email is already in use or invalid.');
         });
-      this.props.navigation.navigate('Dashboard');
+      this.props.navigation.navigate('BottomNavWrapper');
     }
   }
 

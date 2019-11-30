@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import styles from '../public/styles';
 import {Button, Thumbnail, Container} from 'native-base';
+import {connect} from 'react-redux';
 
 const dummyFriends = [
   'https://i.pinimg.com/originals/34/cf/e4/34cfe4ff152f7cde337006dbaf9a5cbf.jpg',
@@ -18,34 +19,63 @@ const dummyFriends = [
   'https://d310a9hpolx59w.cloudfront.net/product_photos/66352254/file_53df422983_original.jpg',
 ];
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
-    this.state = {currentUser: this.props.navigation.getParam('currentUser')};
+
+    this.state = {
+      activeIndex: 0,
+    };
   }
-  today() {
+
+  segmentClicked(index) {
+    this.setState({
+      activeIndex: index,
+    });
+  }
+  checkActive = index => {
+    if (this.state.activeIndex !== index) {
+      return {color: 'grey'};
+    } else {
+      return {};
+    }
+  };
+
+  renderTodaySection() {
     return (
       <View>
-        <Text style={{fontWeight: 'bold'}}>TODAY YOOOOO!</Text>
+        <Text style={styles.paragraph}>TODAY YOOOOO!</Text>
       </View>
     );
   }
-  upcoming() {
+  renderUpcomingSection() {
     return (
       <View>
         <Text style={{fontWeight: 'bold'}}>COMING UP!</Text>
       </View>
     );
   }
-  past() {
+  renderPastSection() {
     return (
       <View>
         <Text style={{fontWeight: 'bold'}}>Past!</Text>
       </View>
     );
   }
+  // style={{flexDirection: 'row', flexWrap: 'wrap'}}
+  renderSection() {
+    if (this.state.activeIndex === 0) {
+      return <View>{this.renderTodaySection()}</View>;
+    } else if (this.state.activeIndex === 1) {
+      return <View>{this.renderUpcomingSection()}</View>;
+    } else if (this.state.activeIndex === 2) {
+      return <View>{this.renderPastSection()}</View>;
+    }
+  }
+
   render() {
     const {navigate} = this.props.navigation;
+    console.log("logged in user is in dashboard",this.props.currentUser);
     return (
       <ImageBackground
         style={styles.title}
@@ -56,7 +86,7 @@ export default class Dashboard extends Component {
 
         <View style={styles.mainContainer}>
           <View style={styles.top}>
-            <Container style={styles.scrollContainer}>
+            <View style={styles.scrollContainer}>
               <View style={styles.scrollHeight}>
                 <View style={styles.proportionsOfScroll}>
                   <Text style={styles.scrollTxt}>All Friends</Text>
@@ -78,74 +108,38 @@ export default class Dashboard extends Component {
                   </ScrollView>
                 </View>
               </View>
-            </Container>
+            </View>
 
             {/* CALANDER BUTTONS */}
             <View style={styles.mainContainerCALANDAR}>
-              <View style={styles.navButtonContainer}>
+              <View style={styles.tabBackgroundColor}>
                 <Button
-                  style={styles.NavButton}
-                  onPress={() => {
-                    this.today;
-                  }}>
+                  onPress={() => this.segmentClicked(0)}
+                  transparent
+                  active={this.state.activeIndex === 0}>
                   <Text style={styles.NavBtnText}> Today</Text>
                 </Button>
-              </View>
 
-              <View style={styles.navButtonContainer}>
                 <Button
-                  style={styles.NavButton}
-                  onPress={() => {
-                    this.upcoming;
-                  }}>
+                  onPress={() => this.segmentClicked(1)}
+                  transparent
+                  active={this.state.activeIndex === 1}>
                   <Text style={styles.NavBtnText}> Upcoming</Text>
                 </Button>
-              </View>
 
-              <View style={styles.navButtonContainer}>
                 <Button
-                  style={styles.NavButton}
-                  onPress={() => {
-                    this.past;
-                  }}>
+                  onPress={() => this.segmentClicked(2)}
+                  transparent
+                  active={this.state.activeIndex === 2}>
                   <Text style={styles.NavBtnText}> Past Events</Text>
                 </Button>
               </View>
-            </View>
-          </View>
-          <View style={styles.feeds}>
-
-          </View>
-
-          <View style={styles.bottom}>
-            <View style={styles.navContainer}>
-              <View style={styles.navButtonContainer}>
-                <Button
-                  style={styles.NavButton}
-                  onPress={() => navigate('Dashboard')}>
-                  <Text style={styles.NavBtnText}> Dash</Text>
-                </Button>
-              </View>
-
-              <View style={styles.navButtonContainer}>
-                <Button style={styles.NavButton} onPress={() => navigate('Search',{currentUser:this.state.currentUser})}>
-                  <Text style={styles.NavBtnText}> Search</Text>
-                </Button>
-              </View>
-
-              <View style={styles.navButtonContainer}>
-                <Button style={styles.NavButton} onPress={() => navigate('Poll')}>
-                  <Text style={styles.NavBtnText}> Poll</Text>
-                </Button>
-              </View>
-
-              <View style={styles.navButtonContainer}>
-                <Button
-                  style={styles.NavButton}
-                  onPress={() => navigate('Profile')}>
-                  <Text style={styles.NavBtnText}> Profile</Text>
-                </Button>
-              </View>
+              <ImageBackground
+                style={styles.opacityImg}
+                imageStyle={{opacity: 0.3}}
+                source={require('../public/Taxis.jpg')}>
+                {this.renderSection()}
+              </ImageBackground>
             </View>
           </View>
         </View>
@@ -153,3 +147,19 @@ export default class Dashboard extends Component {
     );
   }
 }
+
+const mapToState = state => {
+  return {
+    currentUser: state.user.currentUser,
+  };
+};
+
+const dispatchToProps = dispatch => {
+  return {
+  };
+};
+
+export default connect(
+  mapToState,
+  dispatchToProps,
+)(Dashboard);

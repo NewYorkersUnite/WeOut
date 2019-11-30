@@ -4,9 +4,9 @@ import styles from '../public/styles';
 import {Header, Thumbnail, Item, Input, Button} from 'native-base';
 const {db} = require('../functions/util/config');
 
-export default class Dashboard extends Component {
-  constructor(props) {
-    super(props);
+export default class Search extends Component {
+  constructor() {
+    super();
     this.state = {
       currentUser: this.props.navigation.getParam('currentUser'),
       value: '',
@@ -62,54 +62,14 @@ export default class Dashboard extends Component {
                 style={styles.TNDetails}
                 source={{uri: item.imageUrl}}
               />
-              <Text style={styles.listFriends}>
-                {item.username.toUpperCase()}
-              </Text>
-              <Button
-                style={styles.addFriendBtn}
-                // eslint-disable-next-line no-shadow
-                // eslint-disable-next-line no-undef
-                onPress={() => this.addFriendClick({item})}>
+              <Text style={styles.listFriends}>{item.username}</Text>
+              <Button style={styles.addFriendBtn} onPress={this.addFriendClick}>
                 <Text>Add</Text>
               </Button>
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
         />
-
-        <View style={styles.mainContainer}>
-          <View style={styles.navContainer}>
-            <View style={styles.navButtonContainer}>
-              <Button
-                style={styles.NavButton}
-                onPress={() => navigate('Dashboard')}>
-                <Text style={styles.NavBtnText}> Dash</Text>
-              </Button>
-            </View>
-
-            <View style={styles.navButtonContainer}>
-              <Button
-                style={styles.NavButton}
-                onPress={() => navigate('Search')}>
-                <Text style={styles.NavBtnText}> Search</Text>
-              </Button>
-            </View>
-
-            <View style={styles.navButtonContainer}>
-              <Button style={styles.NavButton} onPress={() => navigate('Poll')}>
-                <Text style={styles.NavBtnText}> Poll</Text>
-              </Button>
-            </View>
-
-            <View style={styles.navButtonContainer}>
-              <Button
-                style={styles.NavButton}
-                onPress={() => navigate('Profile')}>
-                <Text style={styles.NavBtnText}> Profile</Text>
-              </Button>
-            </View>
-          </View>
-        </View>
       </View>
     );
   }
