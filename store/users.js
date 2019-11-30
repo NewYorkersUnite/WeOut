@@ -5,6 +5,7 @@ const {firebaseApp, db, config} = require('../functions/util/config');
  */
 const LOGGED_IN = 'LOGGED_IN';
 const ADDED_FRIEND = 'ADDED_FRIEND';
+const GOT_FRIENDS = 'GOT_FRIENDS';
 const ERROR = 'ERROR';
 
 /**
@@ -25,6 +26,10 @@ const logged_in = user => {
 
 const added_friend = () => {
   return {type: ADDED_FRIEND};
+};
+
+const got_friends = friends => {
+  return {type: GOT_FRIENDS, friends};
 };
 
 /**
@@ -50,7 +55,7 @@ export const login = (email, password) => async dispatch => {
 
 export const addFriend = (username, item) => async dispatch => {
   try {
-    await db.doc(`/users/${username}/fiends/${item.username}`).set(item);
+    await db.doc(`/users/${username}/friends/${item.username}`).set(item);
     dispatch(added_friend());
   } catch (err) {
     console.error(err);
@@ -60,6 +65,27 @@ export const addFriend = (username, item) => async dispatch => {
   }
 };
 
+//bottomnav@email.com
+export const getFriends = username => async dispatch => {
+  try {
+    const friendsData = await db
+      .collection('users')
+      .doc(username)
+      .collection('friends')
+      .get();
+    // console.log('GET FRIENDS', friends.docs[0].data());
+    const friends = [];
+    friendsData.docs.forEach(element => {
+      friends.push(element.data());
+    });
+    dispatch(got_friends(friends));
+  } catch (err) {
+    console.error(err);
+    return {
+      type: ERROR,
+    };
+  }
+};
 /**
  * REDUCER
  */
@@ -70,6 +96,9 @@ export default function(state = defaultUser, action) {
     }
     case ADDED_FRIEND: {
       return state;
+    }
+    case GOT_FRIENDS: {
+      return {...state, friends: action.friends};
     }
     case ERROR:
       return state;

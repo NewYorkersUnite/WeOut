@@ -9,6 +9,7 @@ import {
 import styles from '../public/styles';
 import {Button, Thumbnail, Container} from 'native-base';
 import {connect} from 'react-redux';
+import {getFriends} from '../store';
 
 const dummyFriends = [
   'https://i.pinimg.com/originals/34/cf/e4/34cfe4ff152f7cde337006dbaf9a5cbf.jpg',
@@ -25,6 +26,7 @@ class Dashboard extends Component {
 
     this.state = {
       activeIndex: 0,
+      friends: [],
     };
   }
 
@@ -73,7 +75,12 @@ class Dashboard extends Component {
     }
   }
 
+  async componentDidMount() {
+    await this.props.getFriends(this.props.currentUser.username);
+  }
+
   render() {
+    console.log(this.props.friends);
     const {navigate} = this.props.navigation;
     return (
       <ImageBackground
@@ -95,14 +102,15 @@ class Dashboard extends Component {
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={styles.scrollPadding}>
-                    {dummyFriends.map((friend, indx) => {
-                      return (
-                        <Thumbnail
-                          key={indx}
-                          style={styles.TNDetails}
-                          source={{uri: friend}}
-                        />
-                      );
+                    {this.props.friends.map((friend, indx) => {
+                      if (friend.available === true)
+                        return (
+                          <Thumbnail
+                            key={indx}
+                            style={styles.TNDetails}
+                            source={{uri: friend.imageUrl}}
+                          />
+                        );
                     })}
                   </ScrollView>
                 </View>
@@ -150,7 +158,14 @@ class Dashboard extends Component {
 const mapToState = state => {
   return {
     currentUser: state.user.currentUser,
+    friends: state.user.friends,
   };
 };
 
-export default connect(mapToState, null)(Dashboard);
+const dispatchToProps = dispatch => {
+  return {
+    getFriends: username => dispatch(getFriends(username)),
+  };
+};
+
+export default connect(mapToState, dispatchToProps)(Dashboard);
