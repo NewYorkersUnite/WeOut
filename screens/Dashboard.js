@@ -172,4 +172,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapToState, dispatchToProps)(Dashboard);
+export default connect(
+  mapToState,
+  dispatchToProps,
+)(Dashboard);
