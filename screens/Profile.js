@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import styles from '../public/styles';
 import {Button, Content, Container} from 'native-base';
+import ImagePicker from 'react-native-image-picker';
 
 const AllFriends = require('../public/AllFriends.jpg');
 const College = require('../public/College.jpg');
@@ -32,12 +33,14 @@ const catergories = [
 ];
 
 const {width, height} = Dimensions.get('window');
+const Taxi = require('../public/Taxis.jpg');
 
 export default class Profile extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       availablity: true,
+      avatarSource: Taxi,
     };
   }
 
@@ -48,9 +51,30 @@ export default class Profile extends Component {
       this.setState({availablity: true});
     }
   }
+  selectImage = async () => {
+    ImagePicker.showImagePicker(
+      {noData: true, mediaType: 'photo'},
+      response => {
+        console.log('Response = ', response);
+
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else {
+          this.setState({
+            avatarSource: response.uri,
+          });
+        }
+      },
+    );
+  };
 
   render() {
     const {navigate} = this.props.navigation;
+    let {avatarSource} = this.state;
+    console.log('AVATAR', this.state.avatarSource);
+
     return (
       <ImageBackground
         style={styles.title}
@@ -58,17 +82,26 @@ export default class Profile extends Component {
         <View style={styles.ProfileContainer}>
           <View>
             <View style={{flexDirection: 'row'}}>
-              <View style={{flex: 1, alignItems: 'center'}}>
-                <Image
-                  source={require('../public/Taxis.jpg')}
-                  style={[
-                    {width: 100, height: 100, borderRadius: 50},
-                    this.state.availablity
-                      ? {borderColor: '#60F718', borderWidth: 4}
-                      : null,
-                  ]}
-                />
-              </View>
+              <TouchableOpacity
+                onPress={this.selectImage}
+                style={{width: 100, height: 100, borderRadius: 50}}>
+                <View style={{flex: 1, alignItems: 'center'}}>
+                  <ImageBackground
+                    source={{uri: avatarSource}}
+                    style={[
+                      {
+                        width: '100%',
+                        height: '100%',
+                        overflow: 'hidden',
+                        borderRadius: 50,
+                      },
+                      this.state.availablity
+                        ? {borderColor: '#60F718', borderWidth: 4}
+                        : null,
+                    ]}
+                  />
+                </View>
+              </TouchableOpacity>
               <View style={{flex: 3}}>
                 <View
                   style={{

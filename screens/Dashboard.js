@@ -75,8 +75,11 @@ class Dashboard extends Component {
     }
   }
 
-  render() {
+  componentDidMount() {
     this.props.getFriends(this.props.currentUser.username);
+  }
+
+  render() {
     // console.log(this.props.friends);
     const {navigate} = this.props.navigation;
     return (
@@ -99,15 +102,19 @@ class Dashboard extends Component {
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={styles.scrollPadding}>
-                    {this.props.friends.map((friend, indx) => {
-                      if (friend.available === true)
+                    {this.props.users.map((user, indx) => {
+                      if (
+                        user.available &&
+                        this.props.friends.includes(user.username)
+                      ) {
                         return (
                           <Thumbnail
                             key={indx}
                             style={styles.TNDetails}
-                            source={{uri: friend.imageUrl}}
+                            source={{uri: user.imageUrl}}
                           />
                         );
+                      }
                     })}
                   </ScrollView>
                 </View>
@@ -165,4 +172,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapToState, dispatchToProps)(Dashboard);
+export default connect(
+  mapToState,
+  dispatchToProps,
+)(Dashboard);
