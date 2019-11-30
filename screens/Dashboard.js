@@ -43,17 +43,10 @@ class Dashboard extends Component {
     }
   };
 
-  renderTodaySection() {
+  renderCurrentSection() {
     return (
       <View>
         <Text style={styles.paragraph}>TODAY YOOOOO!</Text>
-      </View>
-    );
-  }
-  renderUpcomingSection() {
-    return (
-      <View>
-        <Text style={{fontWeight: 'bold'}}>COMING UP!</Text>
       </View>
     );
   }
@@ -67,10 +60,8 @@ class Dashboard extends Component {
   // style={{flexDirection: 'row', flexWrap: 'wrap'}}
   renderSection() {
     if (this.state.activeIndex === 0) {
-      return <View>{this.renderTodaySection()}</View>;
+      return <View>{this.renderCurrentSection()}</View>;
     } else if (this.state.activeIndex === 1) {
-      return <View>{this.renderUpcomingSection()}</View>;
-    } else if (this.state.activeIndex === 2) {
       return <View>{this.renderPastSection()}</View>;
     }
   }
@@ -126,20 +117,13 @@ class Dashboard extends Component {
                   onPress={() => this.segmentClicked(0)}
                   transparent
                   active={this.state.activeIndex === 0}>
-                  <Text style={styles.NavBtnText}> Today</Text>
+                  <Text style={styles.NavBtnText}> Current Events</Text>
                 </Button>
 
                 <Button
                   onPress={() => this.segmentClicked(1)}
                   transparent
                   active={this.state.activeIndex === 1}>
-                  <Text style={styles.NavBtnText}> Upcoming</Text>
-                </Button>
-
-                <Button
-                  onPress={() => this.segmentClicked(2)}
-                  transparent
-                  active={this.state.activeIndex === 2}>
                   <Text style={styles.NavBtnText}> Past Events</Text>
                 </Button>
               </View>
@@ -172,7 +156,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapToState,
-  dispatchToProps,
-)(Dashboard);
+export default connect(mapToState, dispatchToProps)(Dashboard);
