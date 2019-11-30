@@ -75,8 +75,11 @@ class Dashboard extends Component {
     }
   }
 
-  render() {
+  componentDidMount() {
     this.props.getFriends(this.props.currentUser.username);
+  }
+
+  render() {
     // console.log(this.props.friends);
     const {navigate} = this.props.navigation;
     return (
@@ -100,12 +103,13 @@ class Dashboard extends Component {
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={styles.scrollPadding}>
                     {this.props.friends.map((friend, indx) => {
-                      if (friend.available === true)
+                      console.log("single friends",friend);
+                      // if (friend.available === true)
                         return (
                           <Thumbnail
                             key={indx}
                             style={styles.TNDetails}
-                            source={{uri: friend.imageUrl}}
+                            source={{uri: 'https://i.pinimg.com/originals/34/cf/e4/34cfe4ff152f7cde337006dbaf9a5cbf.jpg'}}
                           />
                         );
                     })}

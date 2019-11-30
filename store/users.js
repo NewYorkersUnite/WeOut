@@ -55,7 +55,10 @@ export const login = (email, password) => async dispatch => {
 
 export const addFriend = (username, item) => async dispatch => {
   try {
-    await db.doc(`/users/${username}/friends/${item.username}`).set(item);
+    const currentFriendsData = await db.doc(`/users/${username}`).get();
+    const currentfriends = currentFriendsData.data().friends;
+    currentfriends.push(item.username);
+    await db.doc(`/users/${username}`).update({friends: currentfriends});
     dispatch(added_friend());
   } catch (err) {
     console.error(err);
@@ -68,16 +71,12 @@ export const addFriend = (username, item) => async dispatch => {
 //bottomnav@email.com
 export const getFriends = username => async dispatch => {
   try {
-    const friendsData = await db
-      .collection('users')
-      .doc(username)
-      .collection('friends')
-      .get();
+    const friendsData = await db.doc(`/users/${username}`).get();
     // console.log('GET FRIENDS', friends.docs[0].data());
-    const friends = [];
-    friendsData.docs.forEach(element => {
-      friends.push(element.data());
-    });
+    const friends = friendsData.data().friends;
+    // friendsData.docs.forEach(element => {
+    //   friends.push(element.data());
+    // });
     dispatch(got_friends(friends));
   } catch (err) {
     console.error(err);
