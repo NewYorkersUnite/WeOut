@@ -5,17 +5,19 @@ import {Alert} from 'react-native';
  * ACTION TYPES
  */
 const LOGGED_IN = 'LOGGED_IN';
-const ADDED_FRIEND = 'ADDED_FRIEND';
 const GOT_FRIENDS = 'GOT_FRIENDS';
 const ERROR = 'ERROR';
+const GOT_USERS = 'GOT_USERS';
 
 /**
  * INITIAL STATE
  */
 const defaultUser = {
   currentUser: {},
+  numOfFriends: 0,
   logged_in: false,
   friends: [],
+  users: [],
 };
 
 /**
@@ -33,9 +35,22 @@ const got_friends = friends => {
   return {type: GOT_FRIENDS, friends};
 };
 
+const got_users = users => {
+  return {type: GOT_USERS, users};
+};
+
 /**
  * THUNK CREATORS
  */
+export const get_users = () => async dispatch => {
+  const usersData = await db.collection('/users').get();
+  const users = [];
+  usersData.docs.forEach(element => {
+    users.push(element.data());
+  });
+  dispatch(got_users(users));
+};
+
 export const sign_up = newUser => async dispatch => {
   const noImg = 'no-img.png';
   try {
@@ -97,7 +112,13 @@ export const addFriend = (username, item) => async dispatch => {
     const currentfriends = currentFriendsData.data().friends;
     currentfriends.push(item.username);
     await db.doc(`/users/${username}`).update({friends: currentfriends});
-    dispatch(added_friend());
+    const friendsData = await db.doc(`/users/${username}`).get();
+    // console.log('GET FRIENDS', friends.docs[0].data());
+    const friends = friendsData.data().friends;
+    // friendsData.docs.forEach(element => {
+    //   friends.push(element.data());
+    // });
+    dispatch(got_friends(friends));
   } catch (err) {
     console.error(err);
     return {
@@ -105,7 +126,6 @@ export const addFriend = (username, item) => async dispatch => {
     };
   }
 };
-
 
 export const getFriends = username => async dispatch => {
   try {
@@ -131,11 +151,12 @@ export default function(state = defaultUser, action) {
     case LOGGED_IN: {
       return {...state, currentUser: action.user, logged_in: true};
     }
-    case ADDED_FRIEND: {
-      return state;
-    }
     case GOT_FRIENDS: {
-      return {...state, friends: action.friends};
+      const numOfFriends = action.friends.length;
+      return {...state, friends: action.friends, numOfFriends};
+    }
+    case GOT_USERS: {
+      return {...state, users: action.users};
     }
     case ERROR:
       return state;
