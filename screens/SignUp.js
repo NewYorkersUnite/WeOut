@@ -4,6 +4,8 @@ import styles from '../public/styles';
 const {firebaseApp, db, config} = require('../functions/util/config');
 
 import {Input, Item, Button, Label} from 'native-base';
+import {connect} from 'react-redux';
+import {sign_up} from '../store';
 
 class SignUp extends Component {
   constructor() {
@@ -16,52 +18,10 @@ class SignUp extends Component {
     };
   }
 
-  signUp(email, password, confirmPassword, username) {
+  async signUp(email, password, confirmPassword, username) {
     if (this.validateSignUpData(this.state)) {
-      const noImg = 'no-img.png';
-
-      let token; // initialize a token
-      let userId; // initialize a userId
-
       const newUser = this.state;
-      db.doc(`/users/${newUser.username}`)
-        .get()
-        .then(doc => {
-          if (doc.exists) {
-            Alert.alert('Username is taken.');
-          } else {
-            return firebaseApp
-              .auth()
-              .createUserWithEmailAndPassword(newUser.email, newUser.password);
-          }
-        })
-        .then(data => {
-          userId = data.user.uid;
-        })
-        .then(idToken => {
-          token = idToken;
-
-          const userCredentials = {
-            // this part is to place the new user info into the db
-            username: newUser.username,
-            email: newUser.email,
-            createdAt: new Date().toISOString(),
-            imageUrl: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noImg}?alt=media`,
-            userId: userId,
-            available: true,
-          };
-          return db
-            .doc(`/users/${newUser.username}`)
-            .set(userCredentials)
-            .then(() => {
-              console.log('TOKEN', token);
-            });
-        })
-        .catch(error => {
-          console.error(error);
-          console.log('Email is already in use or invalid.');
-        });
-      this.props.navigation.navigate('BottomNavWrapper');
+      await this.props.signUp(newUser);
     }
   }
 
@@ -105,7 +65,9 @@ class SignUp extends Component {
   };
 
   render() {
-    // console.log('FIREBASE', Firebase.Firebase);
+    if (this.props.logged_in) {
+      this.props.navigation.navigate('BottomNavWrapper');
+    }
     return (
       <ImageBackground
         style={styles.title}
@@ -179,4 +141,22 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+const dispatchToProps = dispatch => {
+  return {
+    signUp: newUser => {
+      dispatch(sign_up(newUser));
+    },
+  };
+};
+
+const mapToProps = state => {
+  return {
+    currentUser: state.user.currentUser,
+    logged_in: state.user.logged_in,
+  };
+};
+
+export default connect(
+  mapToProps,
+  dispatchToProps,
+)(SignUp);

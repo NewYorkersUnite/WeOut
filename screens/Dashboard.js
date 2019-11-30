@@ -9,7 +9,7 @@ import {
 import styles from '../public/styles';
 import {Button, Thumbnail, Container} from 'native-base';
 import {connect} from 'react-redux';
-import {getFriends} from '../store';
+import {getFriends, get_users} from '../store';
 
 const dummyFriends = [
   'https://i.pinimg.com/originals/34/cf/e4/34cfe4ff152f7cde337006dbaf9a5cbf.jpg',
@@ -75,13 +75,12 @@ class Dashboard extends Component {
     }
   }
 
-  componentDidMount() {
-    this.props.getFriends(this.props.currentUser.username);
+  async componentDidMount() {
+    await this.props.getFriends(this.props.currentUser.username);
+    await this.props.getUsers();
   }
 
   render() {
-    // console.log(this.props.friends);
-    const {navigate} = this.props.navigation;
     return (
       <ImageBackground
         style={styles.title}
@@ -106,7 +105,7 @@ class Dashboard extends Component {
                       if (
                         user.available &&
                         this.props.friends.includes(user.username)
-                      ) {
+                      )
                         return (
                           <Thumbnail
                             key={indx}
@@ -114,7 +113,6 @@ class Dashboard extends Component {
                             source={{uri: user.imageUrl}}
                           />
                         );
-                      }
                     })}
                   </ScrollView>
                 </View>
@@ -163,12 +161,14 @@ const mapToState = state => {
   return {
     currentUser: state.user.currentUser,
     friends: state.user.friends,
+    users: state.user.users,
   };
 };
 
 const dispatchToProps = dispatch => {
   return {
     getFriends: username => dispatch(getFriends(username)),
+    getUsers: () => dispatch(get_users()),
   };
 };
 
