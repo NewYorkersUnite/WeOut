@@ -1,20 +1,23 @@
 const {firebaseApp, db, config} = require('../functions/util/config');
+import {Alert} from 'react-native';
 
 /**
  * ACTION TYPES
  */
 const LOGGED_IN = 'LOGGED_IN';
-const ADDED_FRIEND = 'ADDED_FRIEND';
 const GOT_FRIENDS = 'GOT_FRIENDS';
 const ERROR = 'ERROR';
+const GOT_USERS = 'GOT_USERS';
 
 /**
  * INITIAL STATE
  */
 const defaultUser = {
   currentUser: {},
+  numOfFriends: 0,
   logged_in: false,
   friends: [],
+  users: [],
 };
 
 /**
@@ -32,9 +35,59 @@ const got_friends = friends => {
   return {type: GOT_FRIENDS, friends};
 };
 
+const got_users = users => {
+  return {type: GOT_USERS, users};
+};
+
 /**
  * THUNK CREATORS
  */
+export const get_users = () => async dispatch => {
+  const usersData = await db.collection('/users').get();
+  const users = [];
+  usersData.docs.forEach(element => {
+    users.push(element.data());
+  });
+  dispatch(got_users(users));
+};
+
+export const sign_up = newUser => async dispatch => {
+  const noImg = 'no-img.png';
+  try {
+    let user = await db.doc(`/users/${newUser.username}`).get();
+    if (user.data()) {
+      Alert.alert('Username is taken.');
+    } else {
+      const data = await firebaseApp
+        .auth()
+        .createUserWithEmailAndPassword(newUser.email, newUser.password);
+      const userId = data.user.uid;
+      const userCredentials = {
+        // this part is to place the new user info into the db
+        username: newUser.username,
+        email: newUser.email,
+        createdAt: new Date().toISOString(),
+        imageUrl: `https://firebasestorage.googleapis.com/v0/b/${
+          config.storageBucket
+        }/o/${noImg}?alt=media`,
+        userId: userId,
+        available: true,
+        friends: [],
+      };
+      await db.doc(`/users/${newUser.username}`).set(userCredentials);
+      const userData = await db
+        .collection('users')
+        .where('email', '==', newUser.email)
+        .get();
+      user = userData.docs[0].data();
+      dispatch(logged_in(user));
+    }
+  } catch (err) {
+    console.error(err);
+    dispatch({type: ERROR});
+  }
+};
+
 export const login = (email, password) => async dispatch => {
   try {
     await firebaseApp.auth().signInWithEmailAndPassword(email, password);
@@ -55,8 +108,17 @@ export const login = (email, password) => async dispatch => {
 
 export const addFriend = (username, item) => async dispatch => {
   try {
-    await db.doc(`/users/${username}/friends/${item.username}`).set(item);
-    dispatch(added_friend());
+    const currentFriendsData = await db.doc(`/users/${username}`).get();
+    const currentfriends = currentFriendsData.data().friends;
+    currentfriends.push(item.username);
+    await db.doc(`/users/${username}`).update({friends: currentfriends});
+    const friendsData = await db.doc(`/users/${username}`).get();
+    // console.log('GET FRIENDS', friends.docs[0].data());
+    const friends = friendsData.data().friends;
+    // friendsData.docs.forEach(element => {
+    //   friends.push(element.data());
+    // });
+    dispatch(got_friends(friends));
   } catch (err) {
     console.error(err);
     return {
@@ -65,19 +127,14 @@ export const addFriend = (username, item) => async dispatch => {
   }
 };
 
-//bottomnav@email.com
 export const getFriends = username => async dispatch => {
   try {
-    const friendsData = await db
-      .collection('users')
-      .doc(username)
-      .collection('friends')
-      .get();
+    const friendsData = await db.doc(`/users/${username}`).get();
     // console.log('GET FRIENDS', friends.docs[0].data());
-    const friends = [];
-    friendsData.docs.forEach(element => {
-      friends.push(element.data());
-    });
+    const friends = friendsData.data().friends;
+    // friendsData.docs.forEach(element => {
+    //   friends.push(element.data());
+    // });
     dispatch(got_friends(friends));
   } catch (err) {
     console.error(err);
@@ -94,11 +151,12 @@ export default function(state = defaultUser, action) {
     case LOGGED_IN: {
       return {...state, currentUser: action.user, logged_in: true};
     }
-    case ADDED_FRIEND: {
-      return state;
-    }
     case GOT_FRIENDS: {
-      return {...state, friends: action.friends};
+      const numOfFriends = action.friends.length;
+      return {...state, friends: action.friends, numOfFriends};
+    }
+    case GOT_USERS: {
+      return {...state, users: action.users};
     }
     case ERROR:
       return state;

@@ -9,7 +9,7 @@ import {
 import styles from '../public/styles';
 import {Button, Thumbnail, Container} from 'native-base';
 import {connect} from 'react-redux';
-import {getFriends} from '../store';
+import {getFriends, get_users} from '../store';
 
 const dummyFriends = [
   'https://i.pinimg.com/originals/34/cf/e4/34cfe4ff152f7cde337006dbaf9a5cbf.jpg',
@@ -75,10 +75,12 @@ class Dashboard extends Component {
     }
   }
 
+  async componentDidMount() {
+    await this.props.getFriends(this.props.currentUser.username);
+    await this.props.getUsers();
+  }
+
   render() {
-    this.props.getFriends(this.props.currentUser.username);
-    // console.log(this.props.friends);
-    const {navigate} = this.props.navigation;
     return (
       <ImageBackground
         style={styles.title}
@@ -99,13 +101,16 @@ class Dashboard extends Component {
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={styles.scrollPadding}>
-                    {this.props.friends.map((friend, indx) => {
-                      if (friend.available === true)
+                    {this.props.users.map((user, indx) => {
+                      if (
+                        user.available &&
+                        this.props.friends.includes(user.username)
+                      )
                         return (
                           <Thumbnail
                             key={indx}
                             style={styles.TNDetails}
-                            source={{uri: friend.imageUrl}}
+                            source={{uri: user.imageUrl}}
                           />
                         );
                     })}
@@ -156,12 +161,14 @@ const mapToState = state => {
   return {
     currentUser: state.user.currentUser,
     friends: state.user.friends,
+    users: state.user.users,
   };
 };
 
 const dispatchToProps = dispatch => {
   return {
     getFriends: username => dispatch(getFriends(username)),
+    getUsers: () => dispatch(get_users()),
   };
 };
 
