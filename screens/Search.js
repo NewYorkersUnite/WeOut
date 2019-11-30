@@ -8,14 +8,18 @@ export default class Search extends Component {
   constructor() {
     super();
     this.state = {
+      currentUser: this.props.navigation.getParam('currentUser'),
       value: '',
       users: [],
       searchResult: [],
     };
   }
 
-  addFriendClick() {
-    console.log('ADDED');
+  async addFriendClick({item}) {
+    console.log("ADDEED", item);
+    await db
+      .doc(`/users/${this.state.currentUser}/fiends/${item.username}`)
+      .set(item);
   }
 
   async componentDidMount() {
@@ -24,10 +28,13 @@ export default class Search extends Component {
     userData.forEach(element => {
       users.push(element.data());
     });
+    // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({users});
   }
 
   render() {
+    console.log("In search current user is", this.state.currentUser  );
+
     const {navigate} = this.props.navigation;
     return (
       <View style={styles.searchBar}>

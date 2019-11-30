@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import styles from '../public/styles';
 import {Button, Thumbnail, Container} from 'native-base';
+import {connect} from 'react-redux';
 
 const dummyFriends = [
   'https://i.pinimg.com/originals/34/cf/e4/34cfe4ff152f7cde337006dbaf9a5cbf.jpg',
@@ -18,7 +19,7 @@ const dummyFriends = [
   'https://d310a9hpolx59w.cloudfront.net/product_photos/66352254/file_53df422983_original.jpg',
 ];
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
 
@@ -74,6 +75,7 @@ export default class Dashboard extends Component {
 
   render() {
     const {navigate} = this.props.navigation;
+    console.log("logged in user is in dashboard",this.props.currentUser);
     return (
       <ImageBackground
         style={styles.title}
@@ -145,3 +147,19 @@ export default class Dashboard extends Component {
     );
   }
 }
+
+const mapToState = state => {
+  return {
+    currentUser: state.user.currentUser,
+  };
+};
+
+const dispatchToProps = dispatch => {
+  return {
+  };
+};
+
+export default connect(
+  mapToState,
+  dispatchToProps,
+)(Dashboard);
