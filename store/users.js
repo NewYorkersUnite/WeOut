@@ -1,4 +1,5 @@
 const {firebaseApp, db, config} = require('../functions/util/config');
+import {Alert} from 'react-native';
 
 /**
  * ACTION TYPES
@@ -35,6 +36,43 @@ const got_friends = friends => {
 /**
  * THUNK CREATORS
  */
+export const sign_up = newUser => async dispatch => {
+  const noImg = 'no-img.png';
+  try {
+    let user = await db.doc(`/users/${newUser.username}`).get();
+    if (user.data()) {
+      Alert.alert('Username is taken.');
+    } else {
+      const data = await firebaseApp
+        .auth()
+        .createUserWithEmailAndPassword(newUser.email, newUser.password);
+      const userId = data.user.uid;
+      const userCredentials = {
+        // this part is to place the new user info into the db
+        username: newUser.username,
+        email: newUser.email,
+        createdAt: new Date().toISOString(),
+        imageUrl: `https://firebasestorage.googleapis.com/v0/b/${
+          config.storageBucket
+        }/o/${noImg}?alt=media`,
+        userId: userId,
+        available: true,
+        friends: [],
+      };
+      await db.doc(`/users/${newUser.username}`).set(userCredentials);
+      const userData = await db
+        .collection('users')
+        .where('email', '==', newUser.email)
+        .get();
+      user = userData.docs[0].data();
+      dispatch(logged_in(user));
+    }
+  } catch (err) {
+    console.error(err);
+    dispatch({type: ERROR});
+  }
+};
+
 export const login = (email, password) => async dispatch => {
   try {
     await firebaseApp.auth().signInWithEmailAndPassword(email, password);
@@ -68,7 +106,7 @@ export const addFriend = (username, item) => async dispatch => {
   }
 };
 
-//bottomnav@email.com
+
 export const getFriends = username => async dispatch => {
   try {
     const friendsData = await db.doc(`/users/${username}`).get();
