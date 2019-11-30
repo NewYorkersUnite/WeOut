@@ -13,11 +13,11 @@ import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import Splash from './screens/Splash';
 import SignUp from './screens/SignUp';
 import Login from './screens/Login';
-import CreatePoll from './screens/CreatePoll';
-import SinglePoll from './screens/SinglePoll';
 import BottomNavWrapper from './screens/BottomNavWrapper';
 import styles from './public/styles';
 import * as firebase from 'firebase';
+import {Provider} from 'react-redux';
+import store from './store';
 
 export default class App extends React.Component {
   // componentDidMount() {
@@ -62,7 +62,11 @@ export default class App extends React.Component {
   //     firebase.database().ref("users/001/email").remove()
   // }
   render() {
-    return <AppNavigator />;
+    return (
+      <Provider store={store}>
+        <AppNavigator />
+      </Provider>
+    );
   }
 }
 
@@ -71,8 +75,6 @@ const MainNavigator = createSwitchNavigator(
     Splash: {screen: Splash},
     SignUp: {screen: SignUp},
     Login: {screen: Login},
-    CreatePoll: {screen: CreatePoll},
-    SinglePoll: {screen: SinglePoll},
     BottomNavWrapper: {screen: BottomNavWrapper},
   },
   {

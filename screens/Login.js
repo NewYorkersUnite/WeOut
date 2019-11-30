@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {View, Text, ImageBackground, Image} from 'react-native';
 import styles from '../public/styles';
-const {firebaseApp, db, config} = require('../functions/util/config');
+// const {firebaseApp, db, config} = require('../functions/util/config');
 
 import {Input, Item, Button, Label} from 'native-base';
+import {connect} from 'react-redux';
+import {login} from '../store';
 
 class Login extends Component {
   constructor() {
@@ -14,20 +16,14 @@ class Login extends Component {
     };
   }
 
-  loginUser(email, password) {
+  async loginUser(email, password) {
     if (this.validateLoginData(this.state)) {
-      firebaseApp
-        .auth()
-        .signInWithEmailAndPassword(this.state.email, this.state.password)
-        .then(function(user) {
-          console.log('USER THAT WAS LOGGED IN >>>', user);
-        })
-        .catch(error => {
-          console.error(error);
-          console.log('Wrong credentials, please try again', error.toString());
-        });
+      await this.props.login(this.state.email, this.state.password);
+      if (this.props.currentUser.username) {
+        console.log("LOGGED IN USER",this.props.currentUser.username);
+        this.props.navigation.navigate('BottomNavWrapper');
+      }
     }
-    this.props.navigation.navigate('BottomNavWrapper');
   }
 
   isEmpty = string => {
@@ -96,4 +92,22 @@ class Login extends Component {
     );
   }
 }
-export default Login;
+
+const mapToProps = state => {
+  return {
+    currentUser: state.user.currentUser,
+  };
+};
+
+const dispatchToProps = dispatch => {
+  return {
+    login: (email, password) => {
+      dispatch(login(email, password));
+    },
+  };
+};
+
+export default connect(
+  mapToProps,
+  dispatchToProps,
+)(Login);

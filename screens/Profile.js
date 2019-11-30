@@ -134,7 +134,10 @@ export default class Profile extends Component {
                 }}>
                 {catergories.map((category, ind) => {
                   return (
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() =>
+                        this.props.navigation.navigate('FriendGroup')
+                      }>
                       <View
                         key={ind}
                         style={[
