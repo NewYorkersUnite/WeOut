@@ -130,10 +130,14 @@ export default class Profile extends Component {
                   flexDirection: 'row',
                   flexWrap: 'wrap',
                   paddingTop: 25,
+                  paddingBottom: 100,
                 }}>
                 {catergories.map((category, ind) => {
                   return (
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() =>
+                        this.props.navigation.navigate('FriendGroup')
+                      }>
                       <View
                         key={ind}
                         style={[

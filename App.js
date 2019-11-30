@@ -13,8 +13,6 @@ import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import Splash from './screens/Splash';
 import SignUp from './screens/SignUp';
 import Login from './screens/Login';
-import CreatePoll from './screens/CreatePoll';
-import SinglePoll from './screens/SinglePoll';
 import BottomNavWrapper from './screens/BottomNavWrapper';
 import styles from './public/styles';
 import * as firebase from 'firebase';
@@ -77,8 +75,6 @@ const MainNavigator = createSwitchNavigator(
     Splash: {screen: Splash},
     SignUp: {screen: SignUp},
     Login: {screen: Login},
-    CreatePoll: {screen: CreatePoll},
-    SinglePoll: {screen: SinglePoll},
     BottomNavWrapper: {screen: BottomNavWrapper},
   },
   {

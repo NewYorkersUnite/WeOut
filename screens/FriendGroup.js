@@ -1,17 +1,30 @@
 import React, {Component} from 'react';
-import {ScrollView, Image, Text, View, ImageBackground} from 'react-native';
+import {
+  ScrollView,
+  Image,
+  Text,
+  View,
+  ImageBackground,
+  TouchableOpacity,
+} from 'react-native';
 import styles from '../public/styles';
 import {Button} from 'native-base';
 
 export default class FriendGroup extends Component {
   render() {
-    const {navigate} = this.props.navigation;
     return (
       <ImageBackground
         style={styles.title}
         source={require('../public/Background.png')}>
-        <View style={styles.mainContainer}>
-          <Text style={styles.center}>FriendGroup!!</Text>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Profile')}>
+          <Image
+            style={{width: 50, height: 50, marginTop: 50, marginLeft: 8}}
+            source={require('../public/BackArrow.png')}
+          />
+        </TouchableOpacity>
+        <View style={styles.centerish}>
+          <Text>FriendGroup!!</Text>
         </View>
       </ImageBackground>
     );
