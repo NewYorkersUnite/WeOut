@@ -75,12 +75,9 @@ class Dashboard extends Component {
     }
   }
 
-  async componentDidMount() {
-    await this.props.getFriends(this.props.currentUser.username);
-  }
-
   render() {
-    console.log(this.props.friends);
+    this.props.getFriends(this.props.currentUser.username);
+    // console.log(this.props.friends);
     const {navigate} = this.props.navigation;
     return (
       <ImageBackground
