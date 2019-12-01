@@ -4,12 +4,11 @@ import {
   Text,
   View,
   ImageBackground,
-  Image,
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
 import styles from '../public/styles';
-import {Button, Content, Container} from 'native-base';
+import {Button} from 'native-base';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
 import {toggle_availability} from '../store';
@@ -34,17 +33,16 @@ const catergories = [
   {name: 'Foodie', img: Foodie},
 ];
 
-const {width, height} = Dimensions.get('window');
-// const Taxi = require('../public/Taxis.jpg');
-const Tom =
-  'http://www.todayifoundout.com/wp-content/uploads/2017/12/myspace-tom.jpg';
+const {width} = Dimensions.get('window');
+// const Tom =
+//   'http://www.todayifoundout.com/wp-content/uploads/2017/12/myspace-tom.jpg';
 
 class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       availablity: true,
-      avatarSource: Tom,
+      avatarSource: this.props.currentUser.imageUrl,
     };
     this.availablityChangeHandler = this.availablityChangeHandler.bind(this);
   }
@@ -53,12 +51,13 @@ class Profile extends Component {
     this.props.toggleAvailablity(this.props.currentUser.username);
   }
   availablity() {
-    if (this.state.availablity === true) {
-      this.setState({availablity: false});
-    } else {
+    if (this.props.currentUser.available) {
       this.setState({availablity: true});
+    } else {
+      this.setState({availablity: false});
     }
   }
+
   selectImage = async () => {
     await ImagePicker.showImagePicker(
       {noData: true, mediaType: 'photo'},
@@ -79,9 +78,13 @@ class Profile extends Component {
   };
 
   render() {
-    const {navigate} = this.props.navigation;
+    const totalFriends = this.props.currentUser.friends.length;
+    const username = this.props.currentUser.username;
     let {avatarSource} = this.state;
-    console.log('AVATAR', this.state.avatarSource);
+
+    // console.log('AVATAR', this.state.avatarSource);
+    console.log('CURRENT USER', this.props.currentUser);
+    // console.log('LOCAL STATE', this.state);
 
     return (
       <ImageBackground
@@ -92,18 +95,13 @@ class Profile extends Component {
             <View style={{flexDirection: 'row'}}>
               <TouchableOpacity
                 onPress={this.selectImage}
-                style={{width: 100, height: 100, borderRadius: 50}}>
+                style={styles.profilePicBTN}>
                 <View style={{flex: 1, alignItems: 'center'}}>
                   <ImageBackground
                     source={{uri: avatarSource}}
                     style={[
-                      {
-                        width: '100%',
-                        height: '100%',
-                        overflow: 'hidden',
-                        borderRadius: 50,
-                      },
-                      this.state.availablity
+                      styles.profilePic,
+                      this.props.currentUser.available
                         ? {borderColor: '#60F718', borderWidth: 4}
                         : null,
                     ]}
@@ -111,22 +109,17 @@ class Profile extends Component {
                 </View>
               </TouchableOpacity>
               <View style={{flex: 3}}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-around',
-                    alignItems: 'flex-end',
-                  }}>
-                  <View style={{alignItems: 'center'}}>
+                <View style={styles.topSection}>
+                  <View style={styles.alignCen}>
                     <Text style={{fontWeight: 'bold', fontSize: 22}}>
-                      Username
+                      {username}
                     </Text>
                   </View>
-                  <View style={{alignItems: 'center'}}>
-                    <Text>205</Text>
+                  <View style={styles.alignCen}>
+                    <Text>{totalFriends}</Text>
                     <Text style={{fontSize: 10, color: 'grey'}}>Friends</Text>
                   </View>
-                  <View style={{alignItems: 'center'}}>
+                  <View style={styles.alignCen}>
                     <Text>167</Text>
                     <Text style={{fontSize: 10, color: 'grey'}}>Polls</Text>
                   </View>
@@ -140,39 +133,19 @@ class Profile extends Component {
                   <Button
                     bordered
                     dark
-                    style={{
-                      flex: 3,
-                      marginLeft: 10,
-                      justifyContent: 'center',
-                      height: 40,
-                    }}
+                    style={styles.statBtnLRG}
                     onPress={this.availablityChangeHandler}>
-                    <Text style={{fontWeight: 'bold'}}>Status</Text>
+                    <Text style={styles.scrollTxt}>Status</Text>
                   </Button>
 
-                  <Button
-                    bordered
-                    dark
-                    style={{
-                      flex: 1,
-                      height: 40,
-                      marginRight: 10,
-                      marginLeft: 5,
-                      justifyContent: 'center',
-                    }}>
-                    <Text style={{fontWeight: 'bold'}}>Log Out</Text>
+                  <Button bordered dark style={styles.statBtnSML}>
+                    <Text style={styles.scrollTxt}>Log Out</Text>
                   </Button>
                 </View>
               </View>
             </View>
             <ScrollView>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                  paddingTop: 25,
-                  paddingBottom: 100,
-                }}>
+              <View style={styles.categorySection}>
                 {catergories.map((category, ind) => {
                   return (
                     <TouchableOpacity
@@ -190,13 +163,7 @@ class Profile extends Component {
                         <ImageBackground
                           style={{flex: 1, width: undefined, height: undefined}}
                           source={category.img}>
-                          <Text
-                            style={{
-                              fontWeight: 'bold',
-                              color: 'white',
-                              backgroundColor: '#DA2727',
-                              textAlign: 'center',
-                            }}>
+                          <Text style={styles.categoryLabels}>
                             {category.name}
                           </Text>
                         </ImageBackground>
@@ -226,4 +193,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapToState, dispatchToProps)(Profile);
+export default connect(
+  mapToState,
+  dispatchToProps,
+)(Profile);

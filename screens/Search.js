@@ -52,24 +52,74 @@ class Search extends Component {
           </Item>
         </Header>
 
+        <Text
+          style={{
+            fontSize: 20,
+            fontWeight: 'bold',
+            marginLeft: 20,
+            marginTop: 20,
+          }}>
+          Search Results:
+        </Text>
+
         <FlatList
+          style={{marginTop: 40, paddingLeft: 20, paddingRight: 20}}
           data={this.state.searchResult}
           renderItem={({item}) => (
-            <View style={styles.resultElement}>
-              <Thumbnail
-                style={styles.TNDetails}
-                source={{uri: item.imageUrl}}
-              />
-              <Text style={styles.listFriends}>{item.username}</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: 5,
+              }}>
+              <View
+                style={{flex: 2, flexDirection: 'row', alignItems: 'center'}}>
+                <Thumbnail
+                  style={styles.TNDetails}
+                  source={{uri: item.imageUrl}}
+                />
+                <Text
+                  style={{paddingLeft: 20, fontSize: 20, fontWeight: 'bold'}}>
+                  {item.username}
+                </Text>
+              </View>
               <Button
-                style={styles.addFriendBtn}
+                full
+                rounded
+                style={{
+                  backgroundColor: '#2b81b5',
+                  justifyContent: 'center',
+                  width: 100,
+                }}
                 onPress={() => this.addFriendClick({item})}>
-                <Text>Add</Text>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    fontWeight: 'bold',
+                    color: 'white',
+                  }}>
+                  Add Friend
+                </Text>
               </Button>
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
         />
+        <Button
+          full
+          style={{
+            backgroundColor: '#2b81b5',
+            justifyContent: 'center',
+          }}>
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: 'bold',
+              color: 'white',
+            }}>
+            Create Poll Room
+          </Text>
+        </Button>
       </View>
     );
   }
@@ -89,4 +139,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapToState, dispatchToProps)(Search);
+export default connect(
+  mapToState,
+  dispatchToProps,
+)(Search);
