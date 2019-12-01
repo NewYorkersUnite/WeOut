@@ -8,7 +8,7 @@ const LOGGED_IN = 'LOGGED_IN';
 const GOT_FRIENDS = 'GOT_FRIENDS';
 const ERROR = 'ERROR';
 const GOT_USERS = 'GOT_USERS';
-
+const AVAILABILITY_TOGGLED = 'AVAILABILITY_TOGGLED';
 /**
  * INITIAL STATE
  */
@@ -18,6 +18,7 @@ const defaultUser = {
   logged_in: false,
   friends: [],
   users: [],
+  availability: true,
 };
 
 /**
@@ -25,10 +26,6 @@ const defaultUser = {
  */
 const logged_in = user => {
   return {type: LOGGED_IN, user};
-};
-
-const added_friend = () => {
-  return {type: ADDED_FRIEND};
 };
 
 const got_friends = friends => {
@@ -39,9 +36,20 @@ const got_users = users => {
   return {type: GOT_USERS, users};
 };
 
+const availability_toggled = availability => {
+  return {type: AVAILABILITY_TOGGLED, availability};
+};
 /**
  * THUNK CREATORS
  */
+export const toggle_availability = username => async dispatch => {
+  const availabilityData = await db.doc(`/users/${username}`).get();
+  const availability = availabilityData.data().available;
+  const newAvailability = !availability;
+  await db.doc(`/users/${username}`).update({available: newAvailability});
+  dispatch(availability_toggled(newAvailability));
+};
+
 export const get_users = () => async dispatch => {
   const usersData = await db.collection('/users').get();
   const users = [];
@@ -67,9 +75,7 @@ export const sign_up = newUser => async dispatch => {
         username: newUser.username,
         email: newUser.email,
         createdAt: new Date().toISOString(),
-        imageUrl: `https://firebasestorage.googleapis.com/v0/b/${
-          config.storageBucket
-        }/o/${noImg}?alt=media`,
+        imageUrl: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noImg}?alt=media`,
         userId: userId,
         available: true,
         friends: [],
@@ -154,6 +160,9 @@ export default function(state = defaultUser, action) {
     case GOT_FRIENDS: {
       const numOfFriends = action.friends.length;
       return {...state, friends: action.friends, numOfFriends};
+    }
+    case AVAILABILITY_TOGGLED: {
+      return {...state, availability: action.availability};
     }
     case GOT_USERS: {
       return {...state, users: action.users};

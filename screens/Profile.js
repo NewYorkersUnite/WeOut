@@ -11,6 +11,8 @@ import {
 import styles from '../public/styles';
 import {Button, Content, Container} from 'native-base';
 import ImagePicker from 'react-native-image-picker';
+import {connect} from 'react-redux';
+import {toggle_availability} from '../store';
 
 const AllFriends = require('../public/AllFriends.jpg');
 const College = require('../public/College.jpg');
@@ -33,17 +35,23 @@ const catergories = [
 ];
 
 const {width, height} = Dimensions.get('window');
-const Taxi = require('../public/Taxis.jpg');
+// const Taxi = require('../public/Taxis.jpg');
+const Tom =
+  'http://www.todayifoundout.com/wp-content/uploads/2017/12/myspace-tom.jpg';
 
-export default class Profile extends Component {
+class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       availablity: true,
-      avatarSource: Taxi,
+      avatarSource: Tom,
     };
+    this.availablityChangeHandler = this.availablityChangeHandler.bind(this);
   }
 
+  availablityChangeHandler() {
+    this.props.toggleAvailablity(this.props.currentUser.username);
+  }
   availablity() {
     if (this.state.availablity === true) {
       this.setState({availablity: false});
@@ -52,7 +60,7 @@ export default class Profile extends Component {
     }
   }
   selectImage = async () => {
-    ImagePicker.showImagePicker(
+    await ImagePicker.showImagePicker(
       {noData: true, mediaType: 'photo'},
       response => {
         console.log('Response = ', response);
@@ -138,7 +146,7 @@ export default class Profile extends Component {
                       justifyContent: 'center',
                       height: 40,
                     }}
-                    onPress={() => this.availablity()}>
+                    onPress={this.availablityChangeHandler}>
                     <Text style={{fontWeight: 'bold'}}>Status</Text>
                   </Button>
 
@@ -204,3 +212,18 @@ export default class Profile extends Component {
     );
   }
 }
+const mapToState = state => {
+  return {
+    availablity: state.user.availablity,
+    currentUser: state.user.currentUser,
+  };
+};
+const dispatchToProps = dispatch => {
+  return {
+    toggleAvailablity: username => {
+      dispatch(toggle_availability(username));
+    },
+  };
+};
+
+export default connect(mapToState, dispatchToProps)(Profile);
