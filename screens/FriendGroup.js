@@ -85,7 +85,6 @@ class FriendGroup extends Component {
                     style={{paddingLeft: 20, fontSize: 20, fontWeight: 'bold'}}>
                     {user.username}
                   </Text>
-                  {/* <CheckBox /> */}
                 </View>
               );
             }

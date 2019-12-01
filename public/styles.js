@@ -152,14 +152,18 @@ const styles = StyleSheet.create({
   resultElement: {
     flexDirection: 'row',
     alignSelf: 'stretch',
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 5,
+    marginBottom: 5,
   },
   searchBar: {
     flex: 1,
   },
-  listFriends: {
-    flex: 7,
-    fontSize: 20,
-  },
+  // listFriends: {
+  //   flex: 7,
+  //   fontSize: 20,
+  // },
   addFriendBtn: {
     flex: 1,
     justifyContent: 'flex-end',
