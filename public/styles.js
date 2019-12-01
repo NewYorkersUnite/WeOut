@@ -179,9 +179,47 @@ const styles = StyleSheet.create({
   // PROFILE
   ProfileContainer: {
     flex: 1,
-    // backgroundColor: '#F0F0F0',
-    // backgroundColor: 'pink', // for testing purposes
     paddingTop: 120, // use this for poll's container!
+  },
+  profilePic: {
+    width: '100%',
+    height: '100%',
+    overflow: 'hidden',
+    borderRadius: 50,
+  },
+  profilePicBTN: {width: 100, height: 100, borderRadius: 50},
+  alignCen: {
+    alignItems: 'center',
+  },
+  topSection: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'flex-end',
+  },
+  statBtnLRG: {
+    flex: 3,
+    marginLeft: 10,
+    justifyContent: 'center',
+    height: 40,
+  },
+  statBtnSML: {
+    flex: 1,
+    height: 40,
+    marginRight: 10,
+    marginLeft: 5,
+    justifyContent: 'center',
+  },
+  categorySection: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingTop: 25,
+    paddingBottom: 100,
+  },
+  categoryLabels: {
+    fontWeight: 'bold',
+    color: 'white',
+    backgroundColor: '#DA2727',
+    textAlign: 'center',
   },
 
   // POLL
