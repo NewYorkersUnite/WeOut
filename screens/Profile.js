@@ -34,17 +34,16 @@ const catergories = [
   {name: 'Foodie', img: Foodie},
 ];
 
-const {width, height} = Dimensions.get('window');
-// const Taxi = require('../public/Taxis.jpg');
-const Tom =
-  'http://www.todayifoundout.com/wp-content/uploads/2017/12/myspace-tom.jpg';
+const {width} = Dimensions.get('window');
+// const Tom =
+//   'http://www.todayifoundout.com/wp-content/uploads/2017/12/myspace-tom.jpg';
 
 class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       availablity: true,
-      avatarSource: Tom,
+      avatarSource: this.props.currentUser.imageUrl,
     };
     this.availablityChangeHandler = this.availablityChangeHandler.bind(this);
   }
@@ -53,10 +52,10 @@ class Profile extends Component {
     this.props.toggleAvailablity(this.props.currentUser.username);
   }
   availablity() {
-    if (this.state.availablity === true) {
-      this.setState({availablity: false});
-    } else {
+    if (this.props.currentUser.available) {
       this.setState({availablity: true});
+    } else {
+      this.setState({availablity: false});
     }
   }
   selectImage = async () => {
@@ -80,8 +79,13 @@ class Profile extends Component {
 
   render() {
     const {navigate} = this.props.navigation;
+    const totalFriends = this.props.currentUser.friends.length;
+    const username = this.props.currentUser.username;
     let {avatarSource} = this.state;
+
     console.log('AVATAR', this.state.avatarSource);
+    console.log('CURRENT USER', this.props.currentUser.available);
+    console.log('LOCAL STATE', this.state);
 
     return (
       <ImageBackground
@@ -103,7 +107,7 @@ class Profile extends Component {
                         overflow: 'hidden',
                         borderRadius: 50,
                       },
-                      this.state.availablity
+                      this.props.currentUser.available
                         ? {borderColor: '#60F718', borderWidth: 4}
                         : null,
                     ]}
@@ -119,11 +123,11 @@ class Profile extends Component {
                   }}>
                   <View style={{alignItems: 'center'}}>
                     <Text style={{fontWeight: 'bold', fontSize: 22}}>
-                      Username
+                      {username}
                     </Text>
                   </View>
                   <View style={{alignItems: 'center'}}>
-                    <Text>205</Text>
+                    <Text>{totalFriends}</Text>
                     <Text style={{fontSize: 10, color: 'grey'}}>Friends</Text>
                   </View>
                   <View style={{alignItems: 'center'}}>
@@ -226,4 +230,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapToState, dispatchToProps)(Profile);
+export default connect(
+  mapToState,
+  dispatchToProps,
+)(Profile);
