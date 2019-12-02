@@ -9,16 +9,7 @@ import {
 import styles from '../public/styles';
 import {Button, Thumbnail, Container} from 'native-base';
 import {connect} from 'react-redux';
-import {getFriends, get_users} from '../store';
-
-const dummyFriends = [
-  'https://i.pinimg.com/originals/34/cf/e4/34cfe4ff152f7cde337006dbaf9a5cbf.jpg',
-  'https://pbs.twimg.com/media/C1tPCorUoAINR3c.jpg',
-  'https://data.whicdn.com/images/248670503/original.png',
-  'https://mcdn.wallpapersafari.com/medium/12/74/HlNebR.jpg',
-  'https://cdn.designbyhumans.com/product_images/p/618788.f56.05432S7ay1Cm2MjUAAA-650x650-b-p.jpg',
-  'https://d310a9hpolx59w.cloudfront.net/product_photos/66352254/file_53df422983_original.jpg',
-];
+import {getFriends, get_users, accept_friend, deny_friend} from '../store';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -57,12 +48,51 @@ class Dashboard extends Component {
       </View>
     );
   }
+  renderNotifications() {
+    return (
+      <View>
+        {this.props.currentUser.notifications.map((notif, idx) => {
+          return (
+            <View>
+              <Text>{notif}</Text>
+              <Button
+                onPress={() => {
+                  const friend = notif.slice(0, notif.length - 29);
+                  this.props.acceptFriend(
+                    this.props.currentUser.username,
+                    friend,
+                    idx,
+                  );
+                }}>
+                <Text>Accept</Text>
+              </Button>
+              <Button
+                onPress={() => {
+                  this.props.denyFriend(this.props.currentUser.username, idx);
+                }}>
+                <Text>Deny</Text>
+              </Button>
+            </View>
+          );
+        })}
+        <View>
+          {this.props.numOfNotifications ? (
+            <Text>{''}</Text>
+          ) : (
+            <Text>{'You dont have any notification'}</Text>
+          )}
+        </View>
+      </View>
+    );
+  }
   // style={{flexDirection: 'row', flexWrap: 'wrap'}}
   renderSection() {
     if (this.state.activeIndex === 0) {
       return <View>{this.renderCurrentSection()}</View>;
     } else if (this.state.activeIndex === 1) {
       return <View>{this.renderPastSection()}</View>;
+    } else if (this.state.activeIndex === 2) {
+      return <View>{this.renderNotifications()}</View>;
     }
   }
 
@@ -126,6 +156,18 @@ class Dashboard extends Component {
                   active={this.state.activeIndex === 1}>
                   <Text style={styles.NavBtnText}> Past Events</Text>
                 </Button>
+
+                <Button
+                  onPress={() => this.segmentClicked(2)}
+                  transparent
+                  active={this.state.activeIndex === 2}>
+                  <Text style={styles.NavBtnText}>
+                    Notifications
+                    {this.props.numOfNotifications
+                      ? this.props.numOfNotifications
+                      : ''}
+                  </Text>
+                </Button>
               </View>
               <ImageBackground
                 style={styles.opacityImg}
@@ -146,6 +188,8 @@ const mapToState = state => {
     currentUser: state.user.currentUser,
     friends: state.user.friends,
     users: state.user.users,
+    numOfFriends: state.user.numOfFriends,
+    numOfNotifications: state.user.numOfNotifications,
   };
 };
 
@@ -153,6 +197,9 @@ const dispatchToProps = dispatch => {
   return {
     getFriends: username => dispatch(getFriends(username)),
     getUsers: () => dispatch(get_users()),
+    acceptFriend: (username, friend, idx) =>
+      dispatch(accept_friend(username, friend, idx)),
+    denyFriend: (username, idx) => dispatch(deny_friend(username, idx)),
   };
 };
 
