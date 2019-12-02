@@ -16,13 +16,19 @@ class FriendGroup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      invitees: this.props.friends,
+      participants: [],
     };
   }
 
   async componentDidMount() {
     await this.props.getFriends(this.props.currentUser.username);
     await this.props.getUsers();
+  }
+  unselect(unselected) {
+    if (this.state.participants.includes(unselected)) {
+      let newArray = this.state.participants.filter(unselected);
+      return newArray;
+    }
   }
   render() {
     return (
@@ -72,18 +78,49 @@ class FriendGroup extends Component {
           {this.props.users.map((user, indx) => {
             if (user.available && this.props.friends.includes(user.username)) {
               return (
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View>
-                    <Thumbnail
-                      style={styles.TNDetails}
-                      source={{uri: user.imageUrl}}
-                    />
+                <TouchableOpacity
+                  onPress={() => {
+                    if (this.state.participants.includes(user.username)) {
+                      const participants = this.state.participants.filter(
+                        participant =>
+                          user.username === participant ? false : true,
+                      );
+                      this.setState({participants: participants});
+                    } else {
+                      this.setState({
+                        participants: [
+                          ...this.state.participants,
+                          user.username,
+                        ],
+                      });
+                    }
+                  }}>
+                  <View
+                    style={
+                      this.state.participants.includes(user.username)
+                        ? {
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            backgroundColor: 'gray',
+                          }
+                        : {flexDirection: 'row', alignItems: 'center'}
+                    }>
+                    <View>
+                      <Thumbnail
+                        style={styles.TNDetails}
+                        source={{uri: user.imageUrl}}
+                      />
+                    </View>
+                    <Text
+                      style={{
+                        paddingLeft: 20,
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                      }}>
+                      {user.username}
+                    </Text>
                   </View>
-                  <Text
-                    style={{paddingLeft: 20, fontSize: 20, fontWeight: 'bold'}}>
-                    {user.username}
-                  </Text>
-                </View>
+                </TouchableOpacity>
               );
             }
           })}
