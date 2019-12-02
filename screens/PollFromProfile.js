@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {ScrollView, Image, Text, View, ImageBackground} from 'react-native';
+import {
+  ScrollView,
+  Image,
+  Text,
+  View,
+  ImageBackground,
+  DatePickerIOS,
+} from 'react-native';
 import styles from '../public/styles';
 import {Button, Item, Label, Input} from 'native-base';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -8,13 +15,18 @@ export default class PollFromProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      themeTitle: '',
-      suggestionTimer: '',
-      voteTimer: '',
-      limit: '',
+      poll: {themeTitle: '', suggestionTimer: '', voteTimer: '', limit: ''},
+      chosenDate: new Date(),
+      showDatePicker: false,
     };
+    this.setDate = this.setDate.bind(this);
+  }
+
+  setDate(newDate) {
+    this.setState({chosenDate: newDate});
   }
   render() {
+    console.log('STATE IS HERE>>>', this.state);
     return (
       <ImageBackground
         style={styles.title}
@@ -35,7 +47,7 @@ export default class PollFromProfile extends Component {
               autoCorrect={false}
               autoCapitalize="none"
               onChangeText={themeTitle =>
-                this.setState({themeTitle: themeTitle})
+                this.setState({poll: {...this.state.poll, themeTitle}})
               }
             />
           </Item>
@@ -71,7 +83,32 @@ export default class PollFromProfile extends Component {
               onChangeText={limit => this.setState({limit: limit})}
             />
           </Item>
+          <Button
+            style={{
+              backgroundColor: '#2b81b5',
+              justifyContent: 'center',
+              marginTop: 10,
+            }}
+            onPress={() => {
+              this.setState({showDatePicker: !this.state.showDatePicker});
+            }}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: 'bold',
+                color: 'white',
+              }}>
+              Select Date & Time
+            </Text>
+          </Button>
         </View>
+        {this.state.showDatePicker ? (
+          <DatePickerIOS
+            date={this.state.chosenDate}
+            onDateChange={this.setDate}
+          />
+        ) : null}
+
         <Button
           full
           style={{
