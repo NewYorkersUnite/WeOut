@@ -10,14 +10,17 @@ import {
 import styles from '../public/styles';
 import {Button, Item, Label, Input} from 'native-base';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {connect} from 'react-redux';
+import {create_poll} from '../store';
 
-export default class PollFromProfile extends Component {
+class PollFromProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       poll: {themeTitle: '', suggestionTimer: '', voteTimer: '', limit: ''},
       chosenDate: new Date(),
       showDatePicker: false,
+      participants: ['nayyif', 'vanessa'],
     };
     this.setDate = this.setDate.bind(this);
   }
@@ -115,7 +118,14 @@ export default class PollFromProfile extends Component {
             backgroundColor: '#2b81b5',
             justifyContent: 'center',
           }}
-          onPress={() => this.props.navigation.navigate('VotingRoomP')}>
+          onPress={() => {
+            this.props.createPoll(
+              this.props.currentUser.username,
+              this.state.poll,
+              this.state.participants,
+            );
+            this.props.navigation.navigate('VotingRoomP')
+          }}>
           <Text
             style={{
               fontSize: 15,
@@ -129,3 +139,19 @@ export default class PollFromProfile extends Component {
     );
   }
 }
+
+const mapToState = state => {
+  return {
+    polls: state.polls.polls,
+    currentUser: state.user.currentUser,
+  };
+};
+
+const dispatchToProps = dispatch => {
+  return {
+    createPoll: (username, poll, participants) =>
+      dispatch(create_poll(username, poll, participants)),
+  };
+};
+
+export default  connect(mapToState, dispatchToProps)(PollFromProfile)
