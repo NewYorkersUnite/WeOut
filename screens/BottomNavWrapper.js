@@ -9,6 +9,7 @@ import SinglePoll from './SinglePoll';
 import FriendGroup from './FriendGroup';
 import PollFromProfile from './PollFromProfile';
 import PollFromPollTab from './PollFromPollTab';
+import VotingRoomP from './VotingRoomP';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
 
 const PollTab = createSwitchNavigator({
@@ -21,7 +22,7 @@ const ProfileTab = createSwitchNavigator({
   Profile: {screen: Profile},
   FriendGroup: {screen: FriendGroup},
   PollFromProfile: {screen: PollFromProfile},
-  SinglePoll: {screen: SinglePoll},
+  VotingRoomP: {screen: VotingRoomP},
 });
 
 const bottomTabNavigator = createMaterialBottomTabNavigator(

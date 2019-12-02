@@ -9,10 +9,9 @@ export default class PollFromProfile extends Component {
     super(props);
     this.state = {
       themeTitle: '',
-      optionOne: '',
-      optionTwo: '',
-      optionThree: '',
-      invitees: [], // this will be all the available friends from database, just display names for now
+      suggestionTimer: '',
+      voteTimer: '',
+      limit: '',
     };
   }
   render() {
@@ -42,34 +41,34 @@ export default class PollFromProfile extends Component {
           </Item>
 
           <Item floatingLabel>
-            <Label> Option One </Label>
+            <Label> Set Timer for Suggestion Input </Label>
 
             <Input
               autoCorrect={false}
               autoCapitalize="none"
-              onChangeText={optionOne => this.setState({optionOne: optionOne})}
-            />
-          </Item>
-
-          <Item floatingLabel>
-            <Label> Option Two </Label>
-
-            <Input
-              autoCorrect={false}
-              autoCapitalize="none"
-              onChangeText={optionTwo => this.setState({optionTwo: optionTwo})}
-            />
-          </Item>
-
-          <Item floatingLabel>
-            <Label> Option Three </Label>
-
-            <Input
-              autoCorrect={false}
-              autoCapitalize="none"
-              onChangeText={optionThree =>
-                this.setState({optionThree: optionThree})
+              onChangeText={suggestionTimer =>
+                this.setState({suggestionTimer: suggestionTimer})
               }
+            />
+          </Item>
+
+          <Item floatingLabel>
+            <Label> Set Timer for Votes </Label>
+
+            <Input
+              autoCorrect={false}
+              autoCapitalize="none"
+              onChangeText={voteTimer => this.setState({voteTimer: voteTimer})}
+            />
+          </Item>
+
+          <Item floatingLabel>
+            <Label> How Many Suggestions? (Set A Limit) </Label>
+
+            <Input
+              autoCorrect={false}
+              autoCapitalize="none"
+              onChangeText={limit => this.setState({limit: limit})}
             />
           </Item>
         </View>
@@ -79,7 +78,7 @@ export default class PollFromProfile extends Component {
             backgroundColor: '#2b81b5',
             justifyContent: 'center',
           }}
-          onPress={() => this.props.navigation.navigate('SinglePoll')}>
+          onPress={() => this.props.navigation.navigate('VotingRoomP')}>
           <Text
             style={{
               fontSize: 15,

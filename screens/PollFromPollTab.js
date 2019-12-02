@@ -9,13 +9,12 @@ export default class PollFromPollTab extends Component {
     super(props);
     this.state = {
       themeTitle: '',
-      optionOne: '',
-      optionTwo: '',
-      optionThree: '',
+      suggestionTimer: '',
+      voteTimer: '',
+      limit: '',
     };
   }
   render() {
-    console.log('STATE', this.state);
     return (
       <ImageBackground
         style={styles.title}
@@ -42,34 +41,34 @@ export default class PollFromPollTab extends Component {
           </Item>
 
           <Item floatingLabel>
-            <Label> Option One </Label>
+            <Label> Set Timer for Suggestion Input </Label>
 
             <Input
               autoCorrect={false}
               autoCapitalize="none"
-              onChangeText={optionOne => this.setState({optionOne: optionOne})}
-            />
-          </Item>
-
-          <Item floatingLabel>
-            <Label> Option Two </Label>
-
-            <Input
-              autoCorrect={false}
-              autoCapitalize="none"
-              onChangeText={optionTwo => this.setState({optionTwo: optionTwo})}
-            />
-          </Item>
-
-          <Item floatingLabel>
-            <Label> Option Three </Label>
-
-            <Input
-              autoCorrect={false}
-              autoCapitalize="none"
-              onChangeText={optionThree =>
-                this.setState({optionThree: optionThree})
+              onChangeText={suggestionTimer =>
+                this.setState({suggestionTimer: suggestionTimer})
               }
+            />
+          </Item>
+
+          <Item floatingLabel>
+            <Label> Set Timer for Votes </Label>
+
+            <Input
+              autoCorrect={false}
+              autoCapitalize="none"
+              onChangeText={voteTimer => this.setState({voteTimer: voteTimer})}
+            />
+          </Item>
+
+          <Item floatingLabel>
+            <Label> How Many Suggestions? (Set A Limit) </Label>
+
+            <Input
+              autoCorrect={false}
+              autoCapitalize="none"
+              onChangeText={limit => this.setState({limit: limit})}
             />
           </Item>
         </View>
