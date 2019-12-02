@@ -35,8 +35,9 @@ export const get_polls = username => async dispatch => {
     const allPollsData = await db.collection('polls').get();
     const myPolls = [];
     allPollsData.forEach(element => {
-      console.log('ELEMENT ID is', element.id);
-      if (myPollIds.includes(element.id)) myPolls.push(element.data());
+      if (myPollIds.includes(element.id)) {
+        myPolls.push(element.data());
+      }
     });
     dispatch(got_polls(myPolls));
   } catch (err) {
@@ -54,9 +55,14 @@ export const create_poll = (username, poll, participants) => async dispatch => {
 
     await participants.forEach(async participant => {
       const participantData = await db.doc(`/users/${participant}`).get();
+      const participantNotifications = participantData.data().notifications;
+      participantNotifications.push(`${username} has invited you to a poll`);
       const participantPolls = participantData.data().polls;
       participantPolls.push(pollId);
-      await db.doc(`/users/${participant}`).update({polls: participantPolls});
+      await db.doc(`/users/${participant}`).update({
+        polls: participantPolls,
+        notifications: participantNotifications,
+      });
     });
     const myData = await db.doc(`users/${username}/`).get();
     const myPolls = myData.data().polls;
