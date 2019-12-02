@@ -3,18 +3,22 @@ import {ScrollView, Image, Text, View, ImageBackground} from 'react-native';
 import styles from '../public/styles';
 import {Button, Item, Label, Input} from 'native-base';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import TimePicker from 'react-native-simple-time-picker';
 
 export default class PollFromPollTab extends Component {
   constructor(props) {
     super(props);
     this.state = {
       themeTitle: '',
-      suggestionTimer: '',
+      selectedHours: 0,
+      selectedMinutes: 0,
       voteTimer: '',
       limit: '',
     };
   }
+
   render() {
+    const {selectedHours, selectedMinutes} = this.state;
     return (
       <ImageBackground
         style={styles.title}
@@ -41,28 +45,6 @@ export default class PollFromPollTab extends Component {
           </Item>
 
           <Item floatingLabel>
-            <Label> Set Timer for Suggestion Input </Label>
-
-            <Input
-              autoCorrect={false}
-              autoCapitalize="none"
-              onChangeText={suggestionTimer =>
-                this.setState({suggestionTimer: suggestionTimer})
-              }
-            />
-          </Item>
-
-          <Item floatingLabel>
-            <Label> Set Timer for Votes </Label>
-
-            <Input
-              autoCorrect={false}
-              autoCapitalize="none"
-              onChangeText={voteTimer => this.setState({voteTimer: voteTimer})}
-            />
-          </Item>
-
-          <Item floatingLabel>
             <Label> How Many Suggestions? (Set A Limit) </Label>
 
             <Input
@@ -71,6 +53,26 @@ export default class PollFromPollTab extends Component {
               onChangeText={limit => this.setState({limit: limit})}
             />
           </Item>
+
+          <Text>
+            {this.state.selectedHours}hr:
+            {this.state.selectedMinutes}min
+          </Text>
+          <TimePicker
+            selectedHours={this.state.selectedHours}
+            //initial Hourse value
+            selectedMinutes={this.state.selectedMinutes}
+            //initial Minutes value
+            onChange={(hours, minutes) =>
+              this.setState({
+                selectedHours: hours,
+                selectedMinutes: minutes,
+              })
+            }
+          />
+          <Button>
+            <Text>Start</Text>
+          </Button>
         </View>
         <Button
           full
