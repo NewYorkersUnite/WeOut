@@ -105,21 +105,6 @@ class Search extends Component {
           )}
           keyExtractor={(item, index) => index.toString()}
         />
-        <Button
-          full
-          style={{
-            backgroundColor: '#2b81b5',
-            justifyContent: 'center',
-          }}>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 'bold',
-              color: 'white',
-            }}>
-            Create Poll Room
-          </Text>
-        </Button>
       </View>
     );
   }

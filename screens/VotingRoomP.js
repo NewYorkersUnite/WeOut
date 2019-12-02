@@ -6,16 +6,16 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {voteOptionOne, voteOptionTwo, voteOptionThree} from '../store';
 import {connect} from 'react-redux';
 
-class SinglePoll extends Component {
+class VotingRoomP extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // optionOne: 'titanic',
-      // optionTwo: 'movie two',
-      // optionThree: 'toy story',
-      // optionOneVote: 0,
-      // optionTwoVote: 0,
-      // optionThreeVote: 0,
+      //   optionOne: 'titanic',
+      //   optionTwo: 'movie two',
+      //   optionThree: 'toy story',
+      //   optionOneVote: 0,
+      //   optionTwoVote: 0,
+      //   optionThreeVote: 0,
       suggestions: [],
       suggestion: '',
     };
@@ -54,13 +54,12 @@ class SinglePoll extends Component {
         style={styles.title}
         source={require('../public/Background.png')}>
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Poll')}>
+          onPress={() => this.props.navigation.navigate('FriendGroup')}>
           <Image
             style={{width: 50, height: 50, marginTop: 50, marginLeft: 8}}
             source={require('../public/BackArrow.png')}
           />
         </TouchableOpacity>
-
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <Text
             style={{
@@ -153,38 +152,4 @@ const dispatchToProps = dispatch => {
 export default connect(
   mapToState,
   dispatchToProps,
-)(SinglePoll);
-
-/*
-<View style={styles.centerish}>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 25,
-              marginBottom: 30,
-            }}>
-            Movie Night
-          </Text>
-          <View>
-            <Button
-              full
-              rounded
-              style={{
-                backgroundColor: '#2b81b5',
-                justifyContent: 'center',
-                marginBottom: 25,
-              }}
-              onPress={() =>
-                this.setState({optionOneVote: this.state.optionOneVote + 1})
-              }>
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                  color: 'white',
-                }}>
-                {this.state.optionOne}{' '}
-                {this.calcOfOptionOne() ? this.calcOfOptionOne() + '%' : null}
-              </Text>
-            </Button>
-            */
+)(VotingRoomP);

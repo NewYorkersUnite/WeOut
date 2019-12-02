@@ -96,7 +96,8 @@ class FriendGroup extends Component {
           style={{
             backgroundColor: '#2b81b5',
             justifyContent: 'center',
-          }}>
+          }}
+          onPress={() => this.props.navigation.navigate('PollFromProfile')}>
           <Text
             style={{
               fontSize: 15,

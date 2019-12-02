@@ -46,6 +46,24 @@ class Poll extends Component {
             </View>
           </View>
         </TouchableOpacity>
+        <View style={{flex: 1, justifyContent: 'flex-end'}}>
+          <Button
+            full
+            style={{
+              backgroundColor: '#2b81b5',
+              justifyContent: 'center',
+            }}
+            onPress={() => this.props.navigation.navigate('PollFromPollTab')}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: 'bold',
+                color: 'white',
+              }}>
+              Create Poll Room
+            </Text>
+          </Button>
+        </View>
       </ImageBackground>
     );
   }
