@@ -52,7 +52,7 @@ class Dashboard extends Component {
     return (
       <View>
         {this.props.currentUser.notifications.map((notif, idx) => {
-          if(notif.includes('request to add you as friend')) {
+          if (notif.includes('request to add you as friend')) {
             return (
               <View>
                 <Text>{notif}</Text>
@@ -178,7 +178,7 @@ class Dashboard extends Component {
                   <Text style={styles.NavBtnText}>
                     Notifications
                     {this.props.numOfNotifications
-                      ? this.props.numOfNotifications
+                      ? `(${this.props.numOfNotifications})`
                       : ''}
                   </Text>
                 </Button>
