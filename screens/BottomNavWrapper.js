@@ -5,24 +5,22 @@ import Dashboard from './Dashboard';
 import Profile from './Profile';
 import Search from './Search';
 import Poll from './Poll';
-import CreatePoll from './CreatePoll';
 import SinglePoll from './SinglePoll';
 import FriendGroup from './FriendGroup';
+import PollFromProfile from './PollFromProfile';
+import PollFromPollTab from './PollFromPollTab';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
-import Icon from 'react-native-vector-icons/Feather';
-
-// CreatePoll: {screen: CreatePoll},
-//     SinglePoll: {screen: SinglePoll},
 
 const PollTab = createSwitchNavigator({
   Poll: {screen: Poll},
+  PollFromPollTab: {screen: PollFromPollTab},
   SinglePoll: {screen: SinglePoll},
 });
 
 const ProfileTab = createSwitchNavigator({
   Profile: {screen: Profile},
   FriendGroup: {screen: FriendGroup},
-  CreatePoll: {screen: CreatePoll},
+  PollFromProfile: {screen: PollFromProfile},
   SinglePoll: {screen: SinglePoll},
 });
 

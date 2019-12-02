@@ -3,8 +3,9 @@ import {createLogger} from 'redux-logger';
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import user from './users';
+import polls from './polls';
 
-const reducer = combineReducers({user});
+const reducer = combineReducers({user, polls});
 // const middleware = composeWithDevTools(
 //   applyMiddleware(thunkMiddleware, createLogger({collapsed: true})),
 // );
@@ -12,3 +13,4 @@ const store = createStore(reducer, applyMiddleware(thunk));
 
 export default store;
 export * from './users';
+export * from './polls';
