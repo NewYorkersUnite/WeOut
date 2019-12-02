@@ -25,8 +25,6 @@ class FriendGroup extends Component {
     await this.props.getUsers();
   }
   render() {
-    console.log('CURRENT USER IS >>>', this.props.currentUser);
-    console.log('MY FRIENDS ARE>>>', this.props.friends);
     return (
       <ImageBackground
         style={styles.title}
