@@ -4,7 +4,7 @@ import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import Dashboard from './Dashboard';
 import Profile from './Profile';
 import Search from './Search';
-import Poll from './Poll';
+import AllPolls from './AllPolls';
 import SinglePoll from './SinglePoll';
 import FriendGroup from './FriendGroup';
 import PollFromProfile from './PollFromProfile';
@@ -13,7 +13,7 @@ import VotingRoomP from './VotingRoomP';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
 
 const PollTab = createSwitchNavigator({
-  Poll: {screen: Poll},
+  AllPolls: {screen: AllPolls},
   PollFromPollTab: {screen: PollFromPollTab},
   SinglePoll: {screen: SinglePoll},
 });

@@ -82,10 +82,6 @@ class Profile extends Component {
     const username = this.props.currentUser.username;
     let {avatarSource} = this.state;
 
-    // console.log('AVATAR', this.state.avatarSource);
-    console.log('CURRENT USER', this.props.currentUser);
-    // console.log('LOCAL STATE', this.state);
-
     return (
       <ImageBackground
         style={styles.title}

@@ -1,56 +1,90 @@
 const {firebaseApp, db, config} = require('../functions/util/config');
 import {Alert} from 'react-native';
-
 /**
  * ACTION TYPES
  */
-
-const OPTION_ONE_VOTE = 'OPTION_ONE_VOTE';
-const OPTION_TWO_VOTE = 'OPTION_TWO_VOTE';
-const OPTION_THREE_VOTE = 'OPTION_THREE_VOTE';
+const CREATED_POLL = 'CREATED_POLL';
+const GOT_POLLS = 'GOT_POLLS';
+const ERROR = 'ERROR';
 
 /**
  * INITIAL STATE
  */
 const defaultPoll = {
-  optionOne: '',
-  optionTwo: '',
-  optionThree: '',
+  polls: [],
 };
 
 /**
  * ACTION CREATORS
- */ export const voteOptionOne = () => {
-  return {
-    type: OPTION_ONE_VOTE,
-  };
-};
-export const voteOptionTwo = () => {
-  return {
-    type: OPTION_TWO_VOTE,
-  };
-};
-export const voteOptionThree = () => {
-  return {
-    type: OPTION_THREE_VOTE,
-  };
+ */
+const created_poll = polls => {
+  return {type: CREATED_POLL, polls};
 };
 
-export default (state = defaultPoll, action) => {
+const got_polls = polls => {
+  return {type: GOT_POLLS, polls};
+};
+
+/**
+ * THUNK CREATORS
+ */
+export const get_polls = username => async dispatch => {
+  try {
+    const myData = await db.doc(`/users/${username}`).get();
+    const myPollIds = myData.data().polls;
+    const allPollsData = await db.collection('polls').get();
+    const myPolls = [];
+    allPollsData.forEach(element => {
+      console.log('ELEMENT ID is', element.id);
+      if (myPollIds.includes(element.id)) myPolls.push(element.data());
+    });
+    dispatch(got_polls(myPolls));
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: ERROR,
+    });
+  }
+};
+
+export const create_poll = (username, poll, participants) => async dispatch => {
+  try {
+    const pollData = await db.collection('polls').add(poll);
+    const pollId = pollData.id;
+
+    await participants.forEach(async participant => {
+      const participantData = await db.doc(`/users/${participant}`).get();
+      const participantPolls = participantData.data().polls;
+      participantPolls.push(pollId);
+      await db.doc(`/users/${participant}`).update({polls: participantPolls});
+    });
+    const myData = await db.doc(`users/${username}/`).get();
+    const myPolls = myData.data().polls;
+    myPolls.push(pollId);
+    await db.doc(`/users/${username}`).update({polls: myPolls});
+    dispatch(created_poll(myPolls));
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: ERROR,
+    });
+  }
+};
+
+/**
+ * REDUCER
+ */
+export default function(state = defaultPoll, action) {
   switch (action.type) {
-    case OPTION_ONE_VOTE:
-      return Object.assign({}, state, {
-        optionOne: state.optionOne + 1,
-      });
-    case OPTION_TWO_VOTE:
-      return Object.assign({}, state, {
-        optionTwo: state.optionTwo + 1,
-      });
-    case OPTION_THREE_VOTE:
-      return Object.assign({}, state, {
-        optionThree: state.optionThree + 1,
-      });
+    case CREATED_POLL: {
+      return {...state, polls: action.polls};
+    }
+    case GOT_POLLS: {
+      return {...state, polls: action.polls};
+    }
+    case ERROR:
+      return state;
     default:
       return state;
   }
-};
+}
