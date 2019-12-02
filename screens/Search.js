@@ -33,7 +33,6 @@ class Search extends Component {
   }
 
   render() {
-    const {navigate} = this.props.navigation;
     return (
       <View style={styles.searchBar}>
         <Header searchBar rounded>

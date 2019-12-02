@@ -176,7 +176,17 @@ export const accept_friend = (username, friend, idx) => async dispatch => {
   }
 };
 
-export const deny_friend = (username, idx) => async dispatch => {
+// export const deny_friend = (username, idx) => async dispatch => {
+//   const myData = await db.doc(`/users/${username}`).get();
+//   const myFriends = myData.data().friends;
+//   const myNotifications = myData.data().notifications;
+//   myNotifications.splice(idx, 1);
+//   await db.doc(`/users/${username}`).update({notifications: myNotifications});
+//   const numOfNotifications = myData.data().notifications.length;
+//   dispatch(got_friends(myFriends, numOfNotifications));
+// };
+
+export const dismiss = (username, idx) => async dispatch => {
   const myData = await db.doc(`/users/${username}`).get();
   const myFriends = myData.data().friends;
   const myNotifications = myData.data().notifications;

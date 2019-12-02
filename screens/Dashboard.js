@@ -9,7 +9,7 @@ import {
 import styles from '../public/styles';
 import {Button, Thumbnail, Container} from 'native-base';
 import {connect} from 'react-redux';
-import {getFriends, get_users, accept_friend, deny_friend} from '../store';
+import {getFriends, get_users, accept_friend, dismiss} from '../store';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -52,28 +52,42 @@ class Dashboard extends Component {
     return (
       <View>
         {this.props.currentUser.notifications.map((notif, idx) => {
-          return (
-            <View>
-              <Text>{notif}</Text>
-              <Button
-                onPress={() => {
-                  const friend = notif.slice(0, notif.length - 29);
-                  this.props.acceptFriend(
-                    this.props.currentUser.username,
-                    friend,
-                    idx,
-                  );
-                }}>
-                <Text>Accept</Text>
-              </Button>
-              <Button
-                onPress={() => {
-                  this.props.denyFriend(this.props.currentUser.username, idx);
-                }}>
-                <Text>Deny</Text>
-              </Button>
-            </View>
-          );
+          if(notif.includes('request to add you as friend')) {
+            return (
+              <View>
+                <Text>{notif}</Text>
+                <Button
+                  onPress={() => {
+                    const friend = notif.slice(0, notif.length - 29);
+                    this.props.acceptFriend(
+                      this.props.currentUser.username,
+                      friend,
+                      idx,
+                    );
+                  }}>
+                  <Text>Accept</Text>
+                </Button>
+                <Button
+                  onPress={() => {
+                    this.props.dismiss(this.props.currentUser.username, idx);
+                  }}>
+                  <Text>Deny</Text>
+                </Button>
+              </View>
+            );
+          } else {
+            return (
+              <View>
+                <Text>{notif}</Text>
+                <Button
+                  onPress={() => {
+                    this.props.dismiss(this.props.currentUser.username, idx);
+                  }}>
+                  <Text>Dismiss</Text>
+                </Button>
+              </View>
+            );
+          }
         })}
         <View>
           {this.props.numOfNotifications ? (
@@ -199,7 +213,7 @@ const dispatchToProps = dispatch => {
     getUsers: () => dispatch(get_users()),
     acceptFriend: (username, friend, idx) =>
       dispatch(accept_friend(username, friend, idx)),
-    denyFriend: (username, idx) => dispatch(deny_friend(username, idx)),
+    dismiss: (username, idx) => dispatch(dismiss(username, idx)),
   };
 };
 

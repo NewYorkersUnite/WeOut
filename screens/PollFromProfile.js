@@ -20,7 +20,7 @@ class PollFromProfile extends Component {
       poll: {themeTitle: '', suggestionTimer: '', voteTimer: '', limit: ''},
       chosenDate: new Date(),
       showDatePicker: false,
-      participants: ['nayyif', 'vanessa'],
+      participants: this.props.navigation.getParam('participants'),
     };
     this.setDate = this.setDate.bind(this);
   }
@@ -29,7 +29,6 @@ class PollFromProfile extends Component {
     this.setState({chosenDate: newDate});
   }
   render() {
-    console.log('STATE IS HERE>>>', this.state);
     return (
       <ImageBackground
         style={styles.title}
