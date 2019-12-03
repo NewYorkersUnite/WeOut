@@ -11,6 +11,7 @@ import styles from '../public/styles';
 import {Button} from 'native-base';
 import {connect} from 'react-redux';
 import {get_polls} from '../store';
+import randomNYCphotos from '../public/photoURLS';
 
 class AllPolls extends Component {
   async componentDidMount() {
@@ -36,7 +37,12 @@ class AllPolls extends Component {
                       alignItems: 'center',
                     }}>
                     <Image
-                      source={require('../public/Taxis.jpg')}
+                      source={{
+                        uri:
+                          randomNYCphotos[
+                            Math.floor(Math.random() * randomNYCphotos.length)
+                          ],
+                      }}
                       style={{
                         width: 80,
                         height: 80,
@@ -47,7 +53,7 @@ class AllPolls extends Component {
                       }}
                     />
                     <View style={styles.pollDetails}>
-                      <Text>{poll.themeTitle}</Text>
+                      <Text style={styles.scrollTxt}>{poll.themeTitle}</Text>
                       <Text>Suggestions Closing In: 25 minutes</Text>
                       <Text>Final Votes Closing In: 40 minutes</Text>
                     </View>
@@ -95,4 +101,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapToState, dispatchToProps)(AllPolls);
+export default connect(
+  mapToState,
+  dispatchToProps,
+)(AllPolls);
