@@ -132,6 +132,13 @@ export const addFriend = (username, item) => async dispatch => {
   try {
     const friendData = await db.doc(`/users/${item.username}`).get();
     const friendNotifications = friendData.data().notifications;
+    if (
+      friendNotifications.includes(`${username} request to add you as friend`)
+    ) {
+      dispatch(requested_friend());
+      return;
+    }
+
     await friendNotifications.push(`${username} request to add you as friend`);
     await db
       .doc(`/users/${item.username}`)
