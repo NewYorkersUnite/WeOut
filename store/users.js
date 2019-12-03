@@ -101,7 +101,7 @@ export const sign_up = newUser => async dispatch => {
         imageUrl: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noImg}?alt=media`,
         userId: userId,
         available: true,
-        friends: [],
+        friends: ['kenzo'],
         notifications: [],
       };
       await db.doc(`/users/${newUser.username}`).set(userCredentials);
