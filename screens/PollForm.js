@@ -13,7 +13,6 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import {create_poll} from '../store';
 
-
 // WE WANT THIS ONE
 class PollForm extends Component {
   constructor(props) {
@@ -63,7 +62,7 @@ class PollForm extends Component {
           </Item>
 
           <Item floatingLabel>
-            <Label> Set Timer for Suggestion Input (Numerical Value) </Label>
+            <Label> Set Timer for Suggestion (ex: 0-60) </Label>
 
             <Input
               autoCorrect={false}
@@ -75,7 +74,7 @@ class PollForm extends Component {
           </Item>
 
           <Item floatingLabel>
-            <Label> Set Timer for Votes (Numerical Value) </Label>
+            <Label> Set Timer for Votes (ex: 0-60) </Label>
 
             <Input
               autoCorrect={false}
@@ -161,7 +160,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapToState, dispatchToProps)(PollForm);
-
-
-
+export default connect(
+  mapToState,
+  dispatchToProps,
+)(PollForm);
