@@ -90,7 +90,10 @@ class Search extends Component {
                   justifyContent: 'center',
                   width: 100,
                 }}
-                onPress={() => this.addFriendClick({item})}>
+                onPress={() => {
+                  Alert.alert(`Friend Request Sent to ${item.username}!`);
+                  this.addFriendClick({item});
+                }}>
                 <Text
                   style={{
                     fontSize: 15,

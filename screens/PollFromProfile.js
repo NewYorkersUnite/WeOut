@@ -55,7 +55,7 @@ class PollFromProfile extends Component {
           </Item>
 
           <Item floatingLabel>
-            <Label> Set Timer for Suggestion Input </Label>
+            <Label> Set Timer for Suggestion Input (Numerical Value) </Label>
 
             <Input
               autoCorrect={false}
@@ -67,7 +67,7 @@ class PollFromProfile extends Component {
           </Item>
 
           <Item floatingLabel>
-            <Label> Set Timer for Votes </Label>
+            <Label> Set Timer for Votes (Numerical Value) </Label>
 
             <Input
               autoCorrect={false}
@@ -123,7 +123,7 @@ class PollFromProfile extends Component {
               this.state.poll,
               this.state.participants,
             );
-            this.props.navigation.navigate('VotingRoomP')
+            this.props.navigation.navigate('VotingRoomP');
           }}>
           <Text
             style={{
@@ -153,4 +153,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default  connect(mapToState, dispatchToProps)(PollFromProfile)
+export default connect(
+  mapToState,
+  dispatchToProps,
+)(PollFromProfile);

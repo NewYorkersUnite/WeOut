@@ -22,7 +22,7 @@ const defaultUser = {
   logged_in: false,
   friends: [],
   users: [],
-  availability: null, // Kaitlyn changed this from true
+  availability: true, // Kaitlyn changed this from true
 };
 
 /**
@@ -88,7 +88,9 @@ export const sign_up = newUser => async dispatch => {
         username: newUser.username,
         email: newUser.email,
         createdAt: new Date().toISOString(),
-        imageUrl: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noImg}?alt=media`,
+        imageUrl: `https://firebasestorage.googleapis.com/v0/b/${
+          config.storageBucket
+        }/o/${noImg}?alt=media`,
         userId: userId,
         available: true,
         friends: [],

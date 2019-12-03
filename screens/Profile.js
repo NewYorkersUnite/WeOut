@@ -11,7 +11,7 @@ import styles from '../public/styles';
 import {Button} from 'native-base';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {toggle_availability} from '../store';
+import {toggle_availability, get_polls} from '../store';
 
 const AllFriends = require('../public/AllFriends.jpg');
 const College = require('../public/College.jpg');
@@ -41,22 +41,21 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      availablity: true,
+      available: null,
       avatarSource: this.props.currentUser.imageUrl,
     };
     this.availablityChangeHandler = this.availablityChangeHandler.bind(this);
   }
 
   availablityChangeHandler() {
-    this.props.toggleAvailablity(this.props.currentUser.username);
+    this.props.toggleAvailability(this.props.currentUser.username);
+    this.props.availability
+      ? this.setState({available: false})
+      : this.setState({available: true});
   }
-  availablity() {
-    if (this.props.currentUser.available) {
-      this.setState({availablity: true});
-    } else {
-      this.setState({availablity: false});
-    }
-  }
+  // availablity() {
+  //   //** */
+  // }
 
   selectImage = async () => {
     await ImagePicker.showImagePicker(
@@ -81,7 +80,7 @@ class Profile extends Component {
     const totalFriends = this.props.currentUser.friends.length;
     const username = this.props.currentUser.username;
     let {avatarSource} = this.state;
-
+    const allPolls = this.props.allPolls.length;
     return (
       <ImageBackground
         style={styles.title}
@@ -97,7 +96,7 @@ class Profile extends Component {
                     source={{uri: avatarSource}}
                     style={[
                       styles.profilePic,
-                      this.props.currentUser.available
+                      this.state.available
                         ? {borderColor: '#60F718', borderWidth: 4}
                         : null,
                     ]}
@@ -116,7 +115,7 @@ class Profile extends Component {
                     <Text style={{fontSize: 10, color: 'grey'}}>Friends</Text>
                   </View>
                   <View style={styles.alignCen}>
-                    <Text>167</Text>
+                    <Text>{allPolls}</Text>
                     <Text style={{fontSize: 10, color: 'grey'}}>Polls</Text>
                   </View>
                 </View>
@@ -177,14 +176,18 @@ class Profile extends Component {
 }
 const mapToState = state => {
   return {
-    availablity: state.user.availablity,
+    availability: state.user.availability,
     currentUser: state.user.currentUser,
+    allPolls: state.polls.polls,
   };
 };
 const dispatchToProps = dispatch => {
   return {
-    toggleAvailablity: username => {
+    toggleAvailability: username => {
       dispatch(toggle_availability(username));
+    },
+    getPolls: username => {
+      dispatch(get_polls(username));
     },
   };
 };
