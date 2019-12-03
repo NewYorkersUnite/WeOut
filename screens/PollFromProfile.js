@@ -32,10 +32,9 @@ class PollFromProfile extends Component {
   }
 
   setDate(newDate) {
-    this.setState({poll: {...this.state.poll, newDate}});
+    this.setState({poll: {...this.state.poll, chosenDate: newDate}});
   }
   render() {
-    console.log('STATE', this.state.poll);
     return (
       <ImageBackground
         style={styles.title}
@@ -160,7 +159,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapToState,
-  dispatchToProps,
-)(PollFromProfile);
+export default connect(mapToState, dispatchToProps)(PollFromProfile);

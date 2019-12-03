@@ -20,7 +20,7 @@ export default class PollFromPollTab extends Component {
         style={styles.title}
         source={require('../public/Background.png')}>
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Poll')}>
+          onPress={() => this.props.navigation.navigate('AllPolls')}>
           <Image
             style={{width: 50, height: 50, marginTop: 50, marginLeft: 8}}
             source={require('../public/BackArrow.png')}
