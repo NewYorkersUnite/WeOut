@@ -18,7 +18,13 @@ class AllPolls extends Component {
     await this.props.getPolls(this.props.currentUser.username);
   }
   render() {
-    console.log('poll data', this.props.allPolls);
+    // console.log(
+    //   'poll data',
+    //   this.props.allPolls[0].chosenDate.toISOString().split('T')[0],
+    // ); // Im trying to get the date to render on the all polls page, (Kait)
+
+    // const eventDate = this.props.allPolls.chosenDate;
+    // console.log('eventDate', eventDate);
     return (
       <ImageBackground
         style={styles.title}
@@ -57,6 +63,7 @@ class AllPolls extends Component {
                     />
                     <View style={styles.pollDetails}>
                       <Text style={styles.scrollTxt}>{poll.themeTitle}</Text>
+                      {/* <Text>Event Date: {poll.chosenDate}</Text> */}
                       <Text>
                         Suggestions Closing In: {poll.suggestionTimer} minutes
                       </Text>
