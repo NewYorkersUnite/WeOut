@@ -10,6 +10,12 @@ class VotingRoomP extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      //   optionOne: 'titanic',
+      //   optionTwo: 'movie two',
+      //   optionThree: 'toy story',
+      //   optionOneVote: 0,
+      //   optionTwoVote: 0,
+      //   optionThreeVote: 0,
       suggestions: [],
       suggestion: '',
     };

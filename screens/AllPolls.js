@@ -55,7 +55,6 @@ class AllPolls extends Component {
                     />
                     <View style={styles.pollDetails}>
                       <Text style={styles.scrollTxt}>{poll.themeTitle}</Text>
-                      {/* <Text>Event Date: {poll.chosenDate}</Text> */}
                       <Text>
                         Suggestions Closing In: {poll.suggestionTimer} minutes
                       </Text>

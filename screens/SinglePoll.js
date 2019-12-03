@@ -18,7 +18,7 @@ class SinglePoll extends Component {
   }
 
   render() {
-    // console.log('SUGGESTIONS', this.props.suggestions);
+    // console.log('STATE', this.state);this.props.navigation.getParam('poll'));
     return (
       <ImageBackground
         style={styles.title}
@@ -37,10 +37,8 @@ class SinglePoll extends Component {
               fontWeight: 'bold',
               fontSize: 25,
               marginBottom: 30,
-              marginTop: 15,
             }}>
-            {'  '}
-            Event Theme: {this.props.navigation.getParam('poll').themeTitle}
+            {this.props.navigation.getParam('poll').themeTitle}
           </Text>
           <ScrollView>
             {this.props.suggestions.map((suggestion, indx) => {
@@ -67,8 +65,7 @@ class SinglePoll extends Component {
                         fontWeight: 'bold',
                         color: 'white',
                       }}>
-                      {suggestion.option} {''}
-                      {Math.floor(suggestion.percentage)}%
+                      {suggestion.option}
                     </Text>
                   </Button>
                 </View>
@@ -132,3 +129,56 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(mapToState, dispatchToProps)(SinglePoll);
+
+/*
+<View style={styles.centerish}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 25,
+              marginBottom: 30,
+            }}>
+            Movie Night
+          </Text>
+          <View>
+            <Button
+              full
+              rounded
+              style={{
+                backgroundColor: '#2b81b5',
+                justifyContent: 'center',
+                marginBottom: 25,
+              }}
+              onPress={() =>
+                this.setState({optionOneVote: this.state.optionOneVote + 1})
+              }>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                  color: 'white',
+                }}>
+                {this.state.optionOne}{' '}
+                {this.calcOfOptionOne() ? this.calcOfOptionOne() + '%' : null}
+              </Text>
+            </Button>
+            */
+
+// calcOfOptionOne() {
+//   let percentOfOptionOne = Math.ceil(
+//     (this.state.optionOneVote / this.totalVotes()) * 100,
+//   );
+//   return percentOfOptionOne;
+// }
+// calcOfOptionTwo() {
+//   let percentOfOptionTwo = Math.ceil(
+//     (this.state.optionTwoVote / this.totalVotes()) * 100,
+//   );
+//   return percentOfOptionTwo;
+// }
+// calcOfOptionThree() {
+//   let percentOfOptionThree = Math.ceil(
+//     (this.state.optionThreeVote / this.totalVotes()) * 100,
+//   );
+//   return percentOfOptionThree;
+// }
