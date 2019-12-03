@@ -12,6 +12,30 @@ import {Button, Thumbnail, Container} from 'native-base';
 import {connect} from 'react-redux';
 import {getFriends, get_users, accept_friend, dismiss} from '../store';
 
+const FRIENDSandFAMILY = [
+  {
+    title: 'Taco Tuesday',
+    winningVote: 'Beef Tacos!!',
+    percentage: '79%',
+    date: 'Today, Dec 3 2019',
+    where: 'Riviera Mayan',
+  },
+  {
+    title: 'Movie Night',
+    winningVote: 'The Notebook',
+    percentage: '58%',
+    date: 'Saturday, Dec 7 2019',
+    where: "Kaitlyn's House",
+  },
+  {
+    title: 'Restaurant',
+    winningVote: 'Nobu',
+    percentage: '84%',
+    date: 'Tuesday, Dec 31, 2019',
+    where: '555 Broadway',
+  },
+];
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -38,14 +62,39 @@ class Dashboard extends Component {
   renderCurrentSection() {
     return (
       <View>
-        <Text style={styles.paragraph}>TODAY YOOOOO!</Text>
+        <Text
+          style={{
+            fontSize: 25,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            paddingBottom: 25,
+            paddingTop: 20,
+          }}>
+          Upcoming Events:
+        </Text>
+        <View style={{alignItems: 'center'}}>
+          {FRIENDSandFAMILY.map((event, indx) => {
+            return (
+              <View style={{margin: 10, alignItems: 'center'}}>
+                <Text style={{fontSize: 22, fontWeight: 'bold'}}>
+                  {event.title}
+                </Text>
+                <Text style={{fontWeight: 'bold'}}>
+                  Winning Suggestion: {event.winningVote}
+                </Text>
+                <Text style={{fontWeight: 'bold'}}>When: {event.date}</Text>
+                <Text style={{fontWeight: 'bold'}}>Where: {event.where}</Text>
+              </View>
+            );
+          })}
+        </View>
       </View>
     );
   }
   renderPastSection() {
     return (
       <View>
-        <Text style={{fontWeight: 'bold'}}>Past!</Text>
+        <Text style={styles.paragraph}>Nothing in History</Text>
       </View>
     );
   }
@@ -174,7 +223,7 @@ class Dashboard extends Component {
           {this.props.numOfNotifications ? (
             <Text>{''}</Text>
           ) : (
-            <Text>{'You dont have any notification'}</Text>
+            <Text style={styles.paragraph}>You dont have any notification</Text>
           )}
         </View>
       </View>
@@ -267,7 +316,7 @@ class Dashboard extends Component {
               <ImageBackground
                 style={styles.opacityImg}
                 imageStyle={{opacity: 0.3}}
-                source={require('../public/Taxis.jpg')}>
+                source={require('../public/Brooklyn.jpg')}>
                 {this.renderSection()}
               </ImageBackground>
             </View>
