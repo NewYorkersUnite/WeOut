@@ -5,6 +5,7 @@ import {
   View,
   ImageBackground,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 import styles from '../public/styles';
 import {Button, Thumbnail, Container} from 'native-base';
@@ -51,44 +52,107 @@ class Dashboard extends Component {
   renderNotifications() {
     return (
       <View>
-        {this.props.currentUser.notifications.map((notif, idx) => {
-          if (notif.includes('request to add you as friend')) {
-            return (
-              <View>
-                <Text>{notif}</Text>
-                <Button
-                  onPress={() => {
-                    const friend = notif.slice(0, notif.length - 29);
-                    this.props.acceptFriend(
-                      this.props.currentUser.username,
-                      friend,
-                      idx,
-                    );
+        <Text
+          style={{
+            fontSize: 25,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            paddingBottom: 25,
+          }}>
+          Notifications:
+        </Text>
+        <ScrollView>
+          {this.props.currentUser.notifications.map((notif, idx) => {
+            if (notif.includes('request to add you as friend')) {
+              return (
+                <View style={{marginTop: 5, marginLeft: 10, marginRight: 10}}>
+                  <View style={{flexDirection: 'row'}}>
+                    <View style={{flex: 2}}>
+                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                        {notif}
+                      </Text>
+                    </View>
+
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        justifyContent: 'space-around',
+                      }}>
+                      <View>
+                        <Button
+                          style={{
+                            backgroundColor: '#bae38a',
+                            width: 60,
+                          }}
+                          onPress={() => {
+                            const friend = notif.slice(0, notif.length - 29);
+                            Alert.alert(
+                              'You have accepted their Friend Request!', // might want to change this later to display the senders name, not the usernames name.
+                            );
+                            this.props.acceptFriend(
+                              this.props.currentUser.username,
+                              friend,
+                              idx,
+                            );
+                          }}>
+                          <Text style={{fontWeight: 'bold'}}>Accept</Text>
+                        </Button>
+                      </View>
+                      <View>
+                        <Button
+                          style={{backgroundColor: '#ff4c30', width: 60}}
+                          onPress={() => {
+                            Alert.alert(
+                              'You Have Denied Their Friend Request!', // might want to change this later to display the senders name, not the usernames name.
+                            );
+                            this.props.dismiss(
+                              this.props.currentUser.username,
+                              idx,
+                            );
+                          }}>
+                          <Text style={{fontWeight: 'bold'}}>Deny</Text>
+                        </Button>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              );
+            } else {
+              return (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: 7,
+                    marginLeft: 10,
+                    marginRight: 10,
                   }}>
-                  <Text>Accept</Text>
-                </Button>
-                <Button
-                  onPress={() => {
-                    this.props.dismiss(this.props.currentUser.username, idx);
-                  }}>
-                  <Text>Deny</Text>
-                </Button>
-              </View>
-            );
-          } else {
-            return (
-              <View>
-                <Text>{notif}</Text>
-                <Button
-                  onPress={() => {
-                    this.props.dismiss(this.props.currentUser.username, idx);
-                  }}>
-                  <Text>Dismiss</Text>
-                </Button>
-              </View>
-            );
-          }
-        })}
+                  <View style={{flex: 2}}>
+                    <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                      {notif}
+                    </Text>
+                  </View>
+
+                  <View style={{flex: 1, padding: 20}}>
+                    <Button
+                      style={{backgroundColor: '#b8bab5'}}
+                      onPress={() => {
+                        Alert.alert(
+                          'You Have Dismissed This Poll Invitation!', // might want to change this later to display the senders name, not the usernames name.
+                        );
+                        this.props.dismiss(
+                          this.props.currentUser.username,
+                          idx,
+                        );
+                      }}>
+                      <Text style={{fontWeight: 'bold'}}>Dismiss</Text>
+                    </Button>
+                  </View>
+                </View>
+              );
+            }
+          })}
+        </ScrollView>
         <View>
           {this.props.numOfNotifications ? (
             <Text>{''}</Text>
@@ -140,7 +204,7 @@ class Dashboard extends Component {
                       if (
                         user.available &&
                         this.props.friends.includes(user.username)
-                      )
+                      ) {
                         return (
                           <Thumbnail
                             key={indx}
@@ -148,6 +212,7 @@ class Dashboard extends Component {
                             source={{uri: user.imageUrl}}
                           />
                         );
+                      }
                     })}
                   </ScrollView>
                 </View>
@@ -216,4 +281,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapToState, dispatchToProps)(Dashboard);
+export default connect(
+  mapToState,
+  dispatchToProps,
+)(Dashboard);

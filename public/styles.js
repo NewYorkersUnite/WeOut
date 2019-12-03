@@ -160,10 +160,6 @@ const styles = StyleSheet.create({
   searchBar: {
     flex: 1,
   },
-  // listFriends: {
-  //   flex: 7,
-  //   fontSize: 20,
-  // },
   addFriendBtn: {
     flex: 1,
     justifyContent: 'flex-end',
