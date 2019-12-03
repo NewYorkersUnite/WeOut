@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styles from '../public/styles';
-import {Button} from 'native-base';
 import {connect} from 'react-redux';
 import {get_polls} from '../store';
 import randomNYCphotos from '../public/photoURLS';
@@ -18,13 +17,6 @@ class AllPolls extends Component {
     await this.props.getPolls(this.props.currentUser.username);
   }
   render() {
-    // console.log(
-    //   'poll data',
-    //   this.props.allPolls[0].chosenDate.toISOString().split('T')[0],
-    // ); // Im trying to get the date to render on the all polls page, (Kait)
-
-    // const eventDate = this.props.allPolls.chosenDate;
-    // console.log('eventDate', eventDate);
     return (
       <ImageBackground
         style={styles.title}
@@ -76,24 +68,6 @@ class AllPolls extends Component {
               );
             })}
           </ScrollView>
-        </View>
-        <View style={{flex: 1, justifyContent: 'flex-end'}}>
-          <Button
-            full
-            style={{
-              backgroundColor: '#2b81b5',
-              justifyContent: 'center',
-            }}
-            onPress={() => this.props.navigation.navigate('PollFromPollTab')}>
-            <Text
-              style={{
-                fontSize: 15,
-                fontWeight: 'bold',
-                color: 'white',
-              }}>
-              Create Poll Room
-            </Text>
-          </Button>
         </View>
       </ImageBackground>
     );

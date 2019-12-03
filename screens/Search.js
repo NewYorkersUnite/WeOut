@@ -11,7 +11,6 @@ class Search extends Component {
   constructor() {
     super();
     this.state = {
-      // currentUser: this.props.navigation.getParam('currentUser'),
       value: '',
       users: [],
       searchResult: [],

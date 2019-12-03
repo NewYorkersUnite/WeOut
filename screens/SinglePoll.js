@@ -83,6 +83,7 @@ class SinglePoll extends Component {
           <Input
             autoCorrect={false}
             autoCapitalize="none"
+            value={this.state.suggestion}
             onChangeText={suggestion => this.setState({suggestion})}
           />
         </Item>
@@ -99,6 +100,7 @@ class SinglePoll extends Component {
               this.props.navigation.getParam('poll').pollId,
               this.state.suggestion,
             );
+            this.setState({suggestion: ''});
           }}>
           <Text
             style={{
