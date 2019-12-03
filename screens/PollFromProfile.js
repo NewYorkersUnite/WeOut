@@ -159,7 +159,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapToState,
-  dispatchToProps,
-)(PollFromProfile);
+export default connect(mapToState, dispatchToProps)(PollFromProfile);
