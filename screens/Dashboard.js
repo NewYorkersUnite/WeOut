@@ -58,6 +58,7 @@ class Dashboard extends Component {
             fontWeight: 'bold',
             textAlign: 'center',
             paddingBottom: 25,
+            paddingTop: 20,
           }}>
           Notifications:
         </Text>
@@ -82,7 +83,7 @@ class Dashboard extends Component {
                       <View>
                         <Button
                           style={{
-                            backgroundColor: '#bae38a',
+                            backgroundColor: '#2b81b5',
                             width: 60,
                           }}
                           onPress={() => {
@@ -96,7 +97,14 @@ class Dashboard extends Component {
                               idx,
                             );
                           }}>
-                          <Text style={{fontWeight: 'bold'}}>Accept</Text>
+                          <Text
+                            style={{
+                              fontWeight: 'bold',
+                              marginLeft: 4,
+                              color: 'white',
+                            }}>
+                            Accept
+                          </Text>
                         </Button>
                       </View>
                       <View>
@@ -111,7 +119,14 @@ class Dashboard extends Component {
                               idx,
                             );
                           }}>
-                          <Text style={{fontWeight: 'bold'}}>Deny</Text>
+                          <Text
+                            style={{
+                              fontWeight: 'bold',
+                              marginLeft: 12,
+                              color: 'white',
+                            }}>
+                            Deny
+                          </Text>
                         </Button>
                       </View>
                     </View>
@@ -133,7 +148,7 @@ class Dashboard extends Component {
                     </Text>
                   </View>
 
-                  <View style={{flex: 1, padding: 20}}>
+                  <View style={{flex: 1, padding: 20, marginLeft: 50}}>
                     <Button
                       style={{backgroundColor: '#b8bab5'}}
                       onPress={() => {
@@ -145,7 +160,9 @@ class Dashboard extends Component {
                           idx,
                         );
                       }}>
-                      <Text style={{fontWeight: 'bold'}}>Dismiss</Text>
+                      <Text style={{fontWeight: 'bold', marginLeft: 22}}>
+                        Dismiss
+                      </Text>
                     </Button>
                   </View>
                 </View>
