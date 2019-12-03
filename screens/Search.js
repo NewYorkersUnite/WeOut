@@ -26,10 +26,14 @@ class Search extends Component {
     const users = [];
     const userData = await db.collection('users').get();
     userData.forEach(element => {
-      users.push(element.data());
+      if (
+        element.data().username !== this.props.currentUser.username &&
+        !this.props.friends.includes(element.data().username)
+      )
+        users.push(element.data());
     });
     // eslint-disable-next-line react/no-did-mount-set-state
-    this.setState({users});
+    this.setState({users, searchResult: users});
   }
 
   render() {
@@ -41,10 +45,11 @@ class Search extends Component {
               value={this.state.value}
               placeholder="Search For Friends"
               onChangeText={value => {
+                value = value.toLocaleLowerCase();
                 this.setState({value});
-                const searchResult = this.state.users.filter(el =>
-                  el.username.includes(value.toLowerCase()),
-                );
+                const searchResult = this.state.users.filter(el => {
+                  return el.username.toLowerCase().includes(value);
+                });
                 this.setState({searchResult});
               }}
             />
@@ -115,6 +120,7 @@ class Search extends Component {
 const mapToState = state => {
   return {
     currentUser: state.user.currentUser,
+    friends: state.user.currentUser.friends,
   };
 };
 
