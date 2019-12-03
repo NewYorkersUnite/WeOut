@@ -133,7 +133,7 @@ class FriendGroup extends Component {
             justifyContent: 'center',
           }}
           onPress={() =>
-            this.props.navigation.navigate('PollFromProfile', {
+            this.props.navigation.navigate('PollForm', {
               participants: this.state.participants,
             })
           }>

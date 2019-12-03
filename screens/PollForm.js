@@ -13,7 +13,9 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import {create_poll} from '../store';
 
-class PollFromProfile extends Component {
+
+// WE WANT THIS ONE
+class PollForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -129,7 +131,7 @@ class PollFromProfile extends Component {
               this.state.poll,
               this.state.participants,
             );
-            this.props.navigation.navigate('VotingRoomP');
+            this.props.navigation.navigate('AllPolls');
           }}>
           <Text
             style={{
@@ -159,4 +161,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapToState, dispatchToProps)(PollFromProfile);
+export default connect(mapToState, dispatchToProps)(PollForm);
+
+
+

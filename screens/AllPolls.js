@@ -28,7 +28,7 @@ class AllPolls extends Component {
               return (
                 <TouchableOpacity
                   onPress={() =>
-                    this.props.navigation.navigate('SinglePoll', {poll})
+                    this.props.navigation.navigate('VotingRoom', {poll})
                   }>
                   <View
                     style={{
