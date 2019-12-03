@@ -18,7 +18,13 @@ class VotingRoom extends Component {
   }
 
   render() {
-    // console.log('STATE', this.state);this.props.navigation.getParam('poll'));
+    const dat = this.props.navigation.getParam('poll').chosenDate.seconds;
+    const date = new Date(dat * 1000);
+
+    //ADD TIME???
+    // const eventHours = date.getHours();
+    // console.log(eventHours);
+
     return (
       <ImageBackground
         style={styles.title}
@@ -36,9 +42,14 @@ class VotingRoom extends Component {
             style={{
               fontWeight: 'bold',
               fontSize: 25,
-              marginBottom: 30,
+              marginBottom: 5,
+              marginTop: 5,
             }}>
             {this.props.navigation.getParam('poll').themeTitle}
+          </Text>
+
+          <Text style={{fontWeight: 'bold', marginBottom: 25}}>
+            Date of Event: {date.toDateString()}
           </Text>
           <ScrollView>
             {this.props.suggestions.map((suggestion, indx) => {
@@ -65,7 +76,8 @@ class VotingRoom extends Component {
                         fontWeight: 'bold',
                         color: 'white',
                       }}>
-                      {suggestion.option}
+                      {suggestion.option} {''}
+                      {Math.floor(suggestion.percentage)}%
                     </Text>
                   </Button>
                 </View>
