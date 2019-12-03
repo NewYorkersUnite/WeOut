@@ -18,6 +18,7 @@ class AllPolls extends Component {
     await this.props.getPolls(this.props.currentUser.username);
   }
   render() {
+    console.log('poll data', this.props.allPolls);
     return (
       <ImageBackground
         style={styles.title}
@@ -56,8 +57,12 @@ class AllPolls extends Component {
                     />
                     <View style={styles.pollDetails}>
                       <Text style={styles.scrollTxt}>{poll.themeTitle}</Text>
-                      <Text>Suggestions Closing In: 25 minutes</Text>
-                      <Text>Final Votes Closing In: 40 minutes</Text>
+                      <Text>
+                        Suggestions Closing In: {poll.suggestionTimer} minutes
+                      </Text>
+                      <Text>
+                        Final Votes Closing In: {poll.voteTimer} minutes
+                      </Text>
                     </View>
                   </View>
                 </TouchableOpacity>
