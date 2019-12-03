@@ -8,13 +8,11 @@ import AllPolls from './AllPolls';
 import SinglePoll from './SinglePoll';
 import FriendGroup from './FriendGroup';
 import PollFromProfile from './PollFromProfile';
-import PollFromPollTab from './PollFromPollTab';
 import VotingRoomP from './VotingRoomP';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
 
 const PollTab = createSwitchNavigator({
   AllPolls: {screen: AllPolls},
-  PollFromPollTab: {screen: PollFromPollTab},
   SinglePoll: {screen: SinglePoll},
 });
 
@@ -31,37 +29,24 @@ const bottomTabNavigator = createMaterialBottomTabNavigator(
       screen: Dashboard,
       navigationOptions: {
         tabBarLabel: 'Dash',
-
-        // tabBarIcon: ({tintColor}) => (
-        //   <Icon name="home" size={23} color={tintColor} />
-        // ),
       },
     },
 
     Search: {
       screen: Search,
       navigationOptions: {
-        // tabBarIcon: ({tintColor}) => (
-        //   <Icon name="search" size={23} color={tintColor} />
-        // ),
       },
     },
     Poll: {
       screen: PollTab,
       navigationOptions: {
         tabBarLabel: 'Poll',
-        // tabBarIcon: ({tintColor}) => (
-        //   <Icon name="list" size={23} color={tintColor} />
-        // ),
       },
     },
     Profile: {
       screen: ProfileTab,
       navigationOptions: {
         tabBarLabel: 'Profile',
-        // tabBarIcon: ({tintColor}) => (
-        //   <Icon name="user" size={23} color={tintColor} />
-        // ),
       },
     },
   },

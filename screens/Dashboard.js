@@ -99,7 +99,7 @@ class Dashboard extends Component {
       </View>
     );
   }
-  // style={{flexDirection: 'row', flexWrap: 'wrap'}}
+
   renderSection() {
     if (this.state.activeIndex === 0) {
       return <View>{this.renderCurrentSection()}</View>;
@@ -154,7 +154,6 @@ class Dashboard extends Component {
               </View>
             </View>
 
-            {/* CALANDER BUTTONS */}
             <View style={styles.mainContainerCALANDAR}>
               <View style={styles.tabBackgroundColor}>
                 <Button
