@@ -6,7 +6,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {add_suggestion, get_suggestions, vote} from '../store';
 import {connect} from 'react-redux';
 
-class SinglePoll extends Component {
+class VotingRoom extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -128,7 +128,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapToState, dispatchToProps)(SinglePoll);
+export default connect(mapToState, dispatchToProps)(VotingRoom);
 
 /*
 <View style={styles.centerish}>

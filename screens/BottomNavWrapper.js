@@ -5,22 +5,22 @@ import Dashboard from './Dashboard';
 import Profile from './Profile';
 import Search from './Search';
 import AllPolls from './AllPolls';
-import SinglePoll from './SinglePoll';
+import VotingRoom from './VotingRoom';
 import FriendGroup from './FriendGroup';
-import PollFromProfile from './PollFromProfile';
-import VotingRoomP from './VotingRoomP';
+import PollForm from './PollForm';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
 
 const PollTab = createSwitchNavigator({
   AllPolls: {screen: AllPolls},
-  SinglePoll: {screen: SinglePoll},
+  // PollForm: {screen: PollForm},
+  VotingRoom: {screen: VotingRoom},
 });
 
 const ProfileTab = createSwitchNavigator({
   Profile: {screen: Profile},
   FriendGroup: {screen: FriendGroup},
-  PollFromProfile: {screen: PollFromProfile},
-  VotingRoomP: {screen: VotingRoomP},
+  PollForm: {screen: PollForm},
+  AllPolls: {screen: AllPolls},
 });
 
 const bottomTabNavigator = createMaterialBottomTabNavigator(
