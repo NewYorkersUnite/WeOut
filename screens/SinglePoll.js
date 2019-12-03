@@ -3,52 +3,22 @@ import {ScrollView, Image, Text, View, ImageBackground} from 'react-native';
 import styles from '../public/styles';
 import {Button, Item, Label, Input} from 'native-base';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {voteOptionOne, voteOptionTwo, voteOptionThree} from '../store';
+import {add_suggestion, get_suggestions, vote} from '../store';
 import {connect} from 'react-redux';
 
 class SinglePoll extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // optionOne: 'titanic',
-      // optionTwo: 'movie two',
-      // optionThree: 'toy story',
-      // optionOneVote: 0,
-      // optionTwoVote: 0,
-      // optionThreeVote: 0,
-      suggestions: [],
       suggestion: '',
     };
   }
-
-  totalVotes() {
-    let totalVotes =
-      this.state.optionOneVote +
-      this.state.optionTwoVote +
-      this.state.optionThreeVote;
-    return totalVotes;
+  componentDidMount() {
+    this.props.getSuggestions(this.props.navigation.getParam('poll').pollId);
   }
 
-  calcOfOptionOne() {
-    let percentOfOptionOne = Math.ceil(
-      (this.state.optionOneVote / this.totalVotes()) * 100,
-    );
-    return percentOfOptionOne;
-  }
-  calcOfOptionTwo() {
-    let percentOfOptionTwo = Math.ceil(
-      (this.state.optionTwoVote / this.totalVotes()) * 100,
-    );
-    return percentOfOptionTwo;
-  }
-  calcOfOptionThree() {
-    let percentOfOptionThree = Math.ceil(
-      (this.state.optionThreeVote / this.totalVotes()) * 100,
-    );
-    return percentOfOptionThree;
-  }
   render() {
-    console.log('STATE', this.state);
+    // console.log('STATE', this.state);this.props.navigation.getParam('poll'));
     return (
       <ImageBackground
         style={styles.title}
@@ -68,13 +38,19 @@ class SinglePoll extends Component {
               fontSize: 25,
               marginBottom: 30,
             }}>
-            Choosen Theme: Movie Night
+            {this.props.navigation.getParam('poll').themeTitle}
           </Text>
           <ScrollView>
-            {this.state.suggestions.map((suggestion, indx) => {
+            {this.props.suggestions.map((suggestion, indx) => {
               return (
                 <View key={indx}>
                   <Button
+                    onPress={() =>
+                      this.props.vote(
+                        this.props.navigation.getParam('poll').pollId,
+                        suggestion.option,
+                      )
+                    }
                     full
                     rounded
                     style={{
@@ -89,7 +65,7 @@ class SinglePoll extends Component {
                         fontWeight: 'bold',
                         color: 'white',
                       }}>
-                      {suggestion}
+                      {suggestion.option}
                     </Text>
                   </Button>
                 </View>
@@ -115,11 +91,12 @@ class SinglePoll extends Component {
             justifyContent: 'center',
             marginTop: 25,
           }}
-          onPress={() =>
-            this.setState({
-              suggestions: [...this.state.suggestions, this.state.suggestion],
-            })
-          }>
+          onPress={() => {
+            this.props.addSuggestion(
+              this.props.navigation.getParam('poll').pollId,
+              this.state.suggestion,
+            );
+          }}>
           <Text
             style={{
               fontSize: 20,
@@ -136,24 +113,20 @@ class SinglePoll extends Component {
 
 const mapToState = state => {
   return {
-    optionOne: state.optionOne,
-    optionTwo: state.optionTwo,
-    optionThree: state.optionThree,
+    suggestions: state.polls.suggestions,
   };
 };
 
 const dispatchToProps = dispatch => {
   return {
-    voteOptionOne: () => dispatch(voteOptionOne()),
-    voteOptionTwo: () => dispatch(voteOptionTwo()),
-    voteOptionThree: () => dispatch(voteOptionThree()),
+    addSuggestion: (pollId, suggestion) =>
+      dispatch(add_suggestion(pollId, suggestion)),
+    getSuggestions: pollId => dispatch(get_suggestions(pollId)),
+    vote: (pollId, option) => dispatch(vote(pollId, option)),
   };
 };
 
-export default connect(
-  mapToState,
-  dispatchToProps,
-)(SinglePoll);
+export default connect(mapToState, dispatchToProps)(SinglePoll);
 
 /*
 <View style={styles.centerish}>
@@ -188,3 +161,22 @@ export default connect(
               </Text>
             </Button>
             */
+
+// calcOfOptionOne() {
+//   let percentOfOptionOne = Math.ceil(
+//     (this.state.optionOneVote / this.totalVotes()) * 100,
+//   );
+//   return percentOfOptionOne;
+// }
+// calcOfOptionTwo() {
+//   let percentOfOptionTwo = Math.ceil(
+//     (this.state.optionTwoVote / this.totalVotes()) * 100,
+//   );
+//   return percentOfOptionTwo;
+// }
+// calcOfOptionThree() {
+//   let percentOfOptionThree = Math.ceil(
+//     (this.state.optionThreeVote / this.totalVotes()) * 100,
+//   );
+//   return percentOfOptionThree;
+// }

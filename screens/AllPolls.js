@@ -29,7 +29,9 @@ class AllPolls extends Component {
             {this.props.allPolls.map(poll => {
               return (
                 <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('SinglePoll')}>
+                  onPress={() =>
+                    this.props.navigation.navigate('SinglePoll', {poll})
+                  }>
                   <View
                     style={{
                       flexDirection: 'row',
