@@ -11,6 +11,7 @@ const GOT_USERS = 'GOT_USERS';
 const AVAILABILITY_TOGGLED = 'AVAILABILITY_TOGGLED';
 const ACCEPTED_FRIEND = 'ACCEPTED_FRIEND';
 const REQUESTED_FRIEND = 'REQUESTED_FRIEND';
+const GOT_NOTIFCATIONS = 'GOT_NOTIFCATIONS';
 
 /**
  * INITIAL STATE
@@ -23,6 +24,7 @@ const defaultUser = {
   friends: [],
   users: [],
   availability: true, // Kaitlyn changed this from true
+  notifications: [],
 };
 
 /**
@@ -50,6 +52,14 @@ const accepted_friend = () => {
 
 const requested_friend = () => {
   return {type: REQUESTED_FRIEND};
+};
+
+const got_notifications = (notifications, numOfNotifications) => {
+  return {
+    type: GOT_NOTIFCATIONS,
+    notifications,
+    numOfNotifications,
+  };
 };
 
 /**
@@ -88,9 +98,7 @@ export const sign_up = newUser => async dispatch => {
         username: newUser.username,
         email: newUser.email,
         createdAt: new Date().toISOString(),
-        imageUrl: `https://firebasestorage.googleapis.com/v0/b/${
-          config.storageBucket
-        }/o/${noImg}?alt=media`,
+        imageUrl: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noImg}?alt=media`,
         userId: userId,
         available: true,
         friends: [],
@@ -173,10 +181,12 @@ export const accept_friend = (username, friend, idx) => async dispatch => {
       .doc(`/users/${friend}`)
       .update({friends: friendFriends, notifications: friendNotifications});
 
-    const friendsData = await db.doc(`/users/${username}`).get();
-    const friends = friendsData.data().friends;
-    const numOfNotifications = myData.data().notifications.length;
-    dispatch(got_friends(friends, numOfNotifications));
+    // const friendsData = await db.doc(`/users/${username}`).get();
+    // const friends = friendsData.data().friends;
+    // const numOfNotifications = myData.data().notifications.length;
+    // dispatch(got_friends(friends, numOfNotifications));
+
+    dispatch(got_notifications(myNotifications, myNotifications.length));
   } catch (err) {
     console.error(err);
     return {
@@ -201,10 +211,22 @@ export const dismiss = (username, idx) => async dispatch => {
   const myNotifications = myData.data().notifications;
   myNotifications.splice(idx, 1);
   await db.doc(`/users/${username}`).update({notifications: myNotifications});
-  const numOfNotifications = myData.data().notifications.length;
-  dispatch(got_friends(myFriends, numOfNotifications));
+
+  dispatch(got_notifications(myNotifications, myNotifications.length));
 };
 
+export const get_notifications = username => async dispatch => {
+  try {
+    const myData = await db.doc(`/users/${username}`).get();
+    const myNotifications = myData.data().notifications;
+    dispatch(got_notifications(myNotifications, myNotifications.length));
+  } catch (err) {
+    console.error(err);
+    return {
+      type: ERROR,
+    };
+  }
+};
 export const getFriends = username => async dispatch => {
   try {
     const myData = await db.doc(`/users/${username}`).get();
@@ -240,6 +262,13 @@ export default function(state = defaultUser, action) {
     }
     case GOT_USERS: {
       return {...state, users: action.users};
+    }
+    case GOT_NOTIFCATIONS: {
+      return {
+        ...state,
+        notifications: action.notifications,
+        numOfNotifications: action.numOfNotifications,
+      };
     }
     case REQUESTED_FRIEND: {
       return state;

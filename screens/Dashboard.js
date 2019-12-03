@@ -10,7 +10,13 @@ import {
 import styles from '../public/styles';
 import {Button, Thumbnail, Container} from 'native-base';
 import {connect} from 'react-redux';
-import {getFriends, get_users, accept_friend, dismiss} from '../store';
+import {
+  getFriends,
+  get_users,
+  accept_friend,
+  dismiss,
+  get_notifications,
+} from '../store';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -62,7 +68,7 @@ class Dashboard extends Component {
           Notifications:
         </Text>
         <ScrollView>
-          {this.props.currentUser.notifications.map((notif, idx) => {
+          {this.props.notifications.map((notif, idx) => {
             if (notif.includes('request to add you as friend')) {
               return (
                 <View style={{marginTop: 5, marginLeft: 10, marginRight: 10}}>
@@ -177,6 +183,7 @@ class Dashboard extends Component {
   async componentDidMount() {
     await this.props.getFriends(this.props.currentUser.username);
     await this.props.getUsers();
+    await this.props.getNotifications(this.props.currentUser.username);
   }
 
   render() {
@@ -267,6 +274,7 @@ const mapToState = state => {
     friends: state.user.friends,
     users: state.user.users,
     numOfFriends: state.user.numOfFriends,
+    notifications: state.user.notifications,
     numOfNotifications: state.user.numOfNotifications,
   };
 };
@@ -278,10 +286,8 @@ const dispatchToProps = dispatch => {
     acceptFriend: (username, friend, idx) =>
       dispatch(accept_friend(username, friend, idx)),
     dismiss: (username, idx) => dispatch(dismiss(username, idx)),
+    getNotifications: username => dispatch(get_notifications(username)),
   };
 };
 
-export default connect(
-  mapToState,
-  dispatchToProps,
-)(Dashboard);
+export default connect(mapToState, dispatchToProps)(Dashboard);
