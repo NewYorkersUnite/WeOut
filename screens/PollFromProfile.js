@@ -17,8 +17,14 @@ class PollFromProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      poll: {themeTitle: '', suggestionTimer: '', voteTimer: '', limit: ''},
-      chosenDate: new Date(),
+      poll: {
+        themeTitle: '',
+        suggestionTimer: '',
+        voteTimer: '',
+        limit: '',
+        chosenDate: new Date(),
+      },
+
       showDatePicker: false,
       participants: this.props.navigation.getParam('participants'),
     };
@@ -26,9 +32,10 @@ class PollFromProfile extends Component {
   }
 
   setDate(newDate) {
-    this.setState({chosenDate: newDate});
+    this.setState({poll: {...this.state.poll, newDate}});
   }
   render() {
+    console.log('STATE', this.state.poll);
     return (
       <ImageBackground
         style={styles.title}
@@ -106,7 +113,7 @@ class PollFromProfile extends Component {
         </View>
         {this.state.showDatePicker ? (
           <DatePickerIOS
-            date={this.state.chosenDate}
+            date={this.state.poll.chosenDate}
             onDateChange={this.setDate}
           />
         ) : null}
