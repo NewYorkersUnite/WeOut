@@ -124,8 +124,8 @@ class PollForm extends Component {
             backgroundColor: '#2b81b5',
             justifyContent: 'center',
           }}
-          onPress={() => {
-            this.props.createPoll(
+          onPress={async () => {
+            await this.props.createPoll(
               this.props.currentUser.username,
               this.state.poll,
               this.state.participants,
@@ -160,7 +160,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapToState,
-  dispatchToProps,
-)(PollForm);
+export default connect(mapToState, dispatchToProps)(PollForm);

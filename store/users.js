@@ -103,6 +103,7 @@ export const sign_up = newUser => async dispatch => {
         available: true,
         friends: ['kenzo'],
         notifications: [],
+        polls: [],
       };
       await db.doc(`/users/${newUser.username}`).set(userCredentials);
       const userData = await db
