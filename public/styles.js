@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 20,
-    paddingTop: 110,
+    paddingTop: 10,
   },
   pollDetails: {flexDirection: 'column', width: 300, height: 50},
 });

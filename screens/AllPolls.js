@@ -21,6 +21,13 @@ class AllPolls extends Component {
       <ImageBackground
         style={styles.title}
         source={require('../public/Background.png')}>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Profile')}>
+          <Image
+            style={{width: 50, height: 50, marginTop: 70, marginLeft: 8}}
+            source={require('../public/BackArrow.png')}
+          />
+        </TouchableOpacity>
         <Text style={styles.activeTitle}>Active Polls</Text>
         <View>
           <ScrollView>
@@ -88,7 +95,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapToState,
-  dispatchToProps,
-)(AllPolls);
+export default connect(mapToState, dispatchToProps)(AllPolls);
