@@ -31,6 +31,7 @@ class FriendGroup extends Component {
     }
   }
   render() {
+    console.log('PARTICIPANTS', this.state.participants);
     return (
       <ImageBackground
         style={styles.title}
@@ -52,6 +53,23 @@ class FriendGroup extends Component {
             </Text>
           </View>
           <Button
+            onPress={() => {
+              const participants = [];
+              this.props.users.forEach((user, index) => {
+                if (
+                  user.available &&
+                  this.props.friends.includes(user.username)
+                ) {
+                  participants.push(user.username);
+                }
+              });
+
+              if (this.state.participants.length === participants.length) {
+                this.setState({participants: []});
+              } else {
+                this.setState({participants});
+              }
+            }}
             style={{
               flex: 1,
               backgroundColor: '#2b81b5',
@@ -165,7 +183,4 @@ const dispatchToProps = dispatch => {
     getUsers: () => dispatch(get_users()),
   };
 };
-export default connect(
-  mapToState,
-  dispatchToProps,
-)(FriendGroup);
+export default connect(mapToState, dispatchToProps)(FriendGroup);
