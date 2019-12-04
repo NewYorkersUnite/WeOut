@@ -138,9 +138,17 @@ export const get_polls = username => async dispatch => {
   }
 };
 
+//Helper function for createPoll
+var add_minutes = function(dt, minutes) {
+  return new Date(dt.getTime() + minutes * 60000);
+};
+console.log(add_minutes(new Date(2014, 10, 2), 30).toString());
+
 export const create_poll = (username, poll, participants) => async dispatch => {
   try {
     poll.suggestions = [];
+    const thisMoment = new Date();
+    poll.endTime = add_minutes(thisMoment, poll.voteTimer);
     const pollData = await db.collection('polls').add(poll);
     const pollId = pollData.id;
 
@@ -159,7 +167,14 @@ export const create_poll = (username, poll, participants) => async dispatch => {
     const myPolls = myData.data().polls;
     myPolls.push(pollId);
     await db.doc(`/users/${username}`).update({polls: myPolls});
-    dispatch(created_poll(myPolls));
+    const allPollsData = await db.collection('polls').get();
+    const allPolls = [];
+    allPollsData.docs.forEach(sPoll => {
+      if (myPolls.includes(sPoll.data().pollId)) {
+        allPolls.push(sPoll.data());
+      }
+    });
+    dispatch(created_poll(allPolls));
   } catch (err) {
     console.log(err);
     dispatch({

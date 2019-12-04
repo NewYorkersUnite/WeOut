@@ -20,8 +20,8 @@ class PollForm extends Component {
     this.state = {
       poll: {
         themeTitle: '',
-        voteTimer: 0,
-        limit: 0,
+        voteTimer: 10,
+        limit: 2,
         chosenDate: new Date(),
       },
 
@@ -195,7 +195,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapToState,
-  dispatchToProps,
-)(PollForm);
+export default connect(mapToState, dispatchToProps)(PollForm);
