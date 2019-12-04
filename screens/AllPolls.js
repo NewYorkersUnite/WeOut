@@ -15,7 +15,13 @@ import randomNYCphotos from '../public/photoURLS';
 class AllPolls extends Component {
   async componentDidMount() {
     await this.props.getPolls(this.props.currentUser.username);
+    this.interval = setInterval(() => this.setState({time: Date.now()}), 60000);
   }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   render() {
     return (
       <ImageBackground
