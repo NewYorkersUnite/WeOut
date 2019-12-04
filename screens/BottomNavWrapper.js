@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BackHandler} from 'react-native';
+import {BackHandler, Image} from 'react-native';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import Dashboard from './Dashboard';
 import Profile from './Profile';
@@ -28,30 +28,53 @@ const bottomTabNavigator = createMaterialBottomTabNavigator(
     Dashboard: {
       screen: Dashboard,
       navigationOptions: {
-        tabBarLabel: 'Dash',
+        tabBarIcon: () => (
+          <Image
+            source={require('../public/HomeIcon.png')}
+            style={{width: 30, height: 30}}
+          />
+        ),
       },
     },
 
     Search: {
       screen: Search,
       navigationOptions: {
+        tabBarIcon: () => (
+          <Image
+            source={require('../public/searchIcon.png')}
+            style={{width: 30, height: 30}}
+          />
+        ),
       },
     },
     Poll: {
       screen: PollTab,
       navigationOptions: {
-        tabBarLabel: 'Poll',
+        tabBarIcon: () => (
+          <Image
+            source={require('../public/poll.png')}
+            style={{width: 30, height: 30}}
+          />
+        ),
       },
     },
     Profile: {
       screen: ProfileTab,
       navigationOptions: {
-        tabBarLabel: 'Profile',
+        tabBarIcon: () => (
+          <Image
+            source={require('../public/UserIcon.png')}
+            style={{width: 30, height: 30}}
+          />
+        ),
       },
     },
   },
   {
     shifting: false,
+    labeled: false,
+
     activeColor: '#000000',
     inactiveColor: '#404040',
     barStyle: {
