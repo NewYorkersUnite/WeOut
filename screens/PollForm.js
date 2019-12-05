@@ -13,6 +13,7 @@ import {Button, Item, Label, Input} from 'native-base';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import {create_poll} from '../store';
+import randomNYCphotos from '../public/photoURLS';
 
 class PollForm extends Component {
   constructor(props) {
@@ -23,6 +24,8 @@ class PollForm extends Component {
         voteTimer: 10,
         limit: 2,
         chosenDate: new Date(),
+        imageURL:
+          randomNYCphotos[Math.floor(Math.random() * randomNYCphotos.length)],
       },
 
       showDatePicker: false,
@@ -196,4 +199,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapToState, dispatchToProps)(PollForm);
+export default connect(
+  mapToState,
+  dispatchToProps,
+)(PollForm);
