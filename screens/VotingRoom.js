@@ -21,16 +21,15 @@ class VotingRoom extends Component {
     };
   }
   componentDidMount() {
-    this.props.getSuggestions(this.props.navigation.getParam('poll').pollId);
+    this.props.getSuggestions(
+      this.props.currentUser.username,
+      this.props.navigation.getParam('poll').pollId,
+    );
   }
 
   render() {
     const dat = this.props.navigation.getParam('poll').chosenDate.seconds;
     const date = new Date(dat * 1000);
-
-    //ADD TIME???
-    // const eventHours = date.getHours();
-    // console.log(eventHours);
 
     return (
       <ImageBackground
@@ -63,12 +62,17 @@ class VotingRoom extends Component {
               return (
                 <View key={indx}>
                   <Button
-                    onPress={() =>
-                      this.props.vote(
-                        this.props.navigation.getParam('poll').pollId,
-                        suggestion.option,
-                      )
-                    }
+                    onPress={() => {
+                      if (!this.props.voted) {
+                        this.props.vote(
+                          this.props.currentUser.username,
+                          this.props.navigation.getParam('poll').pollId,
+                          suggestion.option,
+                        );
+                      } else {
+                        Alert.alert('One vote per person please!');
+                      }
+                    }}
                     full
                     rounded
                     style={{
@@ -143,6 +147,8 @@ class VotingRoom extends Component {
 const mapToState = state => {
   return {
     suggestions: state.polls.suggestions,
+    currentUser: state.user.currentUser,
+    voted: state.polls.voted,
   };
 };
 
@@ -150,8 +156,10 @@ const dispatchToProps = dispatch => {
   return {
     addSuggestion: (pollId, suggestion) =>
       dispatch(add_suggestion(pollId, suggestion)),
-    getSuggestions: pollId => dispatch(get_suggestions(pollId)),
-    vote: (pollId, option) => dispatch(vote(pollId, option)),
+    getSuggestions: (username, pollId) =>
+      dispatch(get_suggestions(username, pollId)),
+    vote: (username, pollId, option) =>
+      dispatch(vote(username, pollId, option)),
   };
 };
 

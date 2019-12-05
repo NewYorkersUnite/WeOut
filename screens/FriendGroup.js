@@ -31,7 +31,6 @@ class FriendGroup extends Component {
     }
   }
   render() {
-    console.log('PARTICIPANTS', this.state.participants);
     return (
       <ImageBackground
         style={styles.title}
