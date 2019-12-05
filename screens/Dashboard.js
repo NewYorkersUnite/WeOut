@@ -16,29 +16,24 @@ import {
   accept_friend,
   dismiss,
   get_notifications,
+  get_events,
 } from '../store';
 
 const FRIENDSandFAMILY = [
   {
     title: 'Taco Tuesday',
     winningVote: 'Beef Tacos!!',
-    percentage: '79%',
     date: 'Today, Dec 3 2019',
-    where: 'Riviera Mayan',
   },
   {
     title: 'Movie Night',
     winningVote: 'The Notebook',
-    percentage: '58%',
     date: 'Saturday, Dec 7 2019',
-    where: "Kaitlyn's House",
   },
   {
     title: 'Restaurant',
     winningVote: 'Nobu',
-    percentage: '84%',
     date: 'Tuesday, Dec 31, 2019',
-    where: '555 Broadway',
   },
 ];
 
@@ -79,17 +74,19 @@ class Dashboard extends Component {
           Upcoming Events:
         </Text>
         <View style={{alignItems: 'center'}}>
-          {FRIENDSandFAMILY.map((event, indx) => {
+          {this.props.events.map((event, indx) => {
+            const date = new Date(event.chosenDate.seconds * 1000);
             return (
               <View style={{margin: 10, alignItems: 'center'}}>
                 <Text style={{fontSize: 22, fontWeight: 'bold'}}>
-                  {event.title}
+                  {event.themeTitle}
                 </Text>
                 <Text style={{fontWeight: 'bold'}}>
                   Winning Suggestion: {event.winningVote}
                 </Text>
-                <Text style={{fontWeight: 'bold'}}>When: {event.date}</Text>
-                <Text style={{fontWeight: 'bold'}}>Where: {event.where}</Text>
+                <Text style={{fontWeight: 'bold'}}>
+                  When: {date.toDateString()}
+                </Text>
               </View>
             );
           })}
@@ -250,6 +247,7 @@ class Dashboard extends Component {
     await this.props.getFriends(this.props.currentUser.username);
     await this.props.getUsers();
     await this.props.getNotifications(this.props.currentUser.username);
+    await this.props.getEvents(this.props.eventsIds);
   }
 
   render() {
@@ -342,6 +340,8 @@ const mapToState = state => {
     numOfFriends: state.user.numOfFriends,
     notifications: state.user.notifications,
     numOfNotifications: state.user.numOfNotifications,
+    eventsIds: state.user.currentUser.polls,
+    events: state.events.events,
   };
 };
 
@@ -353,6 +353,7 @@ const dispatchToProps = dispatch => {
       dispatch(accept_friend(username, friend, idx)),
     dismiss: (username, idx) => dispatch(dismiss(username, idx)),
     getNotifications: username => dispatch(get_notifications(username)),
+    getEvents: eventsIds => dispatch(get_events(eventsIds)),
   };
 };
 
