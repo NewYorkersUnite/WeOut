@@ -78,6 +78,8 @@ class PollForm extends Component {
                     poll: {...this.state.poll, voteTimer: itemValue},
                   });
                 }}>
+                <Picker.Item label="1 Minute" value={1} />
+                <Picker.Item label="5 Minutes" value={5} />
                 <Picker.Item label="10 Minutes" value={10} />
                 <Picker.Item label="15 Minutes" value={15} />
                 <Picker.Item label="30 Minutes" value={30} />
@@ -113,7 +115,6 @@ class PollForm extends Component {
                     poll: {...this.state.poll, limit: itemValue},
                   });
                 }}>
-                <Picker.Item label="1" value={1} />
                 <Picker.Item label="2" value={2} />
                 <Picker.Item label="3" value={3} />
                 <Picker.Item label="4" value={4} />
