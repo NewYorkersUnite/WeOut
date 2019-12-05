@@ -54,10 +54,7 @@ class AllPolls extends Component {
                       }}>
                       <Image
                         source={{
-                          uri:
-                            randomNYCphotos[
-                              Math.floor(Math.random() * randomNYCphotos.length)
-                            ],
+                          uri: poll.imageURL,
                         }}
                         style={{
                           width: 80,
@@ -97,3 +94,4 @@ const dispatchToProps = dispatch => {
   };
 };
 export default connect(mapToState, dispatchToProps)(AllPolls);
+
