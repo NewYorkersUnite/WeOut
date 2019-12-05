@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {ScrollView, Image, Text, View, ImageBackground} from 'react-native';
+import {
+  ScrollView,
+  Image,
+  Text,
+  View,
+  ImageBackground,
+  Alert,
+} from 'react-native';
 import styles from '../public/styles';
 import {Button, Item, Label, Input} from 'native-base';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -105,11 +112,19 @@ class VotingRoom extends Component {
             marginTop: 25,
           }}
           onPress={() => {
-            this.props.addSuggestion(
-              this.props.navigation.getParam('poll').pollId,
-              this.state.suggestion,
-            );
-            this.setState({suggestion: ''});
+            if (this.state.suggestion.trim().length === 0) {
+              Alert.alert('Please input a valid suggestion.');
+              return;
+            }
+            const poll = this.props.navigation.getParam('poll');
+            if (this.props.suggestions.length !== poll.limit) {
+              this.props.addSuggestion(poll.pollId, this.state.suggestion);
+              this.setState({suggestion: ''});
+            } else {
+              Alert.alert(
+                'Suggestion limit has been reached. You can only vote now.',
+              );
+            }
           }}>
           <Text
             style={{
