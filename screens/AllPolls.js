@@ -11,17 +11,14 @@ import styles from '../public/styles';
 import {connect} from 'react-redux';
 import {get_polls} from '../store';
 import randomNYCphotos from '../public/photoURLS';
-
 class AllPolls extends Component {
   async componentDidMount() {
     await this.props.getPolls(this.props.currentUser.username);
     this.interval = setInterval(() => this.setState({time: Date.now()}), 60000);
   }
-
   componentWillUnmount() {
     clearInterval(this.interval);
   }
-
   render() {
     return (
       <ImageBackground
@@ -83,14 +80,12 @@ class AllPolls extends Component {
     );
   }
 }
-
 const mapToState = state => {
   return {
     allPolls: state.polls.polls,
     currentUser: state.user.currentUser,
   };
 };
-
 const dispatchToProps = dispatch => {
   return {
     getPolls: username => {
@@ -98,8 +93,5 @@ const dispatchToProps = dispatch => {
     },
   };
 };
+export default connect(mapToState, dispatchToProps)(AllPolls);
 
-export default connect(
-  mapToState,
-  dispatchToProps,
-)(AllPolls);
