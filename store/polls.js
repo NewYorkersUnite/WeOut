@@ -16,13 +16,14 @@ const defaultPoll = {
   polls: [],
   singlePoll: {},
   suggestions: [],
+  voted: false,
 };
 
 /**
  * ACTION CREATORS
  */
-const got_suggestion = suggestions => {
-  return {type: GOT_SUGGESTION, suggestions};
+const got_suggestion = (suggestions, voted) => {
+  return {type: GOT_SUGGESTION, suggestions, voted};
 };
 
 const suggestion_added = suggestions => {
@@ -40,9 +41,16 @@ const got_polls = polls => {
 /**
  * THUNK CREATORS
  */
-export const vote = (pollId, option) => async dispatch => {
+export const vote = (username, pollId, option) => async dispatch => {
   try {
     const pollData = await db.doc(`/polls/${pollId}`).get();
+    const pollParticipants = pollData.data().participants;
+    const remainingParticipants = [];
+    pollParticipants.forEach(participant => {
+      if (participant !== username) {
+        remainingParticipants.push(participant);
+      }
+    });
     const suggestions = pollData.data().suggestions;
 
     let totalVote = 0;
@@ -59,20 +67,29 @@ export const vote = (pollId, option) => async dispatch => {
       percentage = Math.floor(percentage * 100) / 100;
       element.percentage = percentage;
     });
-    await db.doc(`/polls/${pollId}`).update({suggestions: newSuggestions});
+    await db.doc(`/polls/${pollId}`).update({
+      suggestions: newSuggestions,
+      participants: remainingParticipants,
+    });
 
-    dispatch(suggestion_added(suggestions));
+    dispatch(got_suggestion(suggestions, true));
   } catch (err) {
     console.log(err);
     dispatch({type: ERROR});
   }
 };
 
-export const get_suggestions = pollId => async dispatch => {
+export const get_suggestions = (username, pollId) => async dispatch => {
   try {
+    let voted = false;
     const pollData = await db.doc(`/polls/${pollId}`).get();
     const suggestions = pollData.data().suggestions;
-    dispatch(got_suggestion(suggestions));
+    if (pollData.data().participants.includes(username)) {
+      voted = false;
+    } else {
+      voted = true;
+    }
+    dispatch(got_suggestion(suggestions, voted));
   } catch (err) {
     console.log(err);
     dispatch({type: ERROR});
@@ -149,6 +166,7 @@ export const create_poll = (username, poll, participants) => async dispatch => {
     poll.suggestions = [];
     const thisMoment = new Date();
     poll.endTime = add_minutes(thisMoment, poll.voteTimer);
+    poll.participants = [...participants, username];
     const pollData = await db.collection('polls').add(poll);
     const pollId = pollData.id;
 
@@ -198,7 +216,7 @@ export default function(state = defaultPoll, action) {
       return {...state, suggestions: action.suggestions};
     }
     case GOT_SUGGESTION: {
-      return {...state, suggestions: action.suggestions};
+      return {...state, suggestions: action.suggestions, voted: action.voted};
     }
     case ERROR:
       return state;
