@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, ImageBackground, Image} from 'react-native';
+import {View, Text, ImageBackground, Image, Alert} from 'react-native';
 import styles from '../public/styles';
 // const {firebaseApp, db, config} = require('../functions/util/config');
 
@@ -14,12 +14,16 @@ class Login extends Component {
       email: '',
       password: '',
       currentUser: {},
+      error: '',
     };
   }
 
   async loginUser(email, password) {
     if (this.validateLoginData(this.state)) {
       await this.props.login(this.state.email, this.state.password);
+    } else if (this.state.error === 'Email must not be empty') {
+      console.log('ALERT SHOULD TRIGGER', this.state);
+      return 'Email must not be empty';
     }
   }
 
@@ -32,21 +36,22 @@ class Login extends Component {
   };
 
   validateLoginData = data => {
-    let errors = {};
+    // let errors = {};
     if (this.isEmpty(data.email)) {
-      errors.email = 'Must not be empty';
+      // errors.email = 'Must not be empty';
+      this.setState({error: 'Email must not be empty'});
+      return;
     }
     if (this.isEmpty(data.password)) {
-      errors.password = 'Must not be empty';
+      // errors.password = 'Must not be empty';
     }
-    return {
-      errors,
-    };
+    return 1;
   };
 
   render() {
-    if (this.props.logged_in)
-    {this.props.navigation.navigate('BottomNavWrapper');}
+    if (this.props.logged_in) {
+      this.props.navigation.navigate('BottomNavWrapper');
+    }
     return (
       <ImageBackground
         style={styles.title}
@@ -81,9 +86,14 @@ class Login extends Component {
             style={styles.LogSignBtnCentered}
             full
             success
-            onPress={() =>
-              this.loginUser(this.state.email, this.state.password)
-            }>
+            onPress={() => {
+              if (
+                this.loginUser(this.state.email, this.state.password) ===
+                'Email must not be empty'
+              ) {
+                Alert.alert('Email must not be empty');
+              }
+            }}>
             <Text style={styles.BtnText}>Login</Text>
           </Button>
         </View>

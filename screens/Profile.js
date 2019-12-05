@@ -41,7 +41,7 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      available: null,
+      available: this.props.currentUser.available,
       avatarSource: this.props.currentUser.imageUrl,
     };
     this.availablityChangeHandler = this.availablityChangeHandler.bind(this);
