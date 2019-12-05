@@ -17,6 +17,8 @@ import {
   dismiss,
   get_notifications,
   get_events,
+  get_polls,
+  create_event,
 } from '../store';
 
 const FRIENDSandFAMILY = [
@@ -63,34 +65,37 @@ class Dashboard extends Component {
   renderCurrentSection() {
     return (
       <View>
-        <Text
-          style={{
-            fontSize: 25,
-            fontWeight: 'bold',
-            textAlign: 'center',
-            paddingBottom: 25,
-            paddingTop: 20,
-          }}>
-          Upcoming Events:
-        </Text>
-        <View style={{alignItems: 'center'}}>
-          {this.props.events.map((event, indx) => {
-            const date = new Date(event.chosenDate.seconds * 1000);
-            return (
-              <View style={{margin: 10, alignItems: 'center'}}>
-                <Text style={{fontSize: 22, fontWeight: 'bold'}}>
-                  {event.themeTitle}
-                </Text>
-                <Text style={{fontWeight: 'bold'}}>
-                  Winning Suggestion: {event.winningVote}
-                </Text>
-                <Text style={{fontWeight: 'bold'}}>
-                  When: {date.toDateString()}
-                </Text>
-              </View>
-            );
-          })}
-        </View>
+        <ScrollView>
+          <Text
+            style={{
+              fontSize: 25,
+              fontWeight: 'bold',
+              textAlign: 'center',
+              paddingBottom: 25,
+              paddingTop: 20,
+            }}>
+            Upcoming Events:
+          </Text>
+          <View style={{alignItems: 'center'}}>
+            {this.props.events.map((event, indx) => {
+              if (!event) return;
+              const date = new Date(event.chosenDate.seconds * 1000);
+              return (
+                <View style={{margin: 10, alignItems: 'center'}}>
+                  <Text style={{fontSize: 22, fontWeight: 'bold'}}>
+                    {event.themeTitle}
+                  </Text>
+                  <Text style={{fontWeight: 'bold'}}>
+                    Winning Suggestion: {event.winningVote}
+                  </Text>
+                  <Text style={{fontWeight: 'bold'}}>
+                    When: {date.toDateString()}
+                  </Text>
+                </View>
+              );
+            })}
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -247,6 +252,17 @@ class Dashboard extends Component {
     await this.props.getFriends(this.props.currentUser.username);
     await this.props.getUsers();
     await this.props.getNotifications(this.props.currentUser.username);
+    await this.props.getPolls(this.props.currentUser.username);
+    const allPolls = this.props.allPolls;
+    await allPolls.forEach(async poll => {
+      console.log('single poll is', poll);
+      const thisMoment = new Date();
+      const date = new Date(poll.endTime.seconds * 1000);
+      let minutes = Math.floor((date - thisMoment) / 1000 / 60);
+      if (minutes <= 0) {
+        await this.props.createEvent(poll);
+      }
+    });
     await this.props.getEvents(this.props.eventsIds);
   }
 
@@ -342,6 +358,7 @@ const mapToState = state => {
     numOfNotifications: state.user.numOfNotifications,
     eventsIds: state.user.currentUser.polls,
     events: state.events.events,
+    allPolls: state.polls.polls,
   };
 };
 
@@ -354,6 +371,10 @@ const dispatchToProps = dispatch => {
     dismiss: (username, idx) => dispatch(dismiss(username, idx)),
     getNotifications: username => dispatch(get_notifications(username)),
     getEvents: eventsIds => dispatch(get_events(eventsIds)),
+    getPolls: username => {
+      dispatch(get_polls(username));
+    },
+    createEvent: poll => dispatch(create_event(poll)),
   };
 };
 

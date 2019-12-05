@@ -9,30 +9,17 @@ import {
 } from 'react-native';
 import styles from '../public/styles';
 import {connect} from 'react-redux';
-import {get_polls, create_event} from '../store';
+import {get_polls} from '../store';
 import randomNYCphotos from '../public/photoURLS';
-
 class AllPolls extends Component {
-  constructor() {
-    super();
-    this.state = {
-      eventToCreate: [],
-    };
-  }
   async componentDidMount() {
     await this.props.getPolls(this.props.currentUser.username);
     this.interval = setInterval(() => this.setState({time: Date.now()}), 60000);
-    if (this.state.eventToCreate) {
-      this.props.createEvent(this.state.eventToCreate);
-    }
   }
-
   componentWillUnmount() {
     clearInterval(this.interval);
   }
-
   render() {
-    const eventToCreate = [];
     return (
       <ImageBackground
         style={styles.title}
@@ -51,6 +38,7 @@ class AllPolls extends Component {
               const thisMoment = new Date();
               const date = new Date(poll.endTime.seconds * 1000);
               let minutes = Math.floor((date - thisMoment) / 1000 / 60);
+              // console.log('Minutes left is ', minutes);
               if (minutes > 0) {
                 return (
                   <TouchableOpacity
@@ -87,9 +75,6 @@ class AllPolls extends Component {
                     </View>
                   </TouchableOpacity>
                 );
-              } else {
-                eventToCreate.push(poll);
-                this.setState({eventToCreate});
               }
             })}
           </ScrollView>
@@ -98,21 +83,17 @@ class AllPolls extends Component {
     );
   }
 }
-
 const mapToState = state => {
   return {
     allPolls: state.polls.polls,
     currentUser: state.user.currentUser,
   };
 };
-
 const dispatchToProps = dispatch => {
   return {
     getPolls: username => {
       dispatch(get_polls(username));
     },
-    createEvent: poll => dispatch(create_event(poll)),
   };
 };
-
 export default connect(mapToState, dispatchToProps)(AllPolls);
