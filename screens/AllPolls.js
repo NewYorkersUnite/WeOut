@@ -11,6 +11,7 @@ import styles from '../public/styles';
 import {connect} from 'react-redux';
 import {get_polls} from '../store';
 import randomNYCphotos from '../public/photoURLS';
+
 class AllPolls extends Component {
   async componentDidMount() {
     await this.props.getPolls(this.props.currentUser.username);
@@ -94,4 +95,3 @@ const dispatchToProps = dispatch => {
   };
 };
 export default connect(mapToState, dispatchToProps)(AllPolls);
-

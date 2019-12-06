@@ -21,24 +21,6 @@ import {
   create_event,
 } from '../store';
 
-const FRIENDSandFAMILY = [
-  {
-    title: 'Taco Tuesday',
-    winningVote: 'Beef Tacos!!',
-    date: 'Today, Dec 3 2019',
-  },
-  {
-    title: 'Movie Night',
-    winningVote: 'The Notebook',
-    date: 'Saturday, Dec 7 2019',
-  },
-  {
-    title: 'Restaurant',
-    winningVote: 'Nobu',
-    date: 'Tuesday, Dec 31, 2019',
-  },
-];
-
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -65,32 +47,37 @@ class Dashboard extends Component {
   renderCurrentSection() {
     return (
       <View>
-        <ScrollView>
-          <Text
-            style={{
-              fontSize: 25,
-              fontWeight: 'bold',
-              textAlign: 'center',
-              paddingBottom: 25,
-              paddingTop: 20,
-            }}>
-            Upcoming Events:
-          </Text>
+        <ScrollView
+          style={{
+            marginTop: 25,
+            marginBottom: 100,
+          }}>
           <View style={{alignItems: 'center'}}>
             {this.props.events.map((event, indx) => {
               if (!event) return;
               const date = new Date(event.chosenDate.seconds * 1000);
               return (
-                <View style={{margin: 10, alignItems: 'center'}}>
-                  <Text style={{fontSize: 22, fontWeight: 'bold'}}>
-                    {event.themeTitle}
-                  </Text>
-                  <Text style={{fontWeight: 'bold'}}>
-                    Winning Suggestion: {event.winningVote}
-                  </Text>
-                  <Text style={{fontWeight: 'bold'}}>
-                    When: {date.toDateString()}
-                  </Text>
+                <View style={styles.currentEvents}>
+                  <View
+                    style={{
+                      flex: 2,
+                    }}>
+                    <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+                      {event.themeTitle}
+                    </Text>
+                    <Text style={{fontWeight: 'bold', color: 'gray'}}>
+                      {event.winningVote}
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flex: 1,
+                    }}>
+                    <Text style={{fontWeight: 'bold'}}>
+                      {date.toDateString()}
+                    </Text>
+                  </View>
                 </View>
               );
             })}
@@ -99,34 +86,29 @@ class Dashboard extends Component {
       </View>
     );
   }
-  renderPastSection() {
-    return (
-      <View>
-        <Text style={styles.paragraph}>Nothing in History</Text>
-      </View>
-    );
-  }
   renderNotifications() {
     return (
       <View>
-        <Text
-          style={{
-            fontSize: 25,
-            fontWeight: 'bold',
-            textAlign: 'center',
-            paddingBottom: 25,
-            paddingTop: 20,
-          }}>
-          Notifications:
-        </Text>
-        <ScrollView>
+        <ScrollView style={{marginBottom: 116}}>
           {this.props.notifications.map((notif, idx) => {
             if (notif.includes('request to add you as friend')) {
               return (
-                <View style={{marginTop: 5, marginLeft: 10, marginRight: 10}}>
+                <View
+                  style={{
+                    marginTop: 5,
+                    marginLeft: 10,
+                    marginRight: 10,
+                  }}>
                   <View style={{flexDirection: 'row'}}>
-                    <View style={{flex: 2}}>
-                      <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                    <View
+                      style={{
+                        flex: 2,
+                        backgroundColor: 'white',
+                        borderRadius: 5,
+                        padding: 10,
+                        marginRight: 5,
+                      }}>
+                      <Text style={{fontSize: 15, fontWeight: 'bold'}}>
                         {notif}
                       </Text>
                     </View>
@@ -136,6 +118,7 @@ class Dashboard extends Component {
                         flex: 1,
                         flexDirection: 'row',
                         justifyContent: 'space-around',
+                        borderRadius: 5,
                       }}>
                       <View>
                         <Button
@@ -146,7 +129,7 @@ class Dashboard extends Component {
                           onPress={() => {
                             const friend = notif.slice(0, notif.length - 29);
                             Alert.alert(
-                              'You have accepted their Friend Request!', // might want to change this later to display the senders name, not the usernames name.
+                              'You have accepted their Friend Request!',
                             );
                             this.props.acceptFriend(
                               this.props.currentUser.username,
@@ -169,7 +152,7 @@ class Dashboard extends Component {
                           style={{backgroundColor: '#ff4c30', width: 60}}
                           onPress={() => {
                             Alert.alert(
-                              'You Have Denied Their Friend Request!', // might want to change this later to display the senders name, not the usernames name.
+                              'You Have Denied Their Friend Request!',
                             );
                             this.props.dismiss(
                               this.props.currentUser.username,
@@ -199,8 +182,14 @@ class Dashboard extends Component {
                     marginLeft: 10,
                     marginRight: 10,
                   }}>
-                  <View style={{flex: 2}}>
-                    <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                  <View
+                    style={{
+                      flex: 2,
+                      backgroundColor: 'white',
+                      borderRadius: 5,
+                      padding: 10,
+                    }}>
+                    <Text style={{fontSize: 15, fontWeight: 'bold'}}>
                       {notif}
                     </Text>
                   </View>
@@ -231,7 +220,9 @@ class Dashboard extends Component {
           {this.props.numOfNotifications ? (
             <Text>{''}</Text>
           ) : (
-            <Text style={styles.paragraph}>You dont have any notification</Text>
+            <Text style={styles.paragraph}>
+              You don't have any notifications
+            </Text>
           )}
         </View>
       </View>
@@ -242,8 +233,6 @@ class Dashboard extends Component {
     if (this.state.activeIndex === 0) {
       return <View>{this.renderCurrentSection()}</View>;
     } else if (this.state.activeIndex === 1) {
-      return <View>{this.renderPastSection()}</View>;
-    } else if (this.state.activeIndex === 2) {
       return <View>{this.renderNotifications()}</View>;
     }
   }
@@ -255,7 +244,6 @@ class Dashboard extends Component {
     await this.props.getPolls(this.props.currentUser.username);
     const allPolls = this.props.allPolls;
     await allPolls.forEach(async poll => {
-      console.log('single poll is', poll);
       const thisMoment = new Date();
       const date = new Date(poll.endTime.seconds * 1000);
       let minutes = Math.floor((date - thisMoment) / 1000 / 60);
@@ -319,13 +307,6 @@ class Dashboard extends Component {
                   onPress={() => this.segmentClicked(1)}
                   transparent
                   active={this.state.activeIndex === 1}>
-                  <Text style={styles.NavBtnText}> Past Events</Text>
-                </Button>
-
-                <Button
-                  onPress={() => this.segmentClicked(2)}
-                  transparent
-                  active={this.state.activeIndex === 2}>
                   <Text style={styles.NavBtnText}>
                     Notifications
                     {this.props.numOfNotifications
@@ -336,8 +317,8 @@ class Dashboard extends Component {
               </View>
               <ImageBackground
                 style={styles.opacityImg}
-                imageStyle={{opacity: 0.3}}
-                source={require('../public/Brooklyn.jpg')}>
+                // imageStyle={{opacity: 0.3}}
+                source={require('../public/DashBack.jpeg')}>
                 {this.renderSection()}
               </ImageBackground>
             </View>

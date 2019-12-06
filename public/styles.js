@@ -1,5 +1,7 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+
+const {width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   // Main Page
@@ -47,6 +49,22 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: '#ffffff',
     fontWeight: 'bold',
+  },
+
+  //DASHBOARD CURRENT EVENTS
+  currentEvents: {
+    margin: 10,
+    padding: 10,
+    alignItems: 'center',
+    backgroundColor: 'white',
+    width: width / 1.1,
+    borderRadius: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
   },
 
   // LOGIN & SIGN UP SCREENS

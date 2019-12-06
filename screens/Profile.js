@@ -116,7 +116,7 @@ class Profile extends Component {
                   </View>
                   <View style={styles.alignCen}>
                     <Text>{allPolls}</Text>
-                    <Text style={{fontSize: 10, color: 'grey'}}>Polls</Text>
+                    <Text style={{fontSize: 10, color: 'grey'}}>Events</Text>
                   </View>
                 </View>
 
@@ -192,7 +192,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapToState,
-  dispatchToProps,
-)(Profile);
+export default connect(mapToState, dispatchToProps)(Profile);
