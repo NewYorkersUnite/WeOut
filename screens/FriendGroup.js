@@ -47,18 +47,13 @@ class FriendGroup extends Component {
             <Text style={{fontSize: 22, fontWeight: 'bold'}}>
               Friend Group Name
             </Text>
-            <Text>
-              {this.props.currentUser.friends.length} Available Friends
-            </Text>
+            <Text>{this.props.currentUser.friends.length} Friends</Text>
           </View>
           <Button
             onPress={() => {
               const participants = [];
               this.props.users.forEach((user, index) => {
-                if (
-                  user.available &&
-                  this.props.friends.includes(user.username)
-                ) {
+                if (this.props.friends.includes(user.username)) {
                   participants.push(user.username);
                 }
               });
@@ -93,9 +88,10 @@ class FriendGroup extends Component {
             paddingRight: 20,
           }}>
           {this.props.users.map((user, indx) => {
-            if (user.available && this.props.friends.includes(user.username)) {
+            if (this.props.friends.includes(user.username)) {
               return (
                 <TouchableOpacity
+                  style={{marginBottom: 3}}
                   onPress={() => {
                     if (this.state.participants.includes(user.username)) {
                       const participants = this.state.participants.filter(
@@ -124,7 +120,7 @@ class FriendGroup extends Component {
                     }>
                     <View>
                       <Thumbnail
-                        style={styles.TNDetails}
+                        style={user.available ? styles.TNDetails : null}
                         source={{uri: user.imageUrl}}
                       />
                     </View>
