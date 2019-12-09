@@ -53,9 +53,6 @@ class Profile extends Component {
       ? this.setState({available: false})
       : this.setState({available: true});
   }
-  // availablity() {
-  //   //** */
-  // }
 
   selectImage = async () => {
     await ImagePicker.showImagePicker(
@@ -192,4 +189,7 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapToState, dispatchToProps)(Profile);
+export default connect(
+  mapToState,
+  dispatchToProps,
+)(Profile);
