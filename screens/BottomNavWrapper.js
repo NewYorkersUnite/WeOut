@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BackHandler, Image} from 'react-native';
+import {Image} from 'react-native';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import Dashboard from './Dashboard';
 import Profile from './Profile';
@@ -12,7 +12,6 @@ import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom
 
 const PollTab = createSwitchNavigator({
   AllPolls: {screen: AllPolls},
-  // PollForm: {screen: PollForm},
   VotingRoom: {screen: VotingRoom},
 });
 

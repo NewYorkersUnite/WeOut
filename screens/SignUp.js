@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import {View, Text, ImageBackground, Image, Alert} from 'react-native';
+import {View, Text, ImageBackground, Image} from 'react-native';
 import styles from '../public/styles';
-const {firebaseApp, db, config} = require('../functions/util/config');
-
 import {Input, Item, Button, Label} from 'native-base';
 import {connect} from 'react-redux';
 import {sign_up} from '../store';
@@ -33,6 +31,7 @@ class SignUp extends Component {
       return false;
     }
   };
+
   isEmpty = string => {
     if (string.trim() === '') {
       return true;
@@ -141,7 +140,14 @@ class SignUp extends Component {
   }
 }
 
-const dispatchToProps = dispatch => {
+const mapStateToProps = state => {
+  return {
+    currentUser: state.user.currentUser,
+    logged_in: state.user.logged_in,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
   return {
     signUp: newUser => {
       dispatch(sign_up(newUser));
@@ -149,14 +155,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-const mapToProps = state => {
-  return {
-    currentUser: state.user.currentUser,
-    logged_in: state.user.logged_in,
-  };
-};
-
-export default connect(
-  mapToProps,
-  dispatchToProps,
-)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

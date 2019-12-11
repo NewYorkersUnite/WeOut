@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-  ScrollView,
   Image,
   Text,
   View,
@@ -37,6 +36,7 @@ class PollForm extends Component {
   setDate(newDate) {
     this.setState({poll: {...this.state.poll, chosenDate: newDate}});
   }
+
   render() {
     return (
       <ImageBackground
@@ -185,21 +185,18 @@ class PollForm extends Component {
   }
 }
 
-const mapToState = state => {
+const mapStateToProps = state => {
   return {
     polls: state.polls.polls,
     currentUser: state.user.currentUser,
   };
 };
 
-const dispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     createPoll: (username, poll, participants) =>
       dispatch(create_poll(username, poll, participants)),
   };
 };
 
-export default connect(
-  mapToState,
-  dispatchToProps,
-)(PollForm);
+export default connect(mapStateToProps, mapDispatchToProps)(PollForm);

@@ -10,7 +10,6 @@ import {
 import styles from '../public/styles';
 import {connect} from 'react-redux';
 import {get_polls} from '../store';
-import randomNYCphotos from '../public/photoURLS';
 
 class AllPolls extends Component {
   async componentDidMount() {
@@ -39,7 +38,6 @@ class AllPolls extends Component {
               const thisMoment = new Date();
               const date = new Date(poll.endTime.seconds * 1000);
               let minutes = Math.floor((date - thisMoment) / 1000 / 60);
-              // console.log('Minutes left is ', minutes);
               if (minutes > 0) {
                 return (
                   <TouchableOpacity
@@ -81,17 +79,17 @@ class AllPolls extends Component {
     );
   }
 }
-const mapToState = state => {
+const mapStateToProps = state => {
   return {
     allPolls: state.polls.polls,
     currentUser: state.user.currentUser,
   };
 };
-const dispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     getPolls: username => {
       dispatch(get_polls(username));
     },
   };
 };
-export default connect(mapToState, dispatchToProps)(AllPolls);
+export default connect(mapStateToProps, mapDispatchToProps)(AllPolls);

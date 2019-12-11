@@ -1,14 +1,7 @@
 import React, {Component} from 'react';
-import {
-  ScrollView,
-  Text,
-  View,
-  ImageBackground,
-  SafeAreaView,
-  Alert,
-} from 'react-native';
+import {ScrollView, Text, View, ImageBackground, Alert} from 'react-native';
 import styles from '../public/styles';
-import {Button, Thumbnail, Container} from 'native-base';
+import {Button, Thumbnail} from 'native-base';
 import {connect} from 'react-redux';
 import {
   getFriends,
@@ -36,6 +29,7 @@ class Dashboard extends Component {
       activeIndex: index,
     });
   }
+
   checkActive = index => {
     if (this.state.activeIndex !== index) {
       return {color: 'grey'};
@@ -198,9 +192,7 @@ class Dashboard extends Component {
                     <Button
                       style={{backgroundColor: '#b8bab5'}}
                       onPress={() => {
-                        Alert.alert(
-                          'You Have Dismissed This Poll Invitation!', // might want to change this later to display the senders name, not the usernames name.
-                        );
+                        Alert.alert('You Have Dismissed This Poll Invitation!');
                         this.props.dismiss(
                           this.props.currentUser.username,
                           idx,
@@ -317,7 +309,6 @@ class Dashboard extends Component {
               </View>
               <ImageBackground
                 style={styles.opacityImg}
-                // imageStyle={{opacity: 0.3}}
                 source={require('../public/DashBack.jpeg')}>
                 {this.renderSection()}
               </ImageBackground>
@@ -329,7 +320,7 @@ class Dashboard extends Component {
   }
 }
 
-const mapToState = state => {
+const mapStateToProps = state => {
   return {
     currentUser: state.user.currentUser,
     friends: state.user.friends,
@@ -343,7 +334,7 @@ const mapToState = state => {
   };
 };
 
-const dispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     getFriends: username => dispatch(getFriends(username)),
     getUsers: () => dispatch(get_users()),
@@ -359,4 +350,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapToState, dispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

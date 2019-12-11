@@ -34,8 +34,6 @@ const catergories = [
 ];
 
 const {width} = Dimensions.get('window');
-// const Tom =
-//   'http://www.todayifoundout.com/wp-content/uploads/2017/12/myspace-tom.jpg';
 
 class Profile extends Component {
   constructor(props) {
@@ -171,14 +169,14 @@ class Profile extends Component {
     );
   }
 }
-const mapToState = state => {
+const mapStateToProps = state => {
   return {
     availability: state.user.availability,
     currentUser: state.user.currentUser,
     allPolls: state.polls.polls,
   };
 };
-const dispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     toggleAvailability: username => {
       dispatch(toggle_availability(username));
@@ -189,7 +187,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapToState,
-  dispatchToProps,
-)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
