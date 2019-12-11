@@ -20,6 +20,7 @@ class VotingRoom extends Component {
       suggestion: '',
     };
   }
+
   componentDidMount() {
     this.props.getSuggestions(
       this.props.currentUser.username,
@@ -144,7 +145,7 @@ class VotingRoom extends Component {
   }
 }
 
-const mapToState = state => {
+const mapStateToProps = state => {
   return {
     suggestions: state.polls.suggestions,
     currentUser: state.user.currentUser,
@@ -152,7 +153,7 @@ const mapToState = state => {
   };
 };
 
-const dispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     addSuggestion: (pollId, suggestion) =>
       dispatch(add_suggestion(pollId, suggestion)),
@@ -163,4 +164,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapToState, dispatchToProps)(VotingRoom);
+export default connect(mapStateToProps, mapDispatchToProps)(VotingRoom);

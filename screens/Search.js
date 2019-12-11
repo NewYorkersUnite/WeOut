@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {ScrollView, Image, Text, View, FlatList, Alert} from 'react-native';
+import {Text, View, FlatList, Alert} from 'react-native';
 import styles from '../public/styles';
 import {Header, Thumbnail, Item, Input, Button} from 'native-base';
-const {db} = require('../functions/util/config');
+const {db} = require('../secrets');
 
 import {connect} from 'react-redux';
 import {addFriend} from '../store';
@@ -78,7 +78,7 @@ class Search extends Component {
               <View
                 style={{flex: 2, flexDirection: 'row', alignItems: 'center'}}>
                 <Thumbnail
-                  style={styles.TNDetails}
+                  style={item.available ? styles.TNDetails : {marginLeft: 3}}
                   source={{uri: item.imageUrl}}
                 />
                 <Text
@@ -116,14 +116,14 @@ class Search extends Component {
   }
 }
 
-const mapToState = state => {
+const mapStateToProps = state => {
   return {
     currentUser: state.user.currentUser,
     friends: state.user.currentUser.friends,
   };
 };
 
-const dispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     addFriend: (username, item) => {
       dispatch(addFriend(username, item));
@@ -131,7 +131,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapToState,
-  dispatchToProps,
-)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

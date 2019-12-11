@@ -1,5 +1,5 @@
-const {firebaseApp, db, config} = require('../functions/util/config');
-import {Alert} from 'react-native';
+const {firebaseApp, db, config} = require('../secrets');
+
 /**
  * ACTION TYPES
  */

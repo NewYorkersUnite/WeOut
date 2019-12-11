@@ -7,17 +7,14 @@
  */
 
 import React from 'react';
-import {SafeAreaView, ScrollView, View, Text, StatusBar} from 'react-native';
-
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import Splash from './screens/Splash';
 import SignUp from './screens/SignUp';
 import Login from './screens/Login';
 import BottomNavWrapper from './screens/BottomNavWrapper';
-import styles from './public/styles';
-import * as firebase from 'firebase';
 import {Provider} from 'react-redux';
 import store from './store';
+console.disableYellowBox = true;
 
 export default class App extends React.Component {
   render() {

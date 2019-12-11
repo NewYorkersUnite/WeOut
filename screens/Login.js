@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, ImageBackground, Image, Alert} from 'react-native';
 import styles from '../public/styles';
-// const {firebaseApp, db, config} = require('../functions/util/config');
-
 import {Input, Item, Button, Label} from 'native-base';
 import {connect} from 'react-redux';
 import {login} from '../store';
@@ -22,7 +20,6 @@ class Login extends Component {
     if (this.validateLoginData(this.state)) {
       await this.props.login(this.state.email, this.state.password);
     } else if (this.state.error === 'Email must not be empty') {
-      console.log('ALERT SHOULD TRIGGER', this.state);
       return 'Email must not be empty';
     }
   }
@@ -36,14 +33,11 @@ class Login extends Component {
   };
 
   validateLoginData = data => {
-    // let errors = {};
     if (this.isEmpty(data.email)) {
-      // errors.email = 'Must not be empty';
       this.setState({error: 'Email must not be empty'});
       return;
     }
     if (this.isEmpty(data.password)) {
-      // errors.password = 'Must not be empty';
     }
     return 1;
   };
@@ -102,14 +96,14 @@ class Login extends Component {
   }
 }
 
-const mapToProps = state => {
+const mapStateToProps = state => {
   return {
     currentUser: state.user.currentUser,
     logged_in: state.user.logged_in,
   };
 };
 
-const dispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     login: (email, password) => {
       dispatch(login(email, password));
@@ -117,7 +111,4 @@ const dispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapToProps,
-  dispatchToProps,
-)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

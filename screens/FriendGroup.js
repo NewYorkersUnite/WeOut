@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styles from '../public/styles';
-import {Button, Thumbnail, CheckBox} from 'native-base';
+import {Button, Thumbnail} from 'native-base';
 import {connect} from 'react-redux';
 import {getFriends, get_users} from '../store';
 
@@ -24,12 +24,14 @@ class FriendGroup extends Component {
     await this.props.getFriends(this.props.currentUser.username);
     await this.props.getUsers();
   }
+
   unselect(unselected) {
     if (this.state.participants.includes(unselected)) {
       let newArray = this.state.participants.filter(unselected);
       return newArray;
     }
   }
+
   render() {
     return (
       <ImageBackground
@@ -120,7 +122,9 @@ class FriendGroup extends Component {
                     }>
                     <View>
                       <Thumbnail
-                        style={user.available ? styles.TNDetails : null}
+                        style={
+                          user.available ? styles.TNDetails : {marginLeft: 3}
+                        }
                         source={{uri: user.imageUrl}}
                       />
                     </View>
@@ -164,7 +168,7 @@ class FriendGroup extends Component {
   }
 }
 
-const mapToState = state => {
+const mapStateToProps = state => {
   return {
     currentUser: state.user.currentUser,
     friends: state.user.friends,
@@ -172,10 +176,10 @@ const mapToState = state => {
   };
 };
 
-const dispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     getFriends: username => dispatch(getFriends(username)),
     getUsers: () => dispatch(get_users()),
   };
 };
-export default connect(mapToState, dispatchToProps)(FriendGroup);
+export default connect(mapStateToProps, mapDispatchToProps)(FriendGroup);
