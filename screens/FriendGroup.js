@@ -11,6 +11,8 @@ import styles from '../public/styles';
 import {Button, Thumbnail} from 'native-base';
 import {connect} from 'react-redux';
 import {getFriends, get_users} from '../store';
+const backgroundImg = require('../public/Background.png');
+const backArrow = require('../public/BackArrow.png');
 
 class FriendGroup extends Component {
   constructor(props) {
@@ -34,21 +36,14 @@ class FriendGroup extends Component {
 
   render() {
     return (
-      <ImageBackground
-        style={styles.title}
-        source={require('../public/Background.png')}>
+      <ImageBackground style={styles.title} source={backgroundImg}>
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Profile')}>
-          <Image
-            style={{width: 50, height: 50, marginTop: 70, marginLeft: 8}}
-            source={require('../public/BackArrow.png')}
-          />
+          <Image style={styles.backArrow} source={backArrow} />
         </TouchableOpacity>
-        <View style={{flexDirection: 'row', marginTop: 25}}>
-          <View style={{marginLeft: 20, flex: 2}}>
-            <Text style={{fontSize: 22, fontWeight: 'bold'}}>
-              Friend Group Name
-            </Text>
+        <View style={styles.friendTitle}>
+          <View style={styles.friendView}>
+            <Text style={styles.friendText}>Friend Group Name</Text>
             <Text>{this.props.currentUser.friends.length} Friends</Text>
           </View>
           <Button
@@ -66,20 +61,8 @@ class FriendGroup extends Component {
                 this.setState({participants});
               }
             }}
-            style={{
-              flex: 1,
-              backgroundColor: '#2b81b5',
-              marginRight: 20,
-              justifyContent: 'center',
-            }}>
-            <Text
-              style={{
-                fontSize: 15,
-                fontWeight: 'bold',
-                color: 'white',
-              }}>
-              Select All
-            </Text>
+            style={styles.selectAllButton}>
+            <Text style={styles.selectAllText}>Select All</Text>
           </Button>
         </View>
 
@@ -128,14 +111,7 @@ class FriendGroup extends Component {
                         source={{uri: user.imageUrl}}
                       />
                     </View>
-                    <Text
-                      style={{
-                        paddingLeft: 20,
-                        fontSize: 20,
-                        fontWeight: 'bold',
-                      }}>
-                      {user.username}
-                    </Text>
+                    <Text style={styles.friendName}>{user.username}</Text>
                   </View>
                 </TouchableOpacity>
               );
@@ -145,23 +121,13 @@ class FriendGroup extends Component {
 
         <Button
           full
-          style={{
-            backgroundColor: '#2b81b5',
-            justifyContent: 'center',
-          }}
+          style={styles.friendSubmitPoll}
           onPress={() =>
             this.props.navigation.navigate('PollForm', {
               participants: this.state.participants,
             })
           }>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 'bold',
-              color: 'white',
-            }}>
-            Submit Invite To Poll Room
-          </Text>
+          <Text style={styles.selectAllText}>Submit Invite To Poll Room</Text>
         </Button>
       </ImageBackground>
     );

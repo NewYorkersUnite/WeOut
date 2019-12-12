@@ -13,6 +13,8 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import {create_poll} from '../store';
 import randomNYCphotos from '../public/photoURLS';
+const backgroundImg = require('../public/Background.png');
+const backArrow = require('../public/BackArrow.png');
 
 class PollForm extends Component {
   constructor(props) {
@@ -39,15 +41,10 @@ class PollForm extends Component {
 
   render() {
     return (
-      <ImageBackground
-        style={styles.title}
-        source={require('../public/Background.png')}>
+      <ImageBackground style={styles.title} source={backgroundImg}>
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('FriendGroup')}>
-          <Image
-            style={{width: 50, height: 50, marginTop: 50, marginLeft: 8}}
-            source={require('../public/BackArrow.png')}
-          />
+          <Image style={styles.backArrow} source={backArrow} />
         </TouchableOpacity>
 
         <View style={styles.centerish}>
@@ -63,12 +60,10 @@ class PollForm extends Component {
             />
           </Item>
 
-          <View style={{flex: 1, flexDirection: 'row', marginTop: 20}}>
+          <View style={styles.pollFormBox}>
             <View style={{flex: 1}}>
-              <Text style={{fontWeight: 'bold', textAlign: 'center'}}>
-                Set Timer For Votes:
-              </Text>
-              <Text style={{fontWeight: 'bold', textAlign: 'center'}}>
+              <Text style={styles.timerText}>Set Timer For Votes:</Text>
+              <Text style={styles.timerText}>
                 {this.state.poll.voteTimer < 60
                   ? `${this.state.poll.voteTimer} Minutes`
                   : `${this.state.poll.voteTimer / 60} Hours`}
@@ -104,9 +99,7 @@ class PollForm extends Component {
             </View>
 
             <View style={{flex: 1}}>
-              <Text style={{fontWeight: 'bold', textAlign: 'center'}}>
-                Set Suggestion Input Limit:
-              </Text>
+              <Text style={styles.timerText}>Set Suggestion Input Limit:</Text>
               <Text style={{fontWeight: 'bold', textAlign: 'center'}}>
                 {`${this.state.poll.limit} Max Suggestions`}
               </Text>
@@ -132,22 +125,11 @@ class PollForm extends Component {
           </View>
 
           <Button
-            style={{
-              backgroundColor: '#2b81b5',
-              justifyContent: 'center',
-              marginTop: 10,
-            }}
+            style={styles.dateButton}
             onPress={() => {
               this.setState({showDatePicker: !this.state.showDatePicker});
             }}>
-            <Text
-              style={{
-                fontSize: 15,
-                fontWeight: 'bold',
-                color: 'white',
-              }}>
-              Select Date & Time
-            </Text>
+            <Text style={styles.selectAllText}>Select Date & Time</Text>
           </Button>
         </View>
         {this.state.showDatePicker ? (
@@ -159,10 +141,7 @@ class PollForm extends Component {
 
         <Button
           full
-          style={{
-            backgroundColor: '#2b81b5',
-            justifyContent: 'center',
-          }}
+          style={styles.friendSubmitPoll}
           onPress={async () => {
             await this.props.createPoll(
               this.props.currentUser.username,
@@ -171,14 +150,7 @@ class PollForm extends Component {
             );
             this.props.navigation.navigate('AllPolls');
           }}>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 'bold',
-              color: 'white',
-            }}>
-            Submit Poll
-          </Text>
+          <Text style={styles.selectAllText}>Submit Poll</Text>
         </Button>
       </ImageBackground>
     );

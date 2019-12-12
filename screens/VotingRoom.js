@@ -12,6 +12,8 @@ import {Button, Item, Label, Input} from 'native-base';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {add_suggestion, get_suggestions, vote} from '../store';
 import {connect} from 'react-redux';
+const backgroundImg = require('../public/Background.png');
+const backArrow = require('../public/BackArrow.png');
 
 class VotingRoom extends Component {
   constructor(props) {
@@ -33,29 +35,18 @@ class VotingRoom extends Component {
     const date = new Date(dat * 1000);
 
     return (
-      <ImageBackground
-        style={styles.title}
-        source={require('../public/Background.png')}>
+      <ImageBackground style={styles.title} source={backgroundImg}>
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('AllPolls')}>
-          <Image
-            style={{width: 50, height: 50, marginTop: 50, marginLeft: 8}}
-            source={require('../public/BackArrow.png')}
-          />
+          <Image style={styles.backArrow} source={backArrow} />
         </TouchableOpacity>
 
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 25,
-              marginBottom: 5,
-              marginTop: 5,
-            }}>
+        <View style={styles.votingTitle}>
+          <Text style={styles.votingText}>
             {this.props.navigation.getParam('poll').themeTitle}
           </Text>
 
-          <Text style={{fontWeight: 'bold', marginBottom: 25}}>
+          <Text style={styles.votingDate}>
             Date of Event: {date.toDateString()}
           </Text>
           <ScrollView>
@@ -76,18 +67,8 @@ class VotingRoom extends Component {
                     }}
                     full
                     rounded
-                    style={{
-                      backgroundColor: '#2b81b5',
-                      justifyContent: 'center',
-                      width: 300,
-                      marginBottom: 5,
-                    }}>
-                    <Text
-                      style={{
-                        fontSize: 20,
-                        fontWeight: 'bold',
-                        color: 'white',
-                      }}>
+                    style={styles.suggestion}>
+                    <Text style={styles.suggestionText}>
                       {suggestion.option} {''}
                       {Math.floor(suggestion.percentage)}%
                     </Text>
@@ -111,11 +92,7 @@ class VotingRoom extends Component {
         <Button
           full
           rounded
-          style={{
-            backgroundColor: '#2b81b5',
-            justifyContent: 'center',
-            marginTop: 25,
-          }}
+          style={styles.addSuggestionButton}
           onPress={() => {
             if (this.state.suggestion.trim().length === 0) {
               Alert.alert('Please input a valid suggestion.');
@@ -131,14 +108,7 @@ class VotingRoom extends Component {
               );
             }
           }}>
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: 'bold',
-              color: 'white',
-            }}>
-            Submit
-          </Text>
+          <Text style={styles.suggestionText}>Submit</Text>
         </Button>
       </ImageBackground>
     );
