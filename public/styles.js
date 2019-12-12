@@ -43,6 +43,30 @@ const styles = StyleSheet.create({
     marginBottom: 100,
   },
   dashText: {fontSize: 15, fontWeight: 'bold'},
+  mainContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+  },
+  navContainer: {
+    flexDirection: 'row',
+    marginBottom: 10,
+    justifyContent: 'space-around',
+    backgroundColor: '#F0F0F0',
+  },
+  navButtonContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  NavButton: {
+    backgroundColor: '#F0F0F0',
+  },
+  NavBtnText: {
+    fontSize: 15,
+    color: 'black',
+    fontWeight: 'bold',
+  },
   // DASHBOARD - CURRENT EVENTS
   currentEventsCentered: {alignItems: 'center'},
   currentEvents: {
@@ -355,43 +379,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#2b81b5',
     justifyContent: 'center',
     marginTop: 25,
-  },
-
-  //NAV BAR
-  mainContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-  },
-  navContainer: {
-    flexDirection: 'row',
-    marginBottom: 10,
-    justifyContent: 'space-around',
-    backgroundColor: '#F0F0F0',
-  },
-  navButtonContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  NavButton: {
-    backgroundColor: '#F0F0F0',
-  },
-  NavBtnText: {
-    fontSize: 15,
-    color: 'black',
-    fontWeight: 'bold',
-  },
-
-  // HORIZONTAL SCROLL - DASHBOARD
-  v1InsideSV: {
-    flex: 1,
-    paddingTop: 150,
-  },
-  v1InsideSVTEXT: {
-    fontSize: 24,
-    fontWeight: '700',
-    paddingHorizontal: 20,
   },
 });
 
