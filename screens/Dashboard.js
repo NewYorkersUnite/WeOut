@@ -41,36 +41,20 @@ class Dashboard extends Component {
   renderCurrentSection() {
     return (
       <View>
-        <ScrollView
-          style={{
-            marginTop: 25,
-            marginBottom: 100,
-          }}>
-          <View style={{alignItems: 'center'}}>
+        <ScrollView style={styles.dashScroll}>
+          <View style={styles.currentEventsCentered}>
             {this.props.events.map((event, indx) => {
               if (!event) return;
               const date = new Date(event.chosenDate.seconds * 1000);
               return (
                 <View style={styles.currentEvents}>
-                  <View
-                    style={{
-                      flex: 2,
-                    }}>
-                    <Text style={{fontSize: 15, fontWeight: 'bold'}}>
-                      {event.themeTitle}
-                    </Text>
-                    <Text style={{fontWeight: 'bold', color: 'gray'}}>
-                      {event.winningVote}
-                    </Text>
+                  <View style={styles.bottom}>
+                    <Text style={styles.dashText}>{event.themeTitle}</Text>
+                    <Text style={styles.eventsVote}>{event.winningVote}</Text>
                   </View>
 
-                  <View
-                    style={{
-                      flex: 1,
-                    }}>
-                    <Text style={{fontWeight: 'bold'}}>
-                      {date.toDateString()}
-                    </Text>
+                  <View style={{flex: 1}}>
+                    <Text style={styles.eventsDate}>{date.toDateString()}</Text>
                   </View>
                 </View>
               );
@@ -80,6 +64,7 @@ class Dashboard extends Component {
       </View>
     );
   }
+
   renderNotifications() {
     return (
       <View>
@@ -87,43 +72,20 @@ class Dashboard extends Component {
           {this.props.notifications.map((notif, idx) => {
             if (notif.includes('request to add you as friend')) {
               return (
-                <View
-                  style={{
-                    marginTop: 5,
-                    marginLeft: 10,
-                    marginRight: 10,
-                  }}>
+                <View style={styles.notificationsMargin}>
                   <View style={{flexDirection: 'row'}}>
-                    <View
-                      style={{
-                        flex: 2,
-                        backgroundColor: 'white',
-                        borderRadius: 5,
-                        padding: 10,
-                        marginRight: 5,
-                      }}>
-                      <Text style={{fontSize: 15, fontWeight: 'bold'}}>
-                        {notif}
-                      </Text>
+                    <View style={styles.notificationsBox}>
+                      <Text style={styles.dashText}>{notif}</Text>
                     </View>
 
-                    <View
-                      style={{
-                        flex: 1,
-                        flexDirection: 'row',
-                        justifyContent: 'space-around',
-                        borderRadius: 5,
-                      }}>
+                    <View style={styles.requestBox}>
                       <View>
                         <Button
-                          style={{
-                            backgroundColor: '#2b81b5',
-                            width: 60,
-                          }}
+                          style={styles.requestAccept}
                           onPress={() => {
                             const friend = notif.slice(0, notif.length - 29);
                             Alert.alert(
-                              'You have accepted their Friend Request!',
+                              'You have accepted their friend request!',
                             );
                             this.props.acceptFriend(
                               this.props.currentUser.username,
@@ -131,36 +93,22 @@ class Dashboard extends Component {
                               idx,
                             );
                           }}>
-                          <Text
-                            style={{
-                              fontWeight: 'bold',
-                              marginLeft: 4,
-                              color: 'white',
-                            }}>
-                            Accept
-                          </Text>
+                          <Text style={styles.requestAcceptText}>Accept</Text>
                         </Button>
                       </View>
                       <View>
                         <Button
-                          style={{backgroundColor: '#ff4c30', width: 60}}
+                          style={styles.requestDeny}
                           onPress={() => {
                             Alert.alert(
-                              'You Have Denied Their Friend Request!',
+                              'You have denied their friend request!',
                             );
                             this.props.dismiss(
                               this.props.currentUser.username,
                               idx,
                             );
                           }}>
-                          <Text
-                            style={{
-                              fontWeight: 'bold',
-                              marginLeft: 12,
-                              color: 'white',
-                            }}>
-                            Deny
-                          </Text>
+                          <Text style={styles.requestDenyText}>Deny</Text>
                         </Button>
                       </View>
                     </View>
@@ -169,38 +117,22 @@ class Dashboard extends Component {
               );
             } else {
               return (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    marginTop: 7,
-                    marginLeft: 10,
-                    marginRight: 10,
-                  }}>
-                  <View
-                    style={{
-                      flex: 2,
-                      backgroundColor: 'white',
-                      borderRadius: 5,
-                      padding: 10,
-                    }}>
-                    <Text style={{fontSize: 15, fontWeight: 'bold'}}>
-                      {notif}
-                    </Text>
+                <View style={styles.pollBox}>
+                  <View style={styles.notificationPoll}>
+                    <Text style={styles.dashText}>{notif}</Text>
                   </View>
 
-                  <View style={{flex: 1, padding: 20, marginLeft: 50}}>
+                  <View style={styles.dismissBox}>
                     <Button
                       style={{backgroundColor: '#b8bab5'}}
                       onPress={() => {
-                        Alert.alert('You Have Dismissed This Poll Invitation!');
+                        Alert.alert('You have dismissed this poll invitation!');
                         this.props.dismiss(
                           this.props.currentUser.username,
                           idx,
                         );
                       }}>
-                      <Text style={{fontWeight: 'bold', marginLeft: 22}}>
-                        Dismiss
-                      </Text>
+                      <Text style={styles.dismissText}>Dismiss</Text>
                     </Button>
                   </View>
                 </View>
@@ -257,7 +189,7 @@ class Dashboard extends Component {
 
         <View style={styles.mainContainer}>
           <View style={styles.top}>
-            <View style={styles.scrollContainer}>
+            <View>
               <View style={styles.scrollHeight}>
                 <View style={styles.proportionsOfScroll}>
                   <Text style={styles.scrollTxt}>All Friends</Text>
@@ -286,7 +218,7 @@ class Dashboard extends Component {
               </View>
             </View>
 
-            <View style={styles.mainContainerCALANDAR}>
+            <View style={styles.mainContainerCurrentEvents}>
               <View style={styles.tabBackgroundColor}>
                 <Button
                   onPress={() => this.segmentClicked(0)}

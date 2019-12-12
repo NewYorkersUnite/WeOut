@@ -9,6 +9,7 @@ import VotingRoom from './VotingRoom';
 import FriendGroup from './FriendGroup';
 import PollForm from './PollForm';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
+import styles from '../public/styles';
 
 const PollTab = createSwitchNavigator({
   AllPolls: {screen: AllPolls},
@@ -30,7 +31,7 @@ const bottomTabNavigator = createMaterialBottomTabNavigator(
         tabBarIcon: () => (
           <Image
             source={require('../public/HomeIcon.png')}
-            style={{width: 30, height: 30}}
+            style={styles.bottomIcons}
           />
         ),
       },
@@ -42,7 +43,7 @@ const bottomTabNavigator = createMaterialBottomTabNavigator(
         tabBarIcon: () => (
           <Image
             source={require('../public/searchIcon.png')}
-            style={{width: 30, height: 30}}
+            style={styles.bottomIcons}
           />
         ),
       },
@@ -53,7 +54,7 @@ const bottomTabNavigator = createMaterialBottomTabNavigator(
         tabBarIcon: () => (
           <Image
             source={require('../public/poll.png')}
-            style={{width: 30, height: 30}}
+            style={styles.bottomIcons}
           />
         ),
       },
@@ -64,7 +65,7 @@ const bottomTabNavigator = createMaterialBottomTabNavigator(
         tabBarIcon: () => (
           <Image
             source={require('../public/UserIcon.png')}
-            style={{width: 30, height: 30}}
+            style={styles.bottomIcons}
           />
         ),
       },

@@ -10,26 +10,25 @@ import {
 import styles from '../public/styles';
 import {connect} from 'react-redux';
 import {get_polls} from '../store';
+const backgroundImg = require('../public/Background.png');
+const backArrow = require('../public/BackArrow.png');
 
 class AllPolls extends Component {
   async componentDidMount() {
     await this.props.getPolls(this.props.currentUser.username);
     this.interval = setInterval(() => this.setState({time: Date.now()}), 60000);
   }
+
   componentWillUnmount() {
     clearInterval(this.interval);
   }
+
   render() {
     return (
-      <ImageBackground
-        style={styles.title}
-        source={require('../public/Background.png')}>
+      <ImageBackground style={styles.title} source={backgroundImg}>
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Profile')}>
-          <Image
-            style={{width: 50, height: 50, marginTop: 70, marginLeft: 8}}
-            source={require('../public/BackArrow.png')}
-          />
+          <Image style={styles.backArrow} source={backArrow} />
         </TouchableOpacity>
         <Text style={styles.activeTitle}>Active Polls</Text>
         <View>
@@ -44,25 +43,12 @@ class AllPolls extends Component {
                     onPress={() =>
                       this.props.navigation.navigate('VotingRoom', {poll})
                     }>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        width: 100,
-                        height: 100,
-                        alignItems: 'center',
-                      }}>
+                    <View style={styles.pollButton}>
                       <Image
                         source={{
                           uri: poll.imageURL,
                         }}
-                        style={{
-                          width: 80,
-                          height: 80,
-                          borderRadius: 50,
-                          marginLeft: 10,
-                          marginTop: 10,
-                          marginRight: 10,
-                        }}
+                        style={styles.pollImg}
                       />
                       <View style={styles.pollDetails}>
                         <Text style={styles.scrollTxt}>{poll.themeTitle}</Text>

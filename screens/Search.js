@@ -55,57 +55,29 @@ class Search extends Component {
           </Item>
         </Header>
 
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: 'bold',
-            marginLeft: 20,
-            marginTop: 20,
-          }}>
-          Search Results:
-        </Text>
+        <Text style={styles.searchText}>Search Results:</Text>
 
         <FlatList
-          style={{marginTop: 40, paddingLeft: 20, paddingRight: 20}}
+          style={styles.eachSearch}
           data={this.state.searchResult}
           renderItem={({item}) => (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: 5,
-              }}>
-              <View
-                style={{flex: 2, flexDirection: 'row', alignItems: 'center'}}>
+            <View style={styles.eachSearchLayout}>
+              <View style={styles.searchThumb}>
                 <Thumbnail
                   style={item.available ? styles.TNDetails : {marginLeft: 3}}
                   source={{uri: item.imageUrl}}
                 />
-                <Text
-                  style={{paddingLeft: 20, fontSize: 20, fontWeight: 'bold'}}>
-                  {item.username}
-                </Text>
+                <Text style={styles.friendName}>{item.username}</Text>
               </View>
               <Button
                 full
                 rounded
-                style={{
-                  backgroundColor: '#2b81b5',
-                  justifyContent: 'center',
-                  width: 100,
-                }}
+                style={styles.searchAdd}
                 onPress={() => {
                   Alert.alert(`Friend Request Sent to ${item.username}!`);
                   this.addFriendClick({item});
                 }}>
-                <Text
-                  style={{
-                    fontSize: 15,
-                    fontWeight: 'bold',
-                    color: 'white',
-                  }}>
-                  Add Friend
-                </Text>
+                <Text style={styles.selectAllText}>Add Friend</Text>
               </Button>
             </View>
           )}
