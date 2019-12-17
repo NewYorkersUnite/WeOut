@@ -1,4 +1,6 @@
-![weoutlogo](public/WeOut.png)
+<p align="center">
+  <img src="./public/WeOut.png">
+</p>
 
 # WeOut
 
