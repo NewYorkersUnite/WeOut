@@ -1,4 +1,4 @@
-![weoutlogo](public/ReadMeLogo.png)
+![weoutlogo](public/WeOut.png)
 
 # WeOut
 
