@@ -29,10 +29,9 @@ This starts the iPhone simulator and starts the bundle.js
 
 ## Features
 
-| Dashboard                          |               Search               | Profile |
-| ---------------------------------- | :--------------------------------: | :-----: |
-| ![dashboard](public/Dashboard.png) | ![searchadd](public/SearchAdd.gif) |
-| ![status](public/Status.gif)       |
+| Dashboard                          |               Search               |
+| ---------------------------------- | :--------------------------------: |
+| ![dashboard](public/Dashboard.gif) | ![searchadd](public/SearchAdd.gif) |
 
 ### Dashboard
 
