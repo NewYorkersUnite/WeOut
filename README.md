@@ -29,11 +29,6 @@ npm start
 
 This starts the iPhone simulator and starts the bundle.js
 
-## Presentation
-
-You can view our presentation here:
-https://www.youtube.com/watch?v=yPo5WqBascQ&list=PLx0iOsdUOUmnTCO5wLzNNeaLbbZLlngp6&index=18&t=0s
-
 ## Features
 
 | Dashboard                          |               Search               |
@@ -62,9 +57,9 @@ The user can see their profile page which include their total amount of friends 
 Categories:
 When adding a friend, they can specify a category (or multiple categories) that they may fall into. If the user pressed on a particular category, they would be able to see all the friends of that category. At the bottom of the screen, the user has the option to invite some or all friends into a "poll room".
 
-| Invitation to Poll Room              |             All Polls             |
-| ------------------------------------ | :-------------------------------: |
-| ![dashboard](public/PollDetails.gif) | ![searchadd](public/AllPolls.gif) |
+| Invitation to Poll Room              |             All Polls             | Poll Room                        |
+| ------------------------------------ | :-------------------------------: | -------------------------------- |
+| ![dashboard](public/PollDetails.gif) | ![searchadd](public/AllPolls.gif) | ![pollroom](public/pollroom.gif) |
 
 ### Polls
 
@@ -75,7 +70,7 @@ All Polls:
 On this page, the user can see all the active polls with a preset timer. Once the timer is up, the poll will be removed from this screen and the results will be displayed on the dashboard (date & time, title of event, and winning vote).
 
 Poll Room:
-The user can also click on a specific poll. They'll be taken to the poll room where they can view all suggestions, add their suggestion, and submit their vote.
+The user can also click on a specific poll. They'll be taken to the poll room where they can view all suggestions, add their suggestion, and submit their vote. They can vote for one suggestion and the percentage of each will fluctuate depending on how many votes that suggestion has received.
 
 ## Common Issues
 
@@ -88,6 +83,12 @@ npm install
 ## Resources
 
 Built on React Native, Firebase, and Node.
+
+## Presentation
+
+You can view our presentation here:
+
+`https://www.youtube.com/watch?v=yPo5WqBascQ&list=PLx0iOsdUOUmnTCO5wLzNNeaLbbZLlngp6&index=18&t=0s`
 
 ## Creators
 
